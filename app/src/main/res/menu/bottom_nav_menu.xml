@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/calender_icon"
+        android:icon="@drawable/home_icon"
         android:title="Bugün" />
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/calender_icon"
+        android:icon="@drawable/gallery_icon"
         android:title="Galeri" />
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/calender_icon"
+        android:icon="@drawable/profile_icon"
         android:title="Profil" />
 </menu>

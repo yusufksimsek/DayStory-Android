@@ -24,9 +24,7 @@ class WelcomePageFragment : Fragment() {
         val text = "DayStory"
         val spannableString = SpannableString(text)
         val boldSpan = StyleSpan(android.graphics.Typeface.BOLD)
-
         spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
         binding.textView.text = spannableString
 
         binding.btnHesabimVar.setOnClickListener {

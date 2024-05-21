@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout5"
+        android:id="@+id/textInputName"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
@@ -50,14 +50,14 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
-
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout6"
+        android:id="@+id/textInputSurname"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
@@ -69,9 +69,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/textInputName">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +85,7 @@
         android:layout_marginTop="56dp"
         android:autofillHints="Seçiniz"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputSurname" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDevam"
@@ -147,7 +148,7 @@
         app:endIconTint="@color/carpiIcon"
         app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextDate"

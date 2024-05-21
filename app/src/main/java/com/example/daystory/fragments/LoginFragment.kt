@@ -1,17 +1,16 @@
 package com.example.daystory.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentLoginBinding
@@ -24,13 +23,20 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        val text = "DayStory'e Hoşgeldin!"
+        val spannableString = SpannableString(text)
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.textViewDaystory.text = spannableString
 
         binding.backIcon.setOnClickListener {
             it.findNavController().popBackStack()
         }
 
         binding.btnLogin.setOnClickListener {
-            it.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            if (validateFields()) {
+                it.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
         }
 
 
@@ -57,4 +63,26 @@ class LoginFragment : Fragment() {
         binding.textView7.movementMethod = LinkMovementMethod.getInstance()
     }
 
+    private fun validateFields(): Boolean {
+        var isValid = true
+
+        val email = binding.editTextEmail.text.toString().trim()
+        val password = binding.editTextPassword.text.toString().trim()
+
+        if (email.isEmpty()) {
+            binding.textInputEmail.error = "Email alanı boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputEmail.error = null
+        }
+
+        if (password.isEmpty()) {
+            binding.textInputPassword.error = "Şifre alanı boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputPassword.error = null
+        }
+
+        return isValid
+    }
 }

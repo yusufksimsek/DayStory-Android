@@ -29,7 +29,9 @@ class SecondRegisterFragment : Fragment() {
         }
 
         binding.btnRegister.setOnClickListener {
-            it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
+            if (validateFields()) {
+                it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
+            }
         }
 
         return binding.root
@@ -58,4 +60,37 @@ class SecondRegisterFragment : Fragment() {
         binding.textGirisyap.movementMethod = LinkMovementMethod.getInstance()
     }
 
+    private fun validateFields(): Boolean {
+        var isValid = true
+
+        if (binding.editTextEmail.text.isNullOrEmpty()) {
+            binding.textInputEmail.error = "E-mail boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputEmail.error = null
+        }
+
+        if (binding.editTextUsername.text.isNullOrEmpty()) {
+            binding.textInputUsername.error = "Kullanıcı adı boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputUsername.error = null
+        }
+
+        if (binding.editTextPassword.text.isNullOrEmpty()) {
+            binding.textInputPassword.error = "Şifre boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputPassword.error = null
+        }
+
+        if (binding.editTextPassword2.text.isNullOrEmpty()) {
+            binding.textInputPassword2.error = "Şifre onayı boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputPassword2.error = null
+        }
+
+        return isValid
+    }
 }

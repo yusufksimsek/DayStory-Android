@@ -36,11 +36,13 @@ class FirstRegisterFragment : Fragment() {
         }
 
         binding.btnDevam.setOnClickListener {
-            val userEnteredDate: String = binding.editTextDate.text.toString()
-            Log.d("FirstRegisterFragment", "User entered date: $userEnteredDate")
+            if (validateFields()) {
+                val userEnteredDate: String = binding.editTextDate.text.toString()
+                Log.d("FirstRegisterFragment", "User entered date: $userEnteredDate")
 
-            it.findNavController()
-                .navigate(R.id.action_firstRegisterFragment_to_secondRegisterFragment)
+                it.findNavController()
+                    .navigate(R.id.action_firstRegisterFragment_to_secondRegisterFragment)
+            }
         }
 
         return binding.root
@@ -108,22 +110,22 @@ class FirstRegisterFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    /*
+
     private fun validateFields(): Boolean {
         var isValid = true
 
         if (binding.editTextName.text.isNullOrEmpty()) {
-            binding.textInputLayout5.error = "Bu alan boş bırakılamaz"
+            binding.textInputName.error = "Bu alan boş bırakılamaz"
             isValid = false
         } else {
-            binding.textInputLayout5.error = null
+            binding.textInputName.error = null
         }
 
         if (binding.editTextSurname.text.isNullOrEmpty()) {
-            binding.textInputLayout6.error = "Bu alan boş bırakılamaz"
+            binding.textInputSurname.error = "Bu alan boş bırakılamaz"
             isValid = false
         } else {
-            binding.textInputLayout6.error = null
+            binding.textInputSurname.error = null
         }
 
         if (binding.editTextDate.text.isNullOrEmpty()) {
@@ -135,8 +137,6 @@ class FirstRegisterFragment : Fragment() {
 
         return isValid
     }
-
-     */
 
 }
 
