@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.selectedItemId = R.id.navigation_home
+        //bottomNavigationView.selectedItemId = R.id.homeFragment
         bottomNavigationView.setupWithNavController(navController)
+
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.nav_graph, true)
             .build()
+
+        /*
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+         */
     }
 
     private fun setupViewModel() {

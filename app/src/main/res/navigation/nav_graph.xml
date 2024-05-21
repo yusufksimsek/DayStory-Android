@@ -90,6 +90,6 @@
         android:id="@+id/galleryFragment"
         android:name="com.example.daystory.fragments.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" /><action android:id="@+id/action_global_galleryFragment" app:destination="@id/galleryFragment"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
 
 </navigation>

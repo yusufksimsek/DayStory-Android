@@ -38,41 +38,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
-        <EditText
-            android:id="@+id/addEventTitle"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TitleInputLayout"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/color_border"
-            android:fontFamily="@font/poppins"
-            android:hint="Enter the title"
-            android:backgroundTint="@color/layoutEventColor"
-            android:maxLines="1"
-            android:padding="5dp"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addEventHeading" />
+            app:layout_constraintTop_toBottomOf="@id/addEventHeading">
 
-        <EditText
-            android:id="@+id/addEventDesc"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addEventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="@font/roboto"
+                android:hint="Enter the title"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:textColor="#1D1B20"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="280dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/color_border"
-            android:fontFamily="@font/poppins"
-            android:gravity="top"
-            android:hint="Enter the description"
-            android:padding="5dp"
-            android:textSize="14sp"
-            android:backgroundTint="@color/layoutEventColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addEventTitle" />
+            app:layout_constraintTop_toBottomOf="@id/TitleInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addEventDesc"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="top"
+                android:hint="Enter the description"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:textColor="#1D1B20"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"

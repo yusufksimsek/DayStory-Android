@@ -18,6 +18,7 @@ import android.widget.DatePicker
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentFirstRegisterBinding
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -51,7 +52,7 @@ class FirstRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = ArrayAdapter.createFromResource(requireContext(),
-            R.array.gender_array, android.R.layout.simple_spinner_item)
+        R.array.gender_array, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
 
@@ -94,20 +95,17 @@ class FirstRegisterFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.editTextDate.setText(sdf.format(selectedDate.time))
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePickerDialog.show()
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Tarih Seçiniz")
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateString = dateFormat.format(it)
+            binding.editTextDate.setText(dateString)
+        }
+
+        datePicker.show(childFragmentManager, datePicker.toString())
     }
 
 
