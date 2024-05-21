@@ -14,7 +14,10 @@
 
     <string name="login_prompt">Henüz hesabın yok mu? Kayıt Ol</string>
     <string name="register_prompt">Zaten bir hesabın var mı? Giriş yap</string>
+    <string name="login_text">Giriş yap</string>
+    <string name="register_text">Kayıt ol</string>
 
+    <string name="login_daystoryText">"DayStory'e Hoşgeldin!"</string>
 
     <string-array name="gender_array">
         <item>Belirtme</item>

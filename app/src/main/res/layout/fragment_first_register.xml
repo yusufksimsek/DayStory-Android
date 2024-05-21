@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FirstRegisterFragment"
-    android:background="@color/white">
+    android:background="@drawable/background_im">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -39,17 +39,20 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputName"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
         android:hint="İsminizi Giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
+        app:endIconMode="clear_text"
         app:endIconTint="@color/carpiIcon"
-        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
@@ -59,13 +62,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputSurname"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
         android:hint="Soyisminizi Giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
+        app:endIconMode="clear_text"
         app:endIconTint="@color/carpiIcon"
-        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +86,7 @@
         android:id="@+id/spinner"
         android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="56dp"
         android:autofillHints="Seçiniz"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,11 +147,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="24dp"
         android:hint="dd/mm/yyyy"
         app:endIconDrawable="@drawable/calender_icon"
-        app:endIconTint="@color/carpiIcon"
         app:endIconMode="custom"
+        app:endIconTint="@color/carpiIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
 

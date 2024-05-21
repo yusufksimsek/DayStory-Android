@@ -40,6 +40,7 @@ class SecondRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val registerText = getString(R.string.register_prompt)
+        val loginText = getString(R.string.login_text)
         val spannableString = SpannableString(registerText)
 
         val clickableSpan = object : ClickableSpan() {
@@ -49,8 +50,8 @@ class SecondRegisterFragment : Fragment() {
             }
         }
 
-        val startIndex = registerText.indexOf("Giriş yap")
-        val endIndex = startIndex + "Giriş yap".length
+        val startIndex = registerText.indexOf(loginText)
+        val endIndex = startIndex + loginText.length
 
         spannableString.setSpan(clickableSpan, startIndex, endIndex,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
