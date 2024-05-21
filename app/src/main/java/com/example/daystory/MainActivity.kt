@@ -5,6 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.daystory.database.EventDatabase
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.navigation_home
         bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -38,6 +40,28 @@ class MainActivity : AppCompatActivity() {
                 R.id.addEventFragment,
                 R.id.editEventFragment -> bottomNavigationView.visibility = View.GONE
                 else -> bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
+
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.nav_graph, true)
+            .build()
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.navigate(R.id.homeFragment, null, navOptions)
+                    true
+                }
+                R.id.navigation_gallery -> {
+                    navController.navigate(R.id.galleryFragment, null, navOptions)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    navController.navigate(R.id.profileFragment, null, navOptions)
+                    true
+                }
+                else -> false
             }
         }
     }

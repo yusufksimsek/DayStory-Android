@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/navigation_gallery"
+        android:icon="@drawable/gallery_icon"
+        android:title="Galeri" />
+    <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home_icon"
         android:title="Bugün" />
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/gallery_icon"
-        android:title="Galeri" />
-    <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/profile_icon"
         android:title="Profil" />
 </menu>

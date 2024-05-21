@@ -26,7 +26,4 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     val getEvents = eventRepository.getAllEvents()
 
-    fun searchEvent(query: String?) =
-        eventRepository.searchEvent(query)
-
 }

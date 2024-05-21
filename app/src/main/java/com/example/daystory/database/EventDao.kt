@@ -23,9 +23,4 @@ interface EventDao {
     @Query("SELECT * FROM EVENTS ORDER BY id Desc")
     fun getAllEvents(): LiveData<List<Event>>
 
-    @Query("SELECT * FROM EVENTS WHERE eventTitle LIKE :query OR eventDesc LIKE :query")
-    fun searchEvent(query: String?): LiveData<List<Event>>
-
-
-
 }

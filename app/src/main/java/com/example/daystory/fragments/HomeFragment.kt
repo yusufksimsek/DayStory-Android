@@ -13,6 +13,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.daystory.MainActivity
 import com.example.daystory.R
@@ -66,9 +67,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun setupHomeRecyclerView(){
         eventAdapter = EventAdapter()
         binding.homeRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = LinearLayoutManager(context)
             //setHasFixedSize(true)
-
             adapter = eventAdapter
         }
 
@@ -81,23 +81,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-    private fun searchNote(query: String?){
-        val searchQuery = "%"
-        eventsViewModel.searchEvent(searchQuery).observe(this) {list ->
-            eventAdapter.submitList(list)
-
-        }
-    }
-
     override fun onQueryTextSubmit(query: String?): Boolean {
         return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if(newText != null){
-            searchNote(newText)
-        }
-        return true
+        return false
     }
 
     override fun onDestroy() {
@@ -108,10 +97,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.home_menu, menu)
-
-        val menuSearch = menu.findItem(R.id.searchMenu).actionView as SearchView
-        menuSearch.isSubmitButtonEnabled = false
-        menuSearch.setOnQueryTextListener(this)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

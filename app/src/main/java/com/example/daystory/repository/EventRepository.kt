@@ -13,6 +13,4 @@ class EventRepository(private val db: EventDatabase) {
 
     fun getAllEvents() = db.getEventDao().getAllEvents()
 
-    fun searchEvent(query: String?) = db.getEventDao().searchEvent(query)
-
 }
