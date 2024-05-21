@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow -->
+    <item>
+        <shape>
+            <solid android:color="#40000000"/> <!-- 25% opacity black -->
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <!-- Main button background -->
+    <item android:left="0dp" android:bottom="3dp">
+        <shape>
+            <gradient
+                android:angle="0"
+                android:startColor="#F3AFE5"
+                android:endColor="#849BF8"
+                android:type="linear" />
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#2962FF</color>
+    <color name="darkblue">#0C2A7A</color>
+    <color name="red">#D50000</color>
+    <color name="purple">#AA2DAA</color>
+    <color name="registrationBase">#6750A4</color>
+    <color name="registrationTextColor">#D0BCFF</color>
+    <color name="toolbarColor">#FEF7FF</color>
+    <color name="toolbarTextColor">#1D1B20</color>
+    <color name="Screen_Background_Color">#F1F0F0</color>
+    <color name="outlined_Button_Border">#6A7FC1</color>
+    <color name="hesabinVarmiText">#889CD9</color>
+    <color name="carpiIcon">#889CD9</color>
+    <color name="altiCiziliText">#6A7FC1</color>
+    <color name="fabColor">#EADDFF</color>
+    <color name="layoutEventColor">#FEF7FF</color>
+    <color name="cancelButton">#79747E</color>
+    <color name="eventTextfieldColor">#49454F</color>
+
+
+
+
+</resources>
