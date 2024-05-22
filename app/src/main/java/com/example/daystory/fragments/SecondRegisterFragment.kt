@@ -39,6 +39,10 @@ class SecondRegisterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        registerSetupClickableSpan()
+    }
+
+    private fun registerSetupClickableSpan() {
         val registerText = getString(R.string.register_prompt)
         val loginText = getString(R.string.login_text)
         val spannableString = SpannableString(registerText)

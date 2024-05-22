@@ -85,13 +85,13 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintBottom_toTopOf="@+id/textViewKayitOl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView7"
+        android:id="@+id/textViewKayitOl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
@@ -111,7 +111,6 @@
         android:id="@+id/materialToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/toolbarColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"

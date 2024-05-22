@@ -14,7 +14,6 @@
             android:id="@+id/materialToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/toolbarColor"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="DayStory"
             app:titleCentered="true"
-            app:titleTextColor="@color/toolbarTextColor" />
+            app:titleTextColor="@color/altiCiziliText" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addEventFab"

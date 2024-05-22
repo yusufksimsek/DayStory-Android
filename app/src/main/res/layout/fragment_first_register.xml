@@ -13,7 +13,6 @@
         android:id="@+id/materialToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/toolbarColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,16 +81,6 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner"
-        android:layout_width="150dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="56dp"
-        android:autofillHints="Seçiniz"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputSurname" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDevam"
         style="@style/Widget.Material3.Button.ElevatedButton"
@@ -144,11 +133,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutDate"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp"
         android:layout_marginEnd="24dp"
-        android:hint="dd/mm/yyyy"
+        android:hint="Doğum Tarihiniz"
         app:endIconDrawable="@drawable/calender_icon"
         app:endIconMode="custom"
         app:endIconTint="@color/carpiIcon"
@@ -162,6 +151,26 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="date" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="53dp"
+        android:hint="Cinsiyetiniz"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

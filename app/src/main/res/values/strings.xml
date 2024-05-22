@@ -23,5 +23,6 @@
         <item>Belirtme</item>
         <item>Erkek</item>
         <item>Kadın</item>
+        <item>Diğer</item>
     </string-array>
 </resources>

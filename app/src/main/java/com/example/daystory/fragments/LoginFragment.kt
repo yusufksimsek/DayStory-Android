@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentLoginBinding
 
-
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
@@ -23,11 +22,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        val text = "DayStory'e Hoşgeldin!"
-        val spannableString = SpannableString(text)
-        val boldSpan = StyleSpan(Typeface.BOLD)
-        spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.textViewDaystory.text = spannableString
+        setupDayStorySpan()
 
         binding.backIcon.setOnClickListener {
             it.findNavController().popBackStack()
@@ -39,11 +34,22 @@ class LoginFragment : Fragment() {
             }
         }
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loginSetupClickableSpan()
+    }
+
+    private fun setupDayStorySpan(){
+        val text = "DayStory'e Hoşgeldin!"
+        val spannableString = SpannableString(text)
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.textViewDaystory.text = spannableString
+    }
+
+    private fun loginSetupClickableSpan() {
         val registerText = getString(R.string.login_prompt)
         val spannableString = SpannableString(registerText)
 
@@ -59,8 +65,8 @@ class LoginFragment : Fragment() {
 
         spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        binding.textView7.text = spannableString
-        binding.textView7.movementMethod = LinkMovementMethod.getInstance()
+        binding.textViewKayitOl.text = spannableString
+        binding.textViewKayitOl.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun validateFields(): Boolean {
@@ -85,4 +91,5 @@ class LoginFragment : Fragment() {
 
         return isValid
     }
+
 }

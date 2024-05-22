@@ -1,7 +1,5 @@
 package com.example.daystory.fragments
 
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -12,9 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentFirstRegisterBinding
@@ -22,15 +18,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
 class FirstRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentFirstRegisterBinding
-    private var selectedGender: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFirstRegisterBinding.inflate(inflater, container, false)
-
 
         binding.backIcon.setOnClickListener {
             it.findNavController().popBackStack()
@@ -39,7 +32,10 @@ class FirstRegisterFragment : Fragment() {
         binding.btnDevam.setOnClickListener {
             if (validateFields()) {
                 val userEnteredDate: String = binding.editTextDate.text.toString()
+                val selectedGender: String = binding.spinner2.text.toString()
+
                 Log.d("FirstRegisterFragment", "User entered date: $userEnteredDate")
+                Log.d("FirstRegisterFragment", "Selected gender: $selectedGender")
 
                 it.findNavController()
                     .navigate(R.id.action_firstRegisterFragment_to_secondRegisterFragment)
@@ -51,23 +47,26 @@ class FirstRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ArrayAdapter.createFromResource(requireContext(),
-        R.array.gender_array, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
 
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedGender = parent.getItemAtPosition(position) as String
-                Log.d("FirstRegisterFragment", "Spinner selected: $selectedGender")
-            }
+        registerSetupClickableSpan()
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                selectedGender = null
-                Log.d("FirstRegisterFragment", "No spinner selection")
-            }
+        binding.editTextDate.setOnClickListener {
+            showDatePickerDialog()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        setupGenderSpinner()
+    }
+
+    private fun setupGenderSpinner() {
+        val genders = resources.getStringArray(R.array.gender_array)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, genders)
+        binding.spinner2.setAdapter(arrayAdapter)
+    }
+
+    private fun registerSetupClickableSpan() {
         val registerText = getString(R.string.register_prompt)
         val loginText = getString(R.string.login_text)
         val spannableString = SpannableString(registerText)
@@ -88,11 +87,6 @@ class FirstRegisterFragment : Fragment() {
 
         binding.textGirisYap.text = spannableString
         binding.textGirisYap.movementMethod = LinkMovementMethod.getInstance()
-
-        binding.editTextDate.setOnClickListener {
-            showDatePickerDialog()
-        }
-
     }
 
     private fun showDatePickerDialog() {
@@ -108,7 +102,6 @@ class FirstRegisterFragment : Fragment() {
 
         datePicker.show(childFragmentManager, datePicker.toString())
     }
-
 
     private fun validateFields(): Boolean {
         var isValid = true
@@ -127,6 +120,13 @@ class FirstRegisterFragment : Fragment() {
             binding.textInputSurname.error = null
         }
 
+        if (binding.spinner2.text.isNullOrEmpty()) {
+            binding.textInputLayout4.error = "Bu alan boş bırakılamaz"
+            isValid = false
+        } else {
+            binding.textInputLayout4.error = null
+        }
+
         if (binding.editTextDate.text.isNullOrEmpty()) {
             binding.textInputLayoutDate.error = "Bu alan boş bırakılamaz"
             isValid = false
@@ -136,6 +136,4 @@ class FirstRegisterFragment : Fragment() {
 
         return isValid
     }
-
 }
-
