@@ -67,6 +67,18 @@
         <action
             android:id="@+id/action_secondRegisterFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="surname"
+            app:argType="string" />
+        <argument
+            android:name="gender"
+            app:argType="string" />
+        <argument
+            android:name="date"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -76,7 +88,9 @@
         tools:layout="@layout/fragment_first_register" >
         <action
             android:id="@+id/action_firstRegisterFragment_to_secondRegisterFragment"
-            app:destination="@id/secondRegisterFragment" />
+            app:destination="@id/secondRegisterFragment">
+
+        </action>
         <action
             android:id="@+id/action_firstRegisterFragment_to_loginFragment"
             app:destination="@id/loginFragment" />

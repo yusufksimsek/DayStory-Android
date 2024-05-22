@@ -11,13 +11,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentLoginBinding
+import com.example.daystory.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -29,9 +33,13 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            if (validateFields()) {
+            val email = binding.editTextEmail.text.toString().trim()
+            val password = binding.editTextPassword.text.toString().trim()
+
+            if (loginViewModel.loginValidateFields(email, password)) {
                 it.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
+
         }
 
         return binding.root
@@ -39,6 +47,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loginSetupClickableSpan()
+
+        loginViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputEmail.error = error
+        })
+
+        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputPassword.error = error
+        })
+
     }
 
     private fun setupDayStorySpan(){
@@ -67,29 +84,6 @@ class LoginFragment : Fragment() {
 
         binding.textViewKayitOl.text = spannableString
         binding.textViewKayitOl.movementMethod = LinkMovementMethod.getInstance()
-    }
-
-    private fun validateFields(): Boolean {
-        var isValid = true
-
-        val email = binding.editTextEmail.text.toString().trim()
-        val password = binding.editTextPassword.text.toString().trim()
-
-        if (email.isEmpty()) {
-            binding.textInputEmail.error = "Email alanı boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputEmail.error = null
-        }
-
-        if (password.isEmpty()) {
-            binding.textInputPassword.error = "Şifre alanı boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputPassword.error = null
-        }
-
-        return isValid
     }
 
 }

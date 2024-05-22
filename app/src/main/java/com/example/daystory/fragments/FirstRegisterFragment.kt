@@ -5,15 +5,18 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentFirstRegisterBinding
+import com.example.daystory.viewmodel.LoginViewModel
+import com.example.daystory.viewmodel.RegistrationViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -21,6 +24,7 @@ import java.util.Locale
 class FirstRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentFirstRegisterBinding
+    private val registerViewModel: RegistrationViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFirstRegisterBinding.inflate(inflater, container, false)
@@ -30,15 +34,22 @@ class FirstRegisterFragment : Fragment() {
         }
 
         binding.btnDevam.setOnClickListener {
-            if (validateFields()) {
-                val userEnteredDate: String = binding.editTextDate.text.toString()
-                val selectedGender: String = binding.spinner2.text.toString()
 
-                Log.d("FirstRegisterFragment", "User entered date: $userEnteredDate")
-                Log.d("FirstRegisterFragment", "Selected gender: $selectedGender")
+            val userEnteredDate: String = binding.editTextDate.text.toString()
+            val selectedGender: String = binding.spinner2.text.toString()
+            val name = binding.editTextName.text.toString()
+            val surname = binding.editTextSurname.text.toString()
 
-                it.findNavController()
-                    .navigate(R.id.action_firstRegisterFragment_to_secondRegisterFragment)
+            if (registerViewModel.firstvalidateFields(name,surname,selectedGender,userEnteredDate)) {
+
+                val action = FirstRegisterFragmentDirections
+                    .actionFirstRegisterFragmentToSecondRegisterFragment(
+                        name = name,
+                        surname = surname,
+                        gender = selectedGender,
+                        date = userEnteredDate
+                    )
+                it.findNavController().navigate(action)
             }
         }
 
@@ -47,6 +58,22 @@ class FirstRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        registerViewModel.nameError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputName.error = error
+        })
+
+        registerViewModel.surnameError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputSurname.error = error
+        })
+
+        registerViewModel.genderError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputGender.error = error
+        })
+
+        registerViewModel.dateError.observe(viewLifecycleOwner, Observer { error ->
+            binding.textInputDate.error = error
+        })
 
         registerSetupClickableSpan()
 
@@ -103,37 +130,5 @@ class FirstRegisterFragment : Fragment() {
         datePicker.show(childFragmentManager, datePicker.toString())
     }
 
-    private fun validateFields(): Boolean {
-        var isValid = true
 
-        if (binding.editTextName.text.isNullOrEmpty()) {
-            binding.textInputName.error = "Bu alan boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputName.error = null
-        }
-
-        if (binding.editTextSurname.text.isNullOrEmpty()) {
-            binding.textInputSurname.error = "Bu alan boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputSurname.error = null
-        }
-
-        if (binding.spinner2.text.isNullOrEmpty()) {
-            binding.textInputLayout4.error = "Bu alan boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputLayout4.error = null
-        }
-
-        if (binding.editTextDate.text.isNullOrEmpty()) {
-            binding.textInputLayoutDate.error = "Bu alan boş bırakılamaz"
-            isValid = false
-        } else {
-            binding.textInputLayoutDate.error = null
-        }
-
-        return isValid
-    }
 }

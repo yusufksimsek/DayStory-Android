@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputUsername">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextPassword1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Şifre Belirleyiniz" />
