@@ -122,7 +122,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/button_background"
+        android:background="@drawable/button_background2"
         android:fontFamily="@font/roboto_medium"
         android:text="Kayıt Ol"
         android:textColor="@color/white"

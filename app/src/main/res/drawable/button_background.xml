@@ -15,8 +15,9 @@
                 android:angle="0"
                 android:startColor="#F3AFE5"
                 android:endColor="#6A7FC1"
-                android:type="linear"/>
-            <corners android:radius="30dp"/>
+                android:type="linear"
+                android:centerX="1"/>
+            <corners android:radius="30dp" />
         </shape>
     </item>
 </layer-list>

@@ -31,7 +31,11 @@
             android:layout_height="70dp"
             android:shadowColor="@color/white"
             app:backgroundTint="@color/white"
+            app:itemIconTint="@drawable/bottom_navigation_color_item"
+            app:itemTextColor="@drawable/bottom_navigation_color_item"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:itemRippleColor="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu" />

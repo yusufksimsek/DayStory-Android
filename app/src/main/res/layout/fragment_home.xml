@@ -29,9 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="28dp"
-            app:backgroundTint="@color/fabColor"
             android:clickable="true"
             android:contentDescription="image"
+            app:backgroundTint="@color/fabColor"
+            app:tint="@color/FabAddColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/add" />
