@@ -1,6 +1,5 @@
 package com.example.daystory.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +8,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.daystory.MainActivity
 import com.example.daystory.R
@@ -65,6 +62,11 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
                 eventsViewModel.updateEvent(event)
 
         }
+
+        binding.btnCancel.setOnClickListener {
+            it.findNavController().popBackStack()
+        }
+
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

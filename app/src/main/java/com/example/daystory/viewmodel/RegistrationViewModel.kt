@@ -94,6 +94,15 @@ class RegistrationViewModel : ViewModel() {
             _password2Error.value = null
         }
 
+        if (password1.isNotEmpty() && password2.isNotEmpty()) {
+            if (password1 != password2) {
+                _password2Error.value = "Şifreler aynı değil!"
+                isValid = false
+            } else if (password1 == password2) {
+                _password2Error.value = null
+            }
+        }
+
         return isValid
     }
 }
