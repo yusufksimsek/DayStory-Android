@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/galleryFragment"
-        android:icon="@drawable/gallery_icon"
+        android:icon="@drawable/galeri_icon"
         android:title="Galeri" />
     <item
         android:id="@+id/homeFragment"

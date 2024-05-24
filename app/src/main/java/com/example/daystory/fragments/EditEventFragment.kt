@@ -57,10 +57,6 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
             it.findNavController().popBackStack()
         }
 
-        binding.iconDelete.setOnClickListener {
-            deleteEvent()
-        }
-
         binding.btnSave.setOnClickListener {
             val eventTitle = binding.editEventTitle.text.toString().trim()
             val eventDesc = binding.editEventDesc.text.toString().trim()
@@ -69,19 +65,6 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
                 eventsViewModel.updateEvent(event)
 
         }
-    }
-
-    private fun deleteEvent(){
-        AlertDialog.Builder(activity).apply {
-            setTitle("Delete Event")
-            setMessage("Do you want to delete this event?")
-            setPositiveButton("Delete"){_,_ ->
-                eventsViewModel.deleteEvent(currentEvent)
-                Toast.makeText(context,"Event Deleted",Toast.LENGTH_LONG).show()
-                findNavController().popBackStack()
-            }
-            setNegativeButton("Cancel", null)
-        }.create().show()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -11,35 +11,53 @@
         app:cardCornerRadius="10dp"
         android:backgroundTint="@color/layoutEventColor">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:padding="16dp">
 
             <TextView
                 android:id="@+id/eventTitle"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="100"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Event Title"
                 android:textColor="@color/eventTextfieldColor"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/more_vert_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0"/>
+
+            <ImageView
+                android:id="@+id/more_vert_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/eventTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:srcCompat="@drawable/more_vert_icon" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/eventDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_weight="200"
                 android:maxHeight="170dp"
                 android:text="Description"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins"
-                android:textColor="@color/eventTextfieldColor"/>
+                android:textColor="@color/eventTextfieldColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/eventTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

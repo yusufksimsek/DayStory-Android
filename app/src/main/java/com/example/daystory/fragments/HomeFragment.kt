@@ -65,7 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
     private fun setupHomeRecyclerView(){
-        eventAdapter = EventAdapter()
+        eventAdapter = EventAdapter(eventsViewModel)
         binding.homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             //setHasFixedSize(true)
