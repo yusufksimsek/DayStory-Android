@@ -14,7 +14,7 @@
             android:id="@+id/materialToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/toolbarColor"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="DayStory"
             app:titleCentered="true"
-            app:titleTextColor="@color/toolbarTextColor" />
+            app:titleTextColor="@color/loginTextColor" />
 
         <TextView
             android:id="@+id/addEventHeading"
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="36dp"
-            android:backgroundTint="@color/registrationBase"
+            android:backgroundTint="@color/loginTextColor"
             android:text="Save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button2" />
@@ -104,10 +104,10 @@
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/white"
             android:text="Cancel"
-            android:textColor="@color/registrationBase"
+            android:textColor="@color/loginTextColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:strokeColor="@color/registrationBase"
+            app:strokeColor="@color/loginTextColor"
             app:strokeWidth="1dp"/>
 
         <ImageView

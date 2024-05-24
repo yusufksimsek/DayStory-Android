@@ -29,7 +29,7 @@
             style="@style/Widget.Material3.BottomNavigationView"
             android:layout_width="0dp"
             android:layout_height="70dp"
-            android:backgroundTint="@color/cardview_light_background"
+            app:backgroundTint="@color/bottomNavigationColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

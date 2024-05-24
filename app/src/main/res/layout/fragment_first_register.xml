@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FirstRegisterFragment"
-    android:background="@drawable/background_im">
+    android:background="@color/white">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -20,14 +20,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="DayStory"
         app:titleCentered="true"
-        app:titleTextColor="@color/altiCiziliText" />
+        app:titleTextColor="@color/loginTextColor" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="105dp"
         android:fontFamily="@font/roboto"
         android:text="Kişisel bilgilerinizi giriniz"
         android:textColor="#000000"
@@ -41,12 +41,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
         android:hint="İsminizi Giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
         app:endIconMode="clear_text"
-        app:endIconTint="@color/carpiIcon"
+        app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
         android:hint="Soyisminizi Giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
         app:endIconMode="clear_text"
-        app:endIconTint="@color/carpiIcon"
+        app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
         android:lineSpacingExtra="6dp"
         android:text="@string/register_prompt"
         android:textAlignment="viewStart"
-        android:textColor="@color/hesabinVarmiText"
+        android:textColor="@color/altiCiziliText"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +140,7 @@
         android:hint="Doğum Tarihiniz"
         app:endIconDrawable="@drawable/calender_icon"
         app:endIconMode="custom"
-        app:endIconTint="@color/carpiIcon"
+        app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
 
@@ -172,5 +172,16 @@
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="27dp"
+        android:src="@drawable/first_reg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

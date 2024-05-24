@@ -15,11 +15,18 @@
     <color name="hesabinVarmiText">#889CD9</color>
     <color name="carpiIcon">#889CD9</color>
     <color name="altiCiziliText">#6A7FC1</color>
-    <color name="fabColor">#EADDFF</color>
-    <color name="layoutEventColor">#FEF7FF</color>
+    <color name="fabColor">#6A7FC1</color>
+    <color name="layoutEventColor">#F9F9F9</color>
     <color name="cancelButton">#79747E</color>
     <color name="eventTextfieldColor">#49454F</color>
     <color name="dayStoryColor">#6A7FC1</color>
+    <color name="loginTextColor">#5A6CA5</color>
+    <color name="loginIconColors">#889CD9</color>
+    <color name="bottomNavigationColor">#FAFAFA</color>
+
+
+
+
 
 
 

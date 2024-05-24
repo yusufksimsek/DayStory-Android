@@ -6,7 +6,7 @@
         android:title="Galeri" />
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/home_icon"
+        android:icon="@drawable/bugun_icon"
         android:title="Bugün" />
     <item
         android:id="@+id/profileFragment"
