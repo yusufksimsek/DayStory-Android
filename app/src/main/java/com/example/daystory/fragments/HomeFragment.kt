@@ -93,11 +93,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun updateUI(event: List<Event>?){
         if(event != null){
             if(event.isEmpty()){
-                //binding.emptyEventsImage.visibility = View.GONE
-                binding.homeRecyclerView.visibility = View.VISIBLE
+                binding.homeRecyclerView.visibility = View.GONE
+                binding.textViewNotBulunmuyor.visibility = View.VISIBLE
             } else {
-                //binding.emptyEventsImage.visibility = View.VISIBLE
-                //binding.homeRecyclerView.visibility = View.GONE
+                binding.homeRecyclerView.visibility = View.VISIBLE
+                binding.textViewNotBulunmuyor.visibility = View.GONE
             }
         }
     }
