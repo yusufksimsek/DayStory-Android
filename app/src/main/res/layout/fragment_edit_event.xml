@@ -16,12 +16,11 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="DayStory"
-            app:titleCentered="true"
-            app:titleTextColor="@color/loginTextColor"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleCentered="true"
+            app:titleTextColor="@color/loginTextColor" />
 
         <TextView
             android:id="@+id/addEventHeading"
@@ -127,6 +126,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:strokeColor="@color/loginTextColor"
             app:strokeWidth="1dp"/>
+
+        <TextView
+            android:id="@+id/textViewDateEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="23dp"
+            android:text="gg/aa/yyyy"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/editBack_icon"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

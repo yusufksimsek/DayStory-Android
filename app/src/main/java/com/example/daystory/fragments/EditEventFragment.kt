@@ -50,6 +50,7 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
         binding.editEventTitle.setText(currentEvent.eventTitle)
         binding.editEventDesc.setText(currentEvent.eventDesc)
+        binding.textViewDateEdit.setText(currentEvent.eventDate)
 
         binding.editBackIcon.setOnClickListener {
             it.findNavController().popBackStack()

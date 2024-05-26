@@ -47,13 +47,20 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel = (activity as MainActivity).eventViewModel
         addEventView = view
 
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = dateFormat.format(Date())
+        binding.textViewDateAdd.text = date
+
         binding.addBackIcon.setOnClickListener {
             it.findNavController().popBackStack()
         }
 
         binding.btnSave.setOnClickListener {
             saveEvent()
+        }
 
+        binding.btnCancel.setOnClickListener {
+            it.findNavController().popBackStack()
         }
 
     }
