@@ -11,5 +11,6 @@ data class Event(
     @PrimaryKey(autoGenerate = true)
     val id:Int,
     val eventTitle: String,
-    val eventDesc: String
+    val eventDesc: String,
+    val eventDate: String
 ) : Parcelable

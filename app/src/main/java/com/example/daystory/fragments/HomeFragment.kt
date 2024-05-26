@@ -18,7 +18,6 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.daystory.MainActivity
 import com.example.daystory.R
 import com.example.daystory.adapter.EventAdapter
@@ -27,7 +26,6 @@ import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.Locale
-
 
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,MenuProvider,DatePickerDialog.OnDateSetListener {
 
@@ -65,7 +63,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private fun setupDateTextView() {
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
     }
@@ -76,7 +74,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val dateString = dateFormat.format(it)
             binding.textViewDate.text = dateString
         }
@@ -87,7 +85,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
      override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
     }
@@ -108,14 +106,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         eventAdapter = EventAdapter(eventsViewModel)
         binding.homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            //setHasFixedSize(true)
             adapter = eventAdapter
         }
 
         activity?.let {
             eventsViewModel.getEvents.observe(viewLifecycleOwner){ event ->
                 eventAdapter.submitList(event)
-                //eventAdapter.notifyDataSetChanged()
                 updateUI(event)
             }
         }

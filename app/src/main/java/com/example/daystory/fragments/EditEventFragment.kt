@@ -19,6 +19,7 @@ import com.example.daystory.databinding.FragmentEditEventBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
 
+
 class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
     private var editEventbinding: FragmentEditEventBinding? = null
@@ -57,8 +58,9 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         binding.btnSave.setOnClickListener {
             val eventTitle = binding.editEventTitle.text.toString().trim()
             val eventDesc = binding.editEventDesc.text.toString().trim()
+            val existingDate = currentEvent.eventDate
 
-                val event = Event(currentEvent.id, eventTitle, eventDesc)
+                val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
                 eventsViewModel.updateEvent(event)
 
         }
@@ -66,7 +68,6 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         binding.btnCancel.setOnClickListener {
             it.findNavController().popBackStack()
         }
-
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

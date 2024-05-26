@@ -1,6 +1,8 @@
 package com.example.daystory.fragments
 
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,6 +20,8 @@ import com.example.daystory.R
 import com.example.daystory.databinding.FragmentAddEventBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
+import java.util.Date
+import java.util.Locale
 
 class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
@@ -49,6 +53,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
         binding.btnSave.setOnClickListener {
             saveEvent()
+
         }
 
     }
@@ -56,10 +61,13 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
     private fun saveEvent() {
         val eventTitle = binding.addEventTitle.text.toString().trim()
         val eventDesc = binding.addEventDesc.text.toString().trim()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = dateFormat.format(Date())
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty()) {
-            val event = Event(0, eventTitle, eventDesc)
+            val event = Event(0, eventTitle, eventDesc, date)
             eventsViewModel.addEvent(event)
+            Log.d("AddEventFragment", "Event Date: $date")
             Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(addEventView.context, "Please fill out all fields", Toast.LENGTH_SHORT).show()
