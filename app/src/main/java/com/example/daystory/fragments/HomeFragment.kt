@@ -1,5 +1,8 @@
 package com.example.daystory.fragments
 
+import android.app.DatePickerDialog
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +11,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -21,9 +25,11 @@ import com.example.daystory.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.Locale
 
 
-class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,MenuProvider {
+class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,MenuProvider,DatePickerDialog.OnDateSetListener {
 
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
@@ -46,10 +52,44 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         eventsViewModel = (activity as MainActivity).eventViewModel
         setupHomeRecyclerView()
+        setupDateTextView()
 
         binding.addEventFab.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_addEventFragment)
         }
+
+        binding.textViewDate.setOnClickListener {
+            showDatePicker()
+        }
+    }
+
+    private fun setupDateTextView() {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date = dateFormat.format(calendar.time)
+        binding.textViewDate.text = date
+    }
+
+    private fun showDatePicker() {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Tarih Seçiniz")
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val dateString = dateFormat.format(it)
+            binding.textViewDate.text = dateString
+        }
+
+        datePicker.show(childFragmentManager, datePicker.toString())
+    }
+
+     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date = dateFormat.format(calendar.time)
+        binding.textViewDate.text = date
     }
 
     private fun updateUI(event: List<Event>?){

@@ -7,8 +7,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomeFragment"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:context=".HomeFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/materialToolbar"
@@ -32,10 +32,10 @@
             android:clickable="true"
             android:contentDescription="image"
             app:backgroundTint="@color/fabColor"
-            app:tint="@color/FabAddColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/add" />
+            app:srcCompat="@drawable/add"
+            app:tint="@color/FabAddColor" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/homeRecyclerView"
@@ -50,14 +50,28 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewNotlar"
             tools:listitem="@layout/event_layout" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewNotlar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Notlar"
             android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="gg.aa.yyyy"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
