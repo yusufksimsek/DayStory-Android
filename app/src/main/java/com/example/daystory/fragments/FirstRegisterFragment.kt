@@ -1,10 +1,12 @@
 package com.example.daystory.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +61,8 @@ class FirstRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbarTitle()
+
         registerViewModel.nameError.observe(viewLifecycleOwner, Observer { error ->
             binding.textInputName.error = error
         })
@@ -91,6 +95,19 @@ class FirstRegisterFragment : Fragment() {
         val genders = resources.getStringArray(R.array.gender_array)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, genders)
         binding.spinner2.setAdapter(arrayAdapter)
+    }
+
+    private fun setupToolbarTitle() {
+        val toolbar = binding.materialToolbar
+        val title = "DayStory"
+        val spannableString = SpannableString(title)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, 3,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        toolbar.title = spannableString
     }
 
     private fun registerSetupClickableSpan() {

@@ -48,6 +48,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loginSetupClickableSpan()
 
+        setupToolbarTitle()
+
         loginViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
             binding.textInputEmail.error = error
         })
@@ -64,6 +66,19 @@ class LoginFragment : Fragment() {
         val boldSpan = StyleSpan(Typeface.BOLD)
         spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textViewDaystory.text = spannableString
+    }
+
+    private fun setupToolbarTitle() {
+        val toolbar = binding.materialToolbar
+        val title = "DayStory"
+        val spannableString = SpannableString(title)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, 3,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        toolbar.title = spannableString
     }
 
     private fun loginSetupClickableSpan() {

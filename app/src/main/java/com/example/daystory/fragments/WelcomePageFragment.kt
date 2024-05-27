@@ -25,7 +25,7 @@ class WelcomePageFragment : Fragment() {
         val spannableString = SpannableString(text)
         val boldSpan = StyleSpan(android.graphics.Typeface.BOLD)
         spannableString.setSpan(boldSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.textView.text = spannableString
+        binding.tvDayStoryfirst.text = spannableString
 
         binding.btnHesabimVar.setOnClickListener {
             it.findNavController().navigate(R.id.action_welcomePageFragment_to_loginFragment)
