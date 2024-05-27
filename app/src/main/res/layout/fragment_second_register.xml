@@ -63,6 +63,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="24dp"
+        app:helperText="@string/helperTextPassword"
+        app:helperTextTextColor="@color/hesabinVarmiText"
         app:endIconDrawable="@drawable/cancel_icon"
         app:endIconMode="clear_text"
         app:endIconTint="@color/loginIconColors"
