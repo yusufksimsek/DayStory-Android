@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -63,7 +64,7 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
                 val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
                 eventsViewModel.updateEvent(event)
-
+                Toast.makeText(requireContext(), "Event updated", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnCancel.setOnClickListener {
