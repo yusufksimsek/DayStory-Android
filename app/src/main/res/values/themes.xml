@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/outlined_Button_Border</item>
         <item name="colorPrimaryVariant">@color/registrationBase</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/registrationBase</item>
         <item name="colorSecondaryVariant">@color/registrationTextColor</item>

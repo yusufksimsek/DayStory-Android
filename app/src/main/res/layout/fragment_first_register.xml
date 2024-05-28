@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FirstRegisterFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".fragments.FirstRegisterFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -133,7 +132,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputDate"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp"
         android:layout_marginEnd="24dp"
@@ -142,6 +141,8 @@
         app:endIconMode="custom"
         app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textInputGender"
         app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -156,11 +157,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputGender"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="53dp"
         android:hint="Cinsiyetiniz"
+        android:layout_marginEnd="21dp"
+        app:layout_constraintEnd_toStartOf="@+id/textInputDate"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputSurname">
 

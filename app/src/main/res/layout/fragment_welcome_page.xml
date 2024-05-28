@@ -18,7 +18,6 @@
         android:textColor="@color/loginTextColor"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -32,7 +31,6 @@
         android:textColor="@color/loginTextColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDayStoryfirst" />
 
@@ -68,6 +66,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/outlined_Button_Border"
         android:textSize="16sp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

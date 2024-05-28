@@ -66,6 +66,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
     }
 
     private fun saveEvent() {
+
         val eventTitle = binding.addEventTitle.text.toString().trim()
         val eventDesc = binding.addEventDesc.text.toString().trim()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
