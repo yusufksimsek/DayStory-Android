@@ -77,6 +77,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
             eventsViewModel.addEvent(event)
             Log.d("AddEventFragment", "Event Date: $date")
             Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
+            addEventView.findNavController().popBackStack()
         } else {
             Toast.makeText(addEventView.context, "Please fill out all fields", Toast.LENGTH_SHORT).show()
         }
