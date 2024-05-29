@@ -1,8 +1,10 @@
 package com.example.daystory.viewmodel
 
+import android.icu.text.SimpleDateFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.Locale
 
 class RegistrationViewModel : ViewModel() {
 
@@ -29,6 +31,10 @@ class RegistrationViewModel : ViewModel() {
 
     private val _password2Error = MutableLiveData<String?>()
     val password2Error: LiveData<String?> = _password2Error
+
+    private val _selectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String> = _selectedDate
+
     fun firstvalidateFields(name:String,surname:String,gender:String,date:String): Boolean {
         var isValid = true
 
@@ -104,5 +110,17 @@ class RegistrationViewModel : ViewModel() {
         }
 
         return isValid
+    }
+
+    fun validateDate(selectedDate: Long, today: Long) {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateString = dateFormat.format(selectedDate)
+
+        if (selectedDate > today) {
+            _dateError.value = "Gelecek bir tarih seçemezsiniz."
+        } else {
+            _dateError.value = null
+            _selectedDate.value = dateString
+        }
     }
 }

@@ -19,6 +19,7 @@ import com.example.daystory.R
 import com.example.daystory.databinding.FragmentFirstRegisterBinding
 import com.example.daystory.viewmodel.LoginViewModel
 import com.example.daystory.viewmodel.RegistrationViewModel
+import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -79,6 +80,10 @@ class FirstRegisterFragment : Fragment() {
             binding.textInputDate.error = error
         })
 
+        registerViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
+            binding.editTextDate.setText(date)
+        })
+
         registerSetupClickableSpan()
 
         binding.editTextDate.setOnClickListener {
@@ -134,18 +139,24 @@ class FirstRegisterFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Tarih Seçiniz")
+            .setSelection(today)
+            .setCalendarConstraints(
+                CalendarConstraints.Builder()
+                    .setEnd(today)
+                    .build()
+            )
             .build()
 
-        datePicker.addOnPositiveButtonClickListener {
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val dateString = dateFormat.format(it)
-            binding.editTextDate.setText(dateString)
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val selectedDate = selection ?: return@addOnPositiveButtonClickListener
+            registerViewModel.validateDate(selectedDate, today)
         }
 
         datePicker.show(childFragmentManager, datePicker.toString())
     }
-
 
 }
