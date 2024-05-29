@@ -23,4 +23,7 @@ interface EventDao {
     @Query("SELECT * FROM EVENTS ORDER BY id Desc")
     fun getAllEvents(): LiveData<List<Event>>
 
+    @Query("SELECT * FROM events WHERE eventDate = :date")
+    fun getEventsByDate(date: String): LiveData<List<Event>>
+
 }

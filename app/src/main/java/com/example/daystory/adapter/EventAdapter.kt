@@ -24,11 +24,6 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
         fun bind(currentEvent: Event) {
             binding.eventTitle.text = currentEvent.eventTitle
             binding.eventDesc.text = currentEvent.eventDesc
-            /*
-            binding.moreVertIcon.setOnClickListener { view ->
-                showPopupMenu(view, currentEvent)
-            }
-            */
 
             val currentDate = Calendar.getInstance().time
             val eventDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(currentEvent.eventDate)

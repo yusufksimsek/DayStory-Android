@@ -62,6 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         checkDateAndToggleFab()
+
     }
 
     private fun setupDateTextView() {
@@ -137,9 +138,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         activity?.let {
-            eventsViewModel.getEvents.observe(viewLifecycleOwner){ event ->
-                eventAdapter.submitList(event)
-                updateUI(event)
+            eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+                eventsViewModel.getEventsByDate(date).observe(viewLifecycleOwner) { events ->
+                    eventAdapter.submitList(events)
+                    updateUI(events)
+                }
             }
         }
     }

@@ -35,4 +35,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     val getEvents = eventRepository.getAllEvents()
 
+    fun getEventsByDate(date: String): LiveData<List<Event>> {
+        return eventRepository.getEventsByDate(date)
+    }
+
 }
