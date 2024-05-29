@@ -47,9 +47,9 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel = (activity as MainActivity).eventViewModel
         addEventView = view
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val date = dateFormat.format(Date())
-        binding.textViewDateAdd.text = date
+        eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            binding.textViewDateAdd.text = date
+        }
 
         binding.addBackIcon.setOnClickListener {
             it.findNavController().popBackStack()
@@ -69,8 +69,8 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
         val eventTitle = binding.addEventTitle.text.toString().trim()
         val eventDesc = binding.addEventDesc.text.toString().trim()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val date = dateFormat.format(Date())
+        val date = binding.textViewDateAdd.text.toString()
+
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty()) {
             val event = Event(0, eventTitle, eventDesc, date)

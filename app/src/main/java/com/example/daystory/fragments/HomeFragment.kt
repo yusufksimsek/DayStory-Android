@@ -66,6 +66,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
+
+        eventsViewModel.setSelectedDate(date)
     }
 
     private fun showDatePicker() {
@@ -77,6 +79,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val dateString = dateFormat.format(it)
             binding.textViewDate.text = dateString
+
+            eventsViewModel.setSelectedDate(dateString)
         }
 
         datePicker.show(childFragmentManager, datePicker.toString())
