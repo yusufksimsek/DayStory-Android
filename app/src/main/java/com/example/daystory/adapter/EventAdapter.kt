@@ -13,6 +13,10 @@ import com.example.daystory.databinding.EventLayoutBinding
 import com.example.daystory.fragments.HomeFragmentDirections
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Event, EventAdapter.EventViewHolder>(Mydif) {
 
@@ -20,11 +24,30 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
         fun bind(currentEvent: Event) {
             binding.eventTitle.text = currentEvent.eventTitle
             binding.eventDesc.text = currentEvent.eventDesc
-
+            /*
             binding.moreVertIcon.setOnClickListener { view ->
                 showPopupMenu(view, currentEvent)
             }
+            */
 
+            val currentDate = Calendar.getInstance().time
+            val eventDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(currentEvent.eventDate)
+
+            if (eventDate.before(currentDate) && !isSameDay(eventDate, currentDate)) {
+                binding.moreVertIcon.visibility = View.GONE
+            } else {
+                binding.moreVertIcon.visibility = View.VISIBLE
+                binding.moreVertIcon.setOnClickListener { view ->
+                    showPopupMenu(view, currentEvent)
+                }
+            }
+        }
+
+        private fun isSameDay(date1: Date, date2: Date): Boolean {
+            val calendar1 = Calendar.getInstance().apply { time = date1 }
+            val calendar2 = Calendar.getInstance().apply { time = date2 }
+            return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+                    calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
         }
 
         private fun showPopupMenu(view: View, currentEvent: Event) {

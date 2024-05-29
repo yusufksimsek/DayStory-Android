@@ -25,6 +25,7 @@ import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.Date
 import java.util.Locale
 
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,MenuProvider,DatePickerDialog.OnDateSetListener {
@@ -59,6 +60,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         binding.textViewDate.setOnClickListener {
             showDatePicker()
         }
+
+        checkDateAndToggleFab()
     }
 
     private fun setupDateTextView() {
@@ -81,9 +84,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             binding.textViewDate.text = dateString
 
             eventsViewModel.setSelectedDate(dateString)
+            checkDateAndToggleFab()
         }
 
         datePicker.show(childFragmentManager, datePicker.toString())
+    }
+
+    private fun isSameDay(date1: Date, date2: Date): Boolean {
+        val calendar1 = Calendar.getInstance().apply { time = date1 }
+        val calendar2 = Calendar.getInstance().apply { time = date2 }
+        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+                calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun checkDateAndToggleFab() {
+        val currentDate = Calendar.getInstance().time
+        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(binding.textViewDate.text.toString())
+
+        if (selectedDate != null && (selectedDate.after(currentDate) || isSameDay(selectedDate, currentDate))) {
+            binding.addEventFab.visibility = View.VISIBLE
+        } else {
+            binding.addEventFab.visibility = View.GONE
+        }
     }
 
      override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -92,6 +114,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
+        checkDateAndToggleFab()
     }
 
     private fun updateUI(event: List<Event>?){
