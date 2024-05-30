@@ -55,7 +55,7 @@ class RegistrationViewModel : ViewModel() {
         if (surname.isEmpty()) {
             _surnameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (surname.length < 3 || surname.length > 50) {
+        } else if (surname.length < 3) {
             _surnameError.value = "Soyisim en az 3 karakter olmalıdır"
             isValid = false
         }else if (surname.length > 50) {
@@ -82,13 +82,13 @@ class RegistrationViewModel : ViewModel() {
         return isValid
     }
 
-    fun secondvalidateFields(email:String,username:String,password1:String,password2:String): Boolean {
+    fun secondvalidateFields(email: String, username: String, password1: String, password2: String): Boolean {
         var isValid = true
 
         if (email.isEmpty()) {
             _emailError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!isValidEmail(email)) {
             _emailError.value = "Geçerli bir E-Mail adresi giriniz"
             isValid = false
         } else {
@@ -98,7 +98,7 @@ class RegistrationViewModel : ViewModel() {
         if (username.isEmpty()) {
             _usernameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (username.length < 3 ) {
+        } else if (username.length < 3) {
             _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
             isValid = false
         } else if (username.length > 50) {
@@ -131,12 +131,17 @@ class RegistrationViewModel : ViewModel() {
             if (password1 != password2) {
                 _password2Error.value = "Şifreler aynı değil!"
                 isValid = false
-            } else if (password1 == password2) {
+            } else {
                 _password2Error.value = null
             }
         }
 
         return isValid
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        val emailPattern = Regex("^(?!.*\\.com@)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+        return emailPattern.matches(email)
     }
 
     fun validateDate(selectedDate: Long, today: Long) {
