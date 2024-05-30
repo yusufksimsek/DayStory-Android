@@ -1,5 +1,7 @@
 package com.example.daystory.adapter
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +58,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
                         true
                     }
                     R.id.delete_event -> {
-                        eventsViewModel.deleteEvent(currentEvent)
+                        showDeleteConfirmationDialog(view.context, currentEvent)
                         true
                     }
                     else -> false
@@ -64,6 +66,18 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
             }
             popupMenu.show()
         }
+
+        private fun showDeleteConfirmationDialog(context: Context, event: Event) {
+            AlertDialog.Builder(context)
+                .setTitle("Notu Sil")
+                .setMessage("Bu notu silmek istediğinize emin misiniz?")
+                .setPositiveButton("Evet") { _, _ ->
+                    eventsViewModel.deleteEvent(event)
+                }
+                .setNegativeButton("Hayır", null)
+                .show()
+        }
+
     }
 
     object Mydif : DiffUtil.ItemCallback<Event>() {
