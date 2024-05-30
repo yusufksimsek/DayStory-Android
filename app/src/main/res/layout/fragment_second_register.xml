@@ -65,8 +65,8 @@
         android:layout_marginEnd="24dp"
         app:helperText="@string/helperTextPassword"
         app:helperTextTextColor="@color/hesabinVarmiText"
-        app:endIconDrawable="@drawable/cancel_icon"
-        app:endIconMode="clear_text"
+        app:endIconDrawable="@drawable/password_icon"
+        app:endIconMode="password_toggle"
         app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -77,7 +77,8 @@
             android:id="@+id/editTextPassword1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Şifre Belirleyiniz" />
+            android:hint="Şifre Belirleyiniz"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -88,8 +89,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="24dp"
-        app:endIconDrawable="@drawable/cancel_icon"
-        app:endIconMode="clear_text"
+        app:endIconDrawable="@drawable/password_icon"
+        app:endIconMode="password_toggle"
         app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -100,7 +101,8 @@
             android:id="@+id/editTextPassword2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Şifrenizi Onaylayınız" />
+            android:hint="Şifrenizi Onaylayınız"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

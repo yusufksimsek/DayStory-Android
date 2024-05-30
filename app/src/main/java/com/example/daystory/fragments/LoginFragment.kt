@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
 
         setupToolbarTitle()
 
-        loginViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
+        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error ->
             binding.textInputEmail.error = error
         })
 

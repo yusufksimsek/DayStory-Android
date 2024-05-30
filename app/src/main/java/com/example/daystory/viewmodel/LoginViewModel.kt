@@ -6,20 +6,26 @@ import androidx.lifecycle.ViewModel
 
 class LoginViewModel: ViewModel() {
 
-    private val _emailError = MutableLiveData<String?>()
-    val emailError: LiveData<String?> = _emailError
+    private val _usernameError = MutableLiveData<String?>()
+    val usernameError: LiveData<String?> = _usernameError
 
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?> = _passwordError
 
-    fun loginValidateFields(email: String, password: String): Boolean {
+    fun loginValidateFields(username: String, password: String): Boolean {
         var isValid = true
 
-        if (email.isEmpty()) {
-            _emailError.value = "Email alanı boş bırakılamaz"
+        if (username.isEmpty()) {
+            _usernameError.value = "Kullanıcı Adı alanı boş bırakılamaz"
             isValid = false
-        } else {
-            _emailError.value = null
+        }else if (username.length < 3 ) {
+            _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
+            isValid = false
+        }else if (username.length > 50) {
+            _usernameError.value = "Kullanıcı adı en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else {
+            _usernameError.value = null
         }
 
         if (password.isEmpty()) {

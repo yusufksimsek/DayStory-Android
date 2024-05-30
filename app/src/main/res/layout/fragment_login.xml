@@ -31,7 +31,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:hint="Emailinizi giriniz"
+        android:hint="Kullanıcı Adınızı giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
         app:endIconMode="clear_text"
         app:endIconTint="@color/loginIconColors"
@@ -54,8 +54,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        app:endIconDrawable="@drawable/cancel_icon"
-        app:endIconMode="clear_text"
+        app:endIconDrawable="@drawable/password_icon"
+        app:endIconMode="password_toggle"
         app:endIconTint="@color/loginIconColors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -66,7 +66,8 @@
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Şifrenizi Giriniz" />
+            android:hint="Şifrenizi Giriniz"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

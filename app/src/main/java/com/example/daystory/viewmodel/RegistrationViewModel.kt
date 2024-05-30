@@ -1,6 +1,7 @@
 package com.example.daystory.viewmodel
 
 import android.icu.text.SimpleDateFormat
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,12 +42,24 @@ class RegistrationViewModel : ViewModel() {
         if (name.isEmpty()) {
             _nameError.value = "Bu alan boş bırakılamaz"
             isValid = false
+        } else if (name.length < 3) {
+            _nameError.value = "İsim en az 3 karakter olmalıdır"
+            isValid = false
+        }else if (name.length > 50) {
+            _nameError.value = "İsim en fazla 50 karakter olmalıdır"
+            isValid = false
         } else {
             _nameError.value = null
         }
 
         if (surname.isEmpty()) {
             _surnameError.value = "Bu alan boş bırakılamaz"
+            isValid = false
+        } else if (surname.length < 3 || surname.length > 50) {
+            _surnameError.value = "Soyisim en az 3 karakter olmalıdır"
+            isValid = false
+        }else if (surname.length > 50) {
+            _surnameError.value = "Soyisim en fazla 50 karakter olmalıdır"
             isValid = false
         } else {
             _surnameError.value = null
@@ -75,6 +88,9 @@ class RegistrationViewModel : ViewModel() {
         if (email.isEmpty()) {
             _emailError.value = "Bu alan boş bırakılamaz"
             isValid = false
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            _emailError.value = "Geçerli bir E-Mail adresi giriniz"
+            isValid = false
         } else {
             _emailError.value = null
         }
@@ -82,12 +98,23 @@ class RegistrationViewModel : ViewModel() {
         if (username.isEmpty()) {
             _usernameError.value = "Bu alan boş bırakılamaz"
             isValid = false
+        } else if (username.length < 3 ) {
+            _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
+            isValid = false
+        } else if (username.length > 50) {
+            _usernameError.value = "Kullanıcı adı en fazla 50 karakter olmalıdır"
+            isValid = false
         } else {
             _usernameError.value = null
         }
 
+        val passwordPattern = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{7,}$")
+
         if (password1.isEmpty()) {
             _password1Error.value = "Bu alan boş bırakılamaz"
+            isValid = false
+        } else if (!passwordPattern.matches(password1)) {
+            _password1Error.value = "Şifre en az 7 karakter olmalı, 1 büyük harf, 1 küçük harf, 1 özel karakter ve 1 sayı içermeli"
             isValid = false
         } else {
             _password1Error.value = null
