@@ -1,6 +1,8 @@
 package com.example.daystory.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -12,6 +14,7 @@ import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.daystory.MainActivity
@@ -20,11 +23,10 @@ import com.example.daystory.databinding.FragmentEditEventBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
 
-
 class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
-    private var editEventbinding: FragmentEditEventBinding? = null
-    private val binding get() = editEventbinding!!
+    private var editEventBinding: FragmentEditEventBinding? = null
+    private val binding get() = editEventBinding!!
 
     private lateinit var eventsViewModel: EventViewModel
     private lateinit var currentEvent: Event
@@ -35,18 +37,17 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        editEventbinding = FragmentEditEventBinding.inflate(inflater, container, false)
+        editEventBinding = FragmentEditEventBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(this,viewLifecycleOwner, Lifecycle.State.RESUMED)
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        eventsViewModel = (activity as MainActivity).eventViewModel
+        eventsViewModel = ViewModelProvider(requireActivity()).get(EventViewModel::class.java)
         currentEvent = args.event!!
 
         binding.editEventTitle.setText(currentEvent.eventTitle)
@@ -58,17 +59,57 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         }
 
         binding.btnSave.setOnClickListener {
-            val eventTitle = binding.editEventTitle.text.toString().trim()
-            val eventDesc = binding.editEventDesc.text.toString().trim()
-            val existingDate = currentEvent.eventDate
-
-                val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
-                eventsViewModel.updateEvent(event)
-                Toast.makeText(requireContext(), "Event updated", Toast.LENGTH_SHORT).show()
+            saveEvent()
         }
 
         binding.btnCancel.setOnClickListener {
             it.findNavController().popBackStack()
+        }
+
+        binding.editEventTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                eventsViewModel.validateTitle(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.editEventDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                eventsViewModel.validateDesc(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        eventsViewModel.addTitleError.observe(viewLifecycleOwner) { error ->
+            binding.editTitleInputLayout.error = error
+        }
+
+        eventsViewModel.addDescError.observe(viewLifecycleOwner) { error ->
+            binding.editDescInputLayout.error = error
+        }
+    }
+
+    private fun saveEvent() {
+        val eventTitle = binding.editEventTitle.text.toString().trim()
+        val eventDesc = binding.editEventDesc.text.toString().trim()
+        val existingDate = currentEvent.eventDate
+
+        eventsViewModel.validateTitle(eventTitle)
+        eventsViewModel.validateDesc(eventDesc)
+
+        if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
+            val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
+            eventsViewModel.updateEvent(event)
+            Toast.makeText(requireContext(), "Event updated", Toast.LENGTH_SHORT).show()
+            view?.findNavController()?.popBackStack()
+        } else {
+            Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -83,7 +124,6 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
     override fun onDestroy() {
         super.onDestroy()
-        editEventbinding = null
+        editEventBinding = null
     }
-
 }

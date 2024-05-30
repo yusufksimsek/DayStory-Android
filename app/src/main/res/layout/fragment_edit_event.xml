@@ -37,12 +37,14 @@
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TitleInputLayout"
+            android:id="@+id/editTitleInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
+            app:helperText="En fazla 250 karakter"
+            app:helperTextTextColor="@color/altiCiziliText"
             app:endIconDrawable="@drawable/cancel_icon"
             app:endIconMode="clear_text"
             app:endIconTint="@color/loginIconColors"
@@ -64,17 +66,20 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editDescInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
+            app:helperText="En fazla 350 karakter"
+            app:helperTextTextColor="@color/altiCiziliText"
             app:endIconDrawable="@drawable/cancel_icon"
             app:endIconMode="clear_text"
             app:endIconTint="@color/loginIconColors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TitleInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/editTitleInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editEventDesc"

@@ -44,6 +44,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
+            app:helperText="En fazla 250 karakter"
+            app:helperTextTextColor="@color/altiCiziliText"
             app:endIconDrawable="@drawable/cancel_icon"
             app:endIconMode="clear_text"
             app:endIconTint="@color/loginIconColors"
@@ -64,11 +66,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DescInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
+            app:helperText="En fazla 350 karakter"
+            app:helperTextTextColor="@color/altiCiziliText"
             app:endIconDrawable="@drawable/cancel_icon"
             app:endIconMode="clear_text"
             app:endIconTint="@color/loginIconColors"

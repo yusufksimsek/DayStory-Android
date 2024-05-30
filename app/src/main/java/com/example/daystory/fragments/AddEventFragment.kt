@@ -1,27 +1,21 @@
 package com.example.daystory.fragments
 
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.daystory.MainActivity
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentAddEventBinding
 import com.example.daystory.model.Event
 import com.example.daystory.viewmodel.EventViewModel
-import java.util.Date
-import java.util.Locale
 
 class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
@@ -42,9 +36,9 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         super.onViewCreated(view, savedInstanceState)
 
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(this,viewLifecycleOwner, Lifecycle.State.RESUMED)
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        eventsViewModel = (activity as MainActivity).eventViewModel
+        eventsViewModel = ViewModelProvider(requireActivity()).get(EventViewModel::class.java)
         addEventView = view
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
@@ -63,23 +57,50 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
             it.findNavController().popBackStack()
         }
 
+        binding.addEventTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                eventsViewModel.validateTitle(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.addEventDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                eventsViewModel.validateDesc(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        eventsViewModel.addTitleError.observe(viewLifecycleOwner) { error ->
+            binding.TitleInputLayout.error = error
+        }
+
+        eventsViewModel.addDescError.observe(viewLifecycleOwner) { error ->
+            binding.DescInputLayout.error = error
+        }
     }
 
     private fun saveEvent() {
-
         val eventTitle = binding.addEventTitle.text.toString().trim()
         val eventDesc = binding.addEventDesc.text.toString().trim()
         val date = binding.textViewDateAdd.text.toString()
 
+        eventsViewModel.validateTitle(eventTitle)
+        eventsViewModel.validateDesc(eventDesc)
 
-        if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty()) {
+        if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
             val event = Event(0, eventTitle, eventDesc, date)
             eventsViewModel.addEvent(event)
-            Log.d("AddEventFragment", "Event Date: $date")
             Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
             addEventView.findNavController().popBackStack()
         } else {
-            Toast.makeText(addEventView.context, "Please fill out all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(addEventView.context, "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -96,5 +117,4 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         super.onDestroy()
         addEventBinding = null
     }
-
 }
