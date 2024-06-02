@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.daystory.R
+import com.example.daystory.api.model.User
 import com.example.daystory.databinding.FragmentSecondRegisterBinding
 import com.example.daystory.viewmodel.RegistrationViewModel
 
@@ -47,7 +49,24 @@ class SecondRegisterFragment : Fragment() {
             val password2 = binding.editTextPassword2.text.toString()
 
             if (registerViewModel.secondvalidateFields(email,username,password1,password2)) {
-                it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
+
+                /*
+                val user = User(
+                    firstName = name,
+                    lastName = surname,
+                    username = username,
+                    email = email,
+                    password = password1,
+                    passwordConfirmed = password2,
+                    birthDate = date,
+                    gender = gender
+                )
+
+                 */
+
+                // registerViewModel.registerUser(user)
+
+                //it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
                 Log.d("SecondRegisterFragment", "Received email: $email")
                 Log.d("SecondRegisterFragment", "Received username: $username")
                 Log.d("SecondRegisterFragment", "Received password1: $password1")
@@ -56,6 +75,8 @@ class SecondRegisterFragment : Fragment() {
                 Log.d("SecondRegisterFragment", "Received surname: $surname")
                 Log.d("SecondRegisterFragment", "Received gender: $gender")
                 Log.d("SecondRegisterFragment", "Received date: $date")
+
+                //Log.d("SecondRegisterFragment", "User registered: $user")
             }
         }
 
@@ -83,6 +104,14 @@ class SecondRegisterFragment : Fragment() {
         registerViewModel.password2Error.observe(viewLifecycleOwner, Observer { error ->
             binding.textInputPassword2.error = error
         })
+
+        /*
+        registerViewModel.registrationError.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        })
+         */
 
     }
 

@@ -1,10 +1,18 @@
 package com.example.daystory.viewmodel
 
 import android.icu.text.SimpleDateFormat
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.daystory.api.model.User
+import com.example.daystory.api.model.UserRegisterResponse
+import com.example.daystory.api.service.RetrofitClient
+import com.example.daystory.api.service.UserService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Locale
 
 class RegistrationViewModel : ViewModel() {
@@ -35,6 +43,9 @@ class RegistrationViewModel : ViewModel() {
 
     private val _selectedDate = MutableLiveData<String>()
     val selectedDate: LiveData<String> = _selectedDate
+
+    private val _registrationError = MutableLiveData<String?>()
+    val registrationError: LiveData<String?> = _registrationError
 
     fun firstvalidateFields(name:String,surname:String,gender:String,date:String): Boolean {
         var isValid = true
@@ -137,6 +148,34 @@ class RegistrationViewModel : ViewModel() {
         }
 
         return isValid
+    }
+
+    fun registerUser(user: User) {
+        val service = RetrofitClient.retrofit.create(UserService::class.java)
+        service.registerUser(user).enqueue(object : Callback<UserRegisterResponse> {
+            override fun onResponse(call: Call<UserRegisterResponse>, response: Response<UserRegisterResponse>) {
+                if (response.isSuccessful) {
+                    Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()?.message}")
+                } else {
+                    when (response.code()) {
+                        409 -> {
+                            val errorBody = response.errorBody()?.string()
+                            if (errorBody != null && errorBody.contains("UserAlreadyExistsException")) {
+                                _registrationError.value = "Bu e-posta veya kullanıcı adı zaten mevcut."
+                            }
+                        }
+                        else -> {
+                            _registrationError.value = "Kayıt başarısız. Lütfen tekrar deneyin."
+                        }
+                    }
+                    Log.d("RegistrationViewModel", "Failed to register: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {
+                Log.d("RegistrationViewModel", "Error: ${t.message}")
+            }
+        })
     }
 
     fun validateDate(selectedDate: Long, today: Long) {
