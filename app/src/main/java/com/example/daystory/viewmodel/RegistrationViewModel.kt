@@ -42,8 +42,8 @@ class RegistrationViewModel : ViewModel() {
         if (name.isEmpty()) {
             _nameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (name.length < 3) {
-            _nameError.value = "İsim en az 3 karakter olmalıdır"
+        } else if (name.length < 2) {
+            _nameError.value = "İsim en az 2 karakter olmalıdır"
             isValid = false
         }else if (name.length > 50) {
             _nameError.value = "İsim en fazla 50 karakter olmalıdır"
@@ -55,8 +55,8 @@ class RegistrationViewModel : ViewModel() {
         if (surname.isEmpty()) {
             _surnameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (surname.length < 3) {
-            _surnameError.value = "Soyisim en az 3 karakter olmalıdır"
+        } else if (surname.length < 2) {
+            _surnameError.value = "Soyisim en az 2 karakter olmalıdır"
             isValid = false
         }else if (surname.length > 50) {
             _surnameError.value = "Soyisim en fazla 50 karakter olmalıdır"
@@ -88,7 +88,7 @@ class RegistrationViewModel : ViewModel() {
         if (email.isEmpty()) {
             _emailError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (!isValidEmail(email)) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailError.value = "Geçerli bir E-Mail adresi giriniz"
             isValid = false
         } else {
@@ -98,8 +98,8 @@ class RegistrationViewModel : ViewModel() {
         if (username.isEmpty()) {
             _usernameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (username.length < 3) {
-            _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
+        } else if (username.length < 2) {
+            _usernameError.value = "Kullanıcı adı en az 2 karakter olmalıdır"
             isValid = false
         } else if (username.length > 50) {
             _usernameError.value = "Kullanıcı adı en fazla 50 karakter olmalıdır"
@@ -137,11 +137,6 @@ class RegistrationViewModel : ViewModel() {
         }
 
         return isValid
-    }
-
-    private fun isValidEmail(email: String): Boolean {
-        val emailPattern = Regex("^(?!.*\\.com@)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
-        return emailPattern.matches(email)
     }
 
     fun validateDate(selectedDate: Long, today: Long) {
