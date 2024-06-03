@@ -8,8 +8,18 @@ data class UserRegister(
     val password: String,
     val passwordConfirmed: String,
     val birthDate: String,
-    val gender: String)
+    val gender: String
+)
+
+data class UserLogin(
+    val email: String,
+    val password: String
+)
 
 data class UserRegisterResponse(
     val message: String
+)
+
+data class UserLoginResponse(
+    val token: String
 )

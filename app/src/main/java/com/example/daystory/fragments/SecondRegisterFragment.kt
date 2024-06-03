@@ -64,7 +64,7 @@ class SecondRegisterFragment : Fragment() {
                 registerViewModel.registerUser(user)
 
                 //it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
-                Log.d("SecondRegisterFragment", "Received email: $email")
+                Log.d(this::class.java.name, "Received email: $email")
                 Log.d("SecondRegisterFragment", "Received username: $username")
                 Log.d("SecondRegisterFragment", "Received password1: $password1")
                 Log.d("SecondRegisterFragment", "Received password2: $password2")

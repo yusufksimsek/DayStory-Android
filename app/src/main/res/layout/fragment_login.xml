@@ -31,7 +31,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:hint="Kullanıcı Adınızı giriniz"
+        android:hint="Emailinizi giriniz"
         app:endIconDrawable="@drawable/cancel_icon"
         app:endIconMode="clear_text"
         app:endIconTint="@color/loginIconColors"
