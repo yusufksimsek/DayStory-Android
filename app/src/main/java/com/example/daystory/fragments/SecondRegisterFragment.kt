@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.daystory.R
-import com.example.daystory.api.model.User
+import com.example.daystory.api.model.UserRegister
 import com.example.daystory.databinding.FragmentSecondRegisterBinding
 import com.example.daystory.viewmodel.RegistrationViewModel
 
@@ -50,8 +50,7 @@ class SecondRegisterFragment : Fragment() {
 
             if (registerViewModel.secondvalidateFields(email,username,password1,password2)) {
 
-                /*
-                val user = User(
+                val user = UserRegister(
                     firstName = name,
                     lastName = surname,
                     username = username,
@@ -62,9 +61,7 @@ class SecondRegisterFragment : Fragment() {
                     gender = gender
                 )
 
-                 */
-
-                // registerViewModel.registerUser(user)
+                registerViewModel.registerUser(user)
 
                 //it.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
                 Log.d("SecondRegisterFragment", "Received email: $email")
@@ -105,13 +102,11 @@ class SecondRegisterFragment : Fragment() {
             binding.textInputPassword2.error = error
         })
 
-        /*
         registerViewModel.registrationError.observe(viewLifecycleOwner, Observer { error ->
             error?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         })
-         */
 
     }
 

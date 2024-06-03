@@ -45,11 +45,18 @@ class FirstRegisterFragment : Fragment() {
 
             if (registerViewModel.firstvalidateFields(name,surname,selectedGender,userEnteredDate)) {
 
+                val genderForBackend = when (selectedGender) {
+                    "Erkek" -> "Male"
+                    "Kadın" -> "Female"
+                    "Diğer" -> "Other"
+                    else -> "NotSpecified"
+                }
+
                 val action = FirstRegisterFragmentDirections
                     .actionFirstRegisterFragmentToSecondRegisterFragment(
                         name = name,
                         surname = surname,
-                        gender = selectedGender,
+                        gender = genderForBackend,
                         date = userEnteredDate
                     )
                 it.findNavController().navigate(action)

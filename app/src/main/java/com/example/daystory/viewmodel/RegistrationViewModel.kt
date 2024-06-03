@@ -6,7 +6,7 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.daystory.api.model.User
+import com.example.daystory.api.model.UserRegister
 import com.example.daystory.api.model.UserRegisterResponse
 import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.api.service.UserService
@@ -109,8 +109,8 @@ class RegistrationViewModel : ViewModel() {
         if (username.isEmpty()) {
             _usernameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (username.length < 2) {
-            _usernameError.value = "Kullanıcı adı en az 2 karakter olmalıdır"
+        } else if (username.length < 3) {
+            _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
             isValid = false
         } else if (username.length > 50) {
             _usernameError.value = "Kullanıcı adı en fazla 50 karakter olmalıdır"
@@ -150,20 +150,18 @@ class RegistrationViewModel : ViewModel() {
         return isValid
     }
 
-    fun registerUser(user: User) {
+    fun registerUser(user: UserRegister) {
         val service = RetrofitClient.retrofit.create(UserService::class.java)
         service.registerUser(user).enqueue(object : Callback<UserRegisterResponse> {
             override fun onResponse(call: Call<UserRegisterResponse>, response: Response<UserRegisterResponse>) {
                 if (response.isSuccessful) {
                     Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()?.message}")
+
                 } else {
                     when (response.code()) {
                         409 -> {
-                            val errorBody = response.errorBody()?.string()
-                            if (errorBody != null && errorBody.contains("UserAlreadyExistsException")) {
                                 _registrationError.value = "Bu e-posta veya kullanıcı adı zaten mevcut."
                             }
-                        }
                         else -> {
                             _registrationError.value = "Kayıt başarısız. Lütfen tekrar deneyin."
                         }
@@ -179,7 +177,7 @@ class RegistrationViewModel : ViewModel() {
     }
 
     fun validateDate(selectedDate: Long, today: Long) {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val dateString = dateFormat.format(selectedDate)
 
         if (selectedDate > today) {

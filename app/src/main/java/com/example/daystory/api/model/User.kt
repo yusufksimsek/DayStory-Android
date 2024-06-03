@@ -1,6 +1,6 @@
 package com.example.daystory.api.model
 
-data class User(
+data class UserRegister(
     val firstName: String,
     val lastName: String,
     val username: String,
