@@ -47,6 +47,9 @@ class RegistrationViewModel : ViewModel() {
     private val _registrationError = MutableLiveData<String?>()
     val registrationError: LiveData<String?> = _registrationError
 
+    private val _registrationSuccess = MutableLiveData<Boolean>()
+    val registrationSuccess: LiveData<Boolean> = _registrationSuccess
+
     fun firstvalidateFields(name:String,surname:String,gender:String,date:String): Boolean {
         var isValid = true
 
@@ -156,7 +159,7 @@ class RegistrationViewModel : ViewModel() {
             override fun onResponse(call: Call<UserRegisterResponse>, response: Response<UserRegisterResponse>) {
                 if (response.isSuccessful) {
                     Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()?.message}")
-
+                    _registrationSuccess.value = true
                 } else {
                     when (response.code()) {
                         409 -> {
@@ -172,6 +175,7 @@ class RegistrationViewModel : ViewModel() {
 
             override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {
                 Log.d("RegistrationViewModel", "Error: ${t.message}")
+                _registrationSuccess.value = false
             }
         })
     }

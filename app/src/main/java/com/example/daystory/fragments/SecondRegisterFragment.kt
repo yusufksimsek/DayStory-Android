@@ -108,6 +108,12 @@ class SecondRegisterFragment : Fragment() {
             }
         })
 
+        registerViewModel.registrationSuccess.observe(viewLifecycleOwner, Observer { success ->
+            if (success == true) {
+                view.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
+            }
+        })
+
     }
 
     private fun registerSetupClickableSpan() {
