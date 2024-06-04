@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.example.daystory.viewmodel.RegistrationViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class FirstRegisterFragment : Fragment() {
@@ -146,21 +148,36 @@ class FirstRegisterFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
+
+        val locale = Locale("tr")
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        requireContext().createConfigurationContext(config)
+
         val today = MaterialDatePicker.todayInUtcMilliseconds()
+
+        val calendarStart = Calendar.getInstance().apply {
+            set(1924, Calendar.JANUARY, 1)
+        }
+        val calendarEnd = Calendar.getInstance().apply {
+            set(2019, Calendar.DECEMBER, 31)
+        }
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Tarih Seçiniz")
             .setSelection(today)
             .setCalendarConstraints(
                 CalendarConstraints.Builder()
-                    .setEnd(today)
+                    .setStart(calendarStart.timeInMillis)
+                    .setEnd(calendarEnd.timeInMillis)
                     .build()
             )
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
             val selectedDate = selection ?: return@addOnPositiveButtonClickListener
-            registerViewModel.validateDate(selectedDate, today)
+            registerViewModel.validateDateRange(selectedDate, calendarStart.timeInMillis, calendarEnd.timeInMillis)
         }
 
         datePicker.show(childFragmentManager, datePicker.toString())

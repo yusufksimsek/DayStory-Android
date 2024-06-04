@@ -186,12 +186,12 @@ class RegistrationViewModel : ViewModel() {
         })
     }
 
-    fun validateDate(selectedDate: Long, today: Long) {
+    fun validateDateRange(selectedDate: Long, startDate: Long, endDate: Long) {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val dateString = dateFormat.format(selectedDate)
 
-        if (selectedDate > today) {
-            _dateError.value = "Gelecek bir tarih seçemezsiniz."
+        if (selectedDate < startDate || selectedDate > endDate) {
+            _dateError.value = "Lütfen geçerli bir tarih aralığı giriniz (1924-2019)."
         } else {
             _dateError.value = null
             _selectedDate.value = dateString
