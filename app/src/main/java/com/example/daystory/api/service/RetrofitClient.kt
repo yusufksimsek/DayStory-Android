@@ -3,6 +3,7 @@ package com.example.daystory.api.service
 import android.annotation.SuppressLint
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,8 +23,6 @@ object RetrofitClient {
         return AuthInterceptor(token)
     }
 
-
-
     private const val BASE_URL = "http://165.22.93.225:5003/"
 
      val retrofit: Retrofit by lazy{
@@ -34,16 +33,17 @@ object RetrofitClient {
 
           val client: OkHttpClient = OkHttpClient.Builder()
              .addInterceptor(loggingInterceptor)
-           //.addInterceptor(getAuthInterceptor())
+             .addInterceptor(getAuthInterceptor())
              .addInterceptor(ChuckerInterceptor(context))
              .build()
+
+         val gsonBuilder = GsonBuilder().setLenient().create()
 
          Retrofit.Builder()
              .baseUrl(BASE_URL)
              .client(client)
-             .addConverterFactory(GsonConverterFactory.create())
+             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
              .build()
-
      }
 
     val api: UserService by lazy {

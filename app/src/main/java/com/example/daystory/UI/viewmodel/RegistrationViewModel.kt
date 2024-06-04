@@ -161,10 +161,10 @@ class RegistrationViewModel : ViewModel() {
 
     fun registerUser(user: UserRegister) {
         val service = RetrofitClient.retrofit.create(UserService::class.java)
-        service.registerUser(user).enqueue(object : Callback<UserRegisterResponse> {
-            override fun onResponse(call: Call<UserRegisterResponse>, response: Response<UserRegisterResponse>) {
+        service.registerUser(user).enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
-                    Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()?.message}")
+                    Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()}")
                     _registrationSuccess.value = true
                 } else {
                     when (response.code()) {
@@ -179,7 +179,7 @@ class RegistrationViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.d("RegistrationViewModel", "Error: ${t.message}")
                 _registrationSuccess.value = false
             }
