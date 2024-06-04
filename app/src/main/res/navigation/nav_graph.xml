@@ -29,7 +29,7 @@
 
     <argument
         android:name="event"
-        app:argType="com.example.daystory.model.Event"
+        app:argType="com.example.daystory.api.model.Event"
         app:nullable="true" />
 </fragment>
 

@@ -1,11 +1,12 @@
 package com.example.daystory.UI.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.daystory.model.Event
+import com.example.daystory.api.model.Event
 import com.example.daystory.repository.EventRepository
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _descError = MutableLiveData<String?>()
     val addDescError: LiveData<String?> = _descError
 
+    private val _eventCreationStatus = MutableLiveData<String?>()
+    val eventCreationStatus: LiveData<String?> = _eventCreationStatus
+
     fun validateTitle(title: String) {
         _titleError.value = if (title.length > 250) "Başlık en fazla 250 karakter olabilir" else null
     }
@@ -32,25 +36,21 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         _selectedDate.value = date
     }
 
-    fun addEvent(event: Event) =
-        viewModelScope.launch {
-            eventRepository.insertEvent(event)
+    fun addEvent(event: Event) = viewModelScope.launch {
+        try {
+            val response = eventRepository.createEvent(event)
+            if (response.isSuccessful) {
+                _eventCreationStatus.postValue("Event successfully created")
+            } else {
+                _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            _eventCreationStatus.postValue("Network error: ${e.message}")
         }
+    }
 
-    fun deleteEvent(event: Event) =
-        viewModelScope.launch {
-            eventRepository.deleteEvent(event)
-        }
-
-    fun updateEvent(event: Event) =
-        viewModelScope.launch {
-            eventRepository.updateEvent(event)
-        }
-
-    //val getEvents = eventRepository.getAllEvents()
-
-    fun getEventsByDate(date: String): LiveData<List<Event>> {
-        return eventRepository.getEventsByDate(date)
+    fun clearEventCreationStatus() {
+        _eventCreationStatus.value = null
     }
 
 }

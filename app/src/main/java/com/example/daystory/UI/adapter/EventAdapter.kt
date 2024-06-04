@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.daystory.R
 import com.example.daystory.UI.fragments.HomeFragmentDirections
 import com.example.daystory.databinding.EventLayoutBinding
-import com.example.daystory.model.Event
 import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.api.model.Event
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -26,11 +26,11 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
 
     class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currentEvent: Event) {
-            binding.eventTitle.text = currentEvent.eventTitle
-            binding.eventDesc.text = currentEvent.eventDesc
+            binding.eventTitle.text = currentEvent.title
+            binding.eventDesc.text = currentEvent.description
 
             val currentDate = Calendar.getInstance().time
-            val eventDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(currentEvent.eventDate)
+            val eventDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(currentEvent.date)
 
             if (eventDate.before(currentDate) && !isSameDay(eventDate, currentDate)) {
                 binding.moreVertIcon.visibility = View.GONE
@@ -74,7 +74,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
                 .setTitle("Notu Sil")
                 .setMessage("Bu notu silmek istediğinize emin misiniz?")
                 .setPositiveButton("Evet") { _, _ ->
-                    eventsViewModel.deleteEvent(event)
+                    //eventsViewModel.deleteEvent(event)
                 }
                 .setNegativeButton("Hayır", null)
                 .show()
@@ -84,7 +84,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
 
     object Mydif : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.description == newItem.description
         }
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {

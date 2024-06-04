@@ -5,13 +5,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.daystory.database.EventDatabase
-import com.example.daystory.repository.EventRepository
 import com.example.daystory.UI.viewmodel.EventViewModel
 import com.example.daystory.UI.viewmodel.EventViewModelFactory
+import com.example.daystory.repository.EventRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        val eventRepository = EventRepository(EventDatabase(this))
+        val eventRepository = EventRepository()
         val viewModelProviderFactory = EventViewModelFactory(application, eventRepository)
         eventViewModel = ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
     }

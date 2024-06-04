@@ -58,7 +58,7 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
     fun login(email: String, password: String) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.api.login(UserLogin(email, password))
+                val response = RetrofitClient.userApi.login(UserLogin(email, password))
                 if (response.isSuccessful) {
                     val token = response.body() ?: ""
                     saveToken(token)

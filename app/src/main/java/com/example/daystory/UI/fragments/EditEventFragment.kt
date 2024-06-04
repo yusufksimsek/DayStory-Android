@@ -19,8 +19,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentEditEventBinding
-import com.example.daystory.model.Event
 import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.api.model.Event
 
 class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
 
@@ -49,9 +49,9 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         eventsViewModel = ViewModelProvider(requireActivity()).get(EventViewModel::class.java)
         currentEvent = args.event!!
 
-        binding.editEventTitle.setText(currentEvent.eventTitle)
-        binding.editEventDesc.setText(currentEvent.eventDesc)
-        binding.textViewDateEdit.setText(currentEvent.eventDate)
+        binding.editEventTitle.setText(currentEvent.title)
+        binding.editEventDesc.setText(currentEvent.description)
+        binding.textViewDateEdit.setText(currentEvent.date)
 
         binding.editBackIcon.setOnClickListener {
             it.findNavController().popBackStack()
@@ -97,14 +97,14 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
     private fun saveEvent() {
         val eventTitle = binding.editEventTitle.text.toString().trim()
         val eventDesc = binding.editEventDesc.text.toString().trim()
-        val existingDate = currentEvent.eventDate
+        val existingDate = currentEvent.date
 
         eventsViewModel.validateTitle(eventTitle)
         eventsViewModel.validateDesc(eventDesc)
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
-            val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
-            eventsViewModel.updateEvent(event)
+            //val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
+            //eventsViewModel.updateEvent(event)
             Toast.makeText(requireContext(), "Event updated", Toast.LENGTH_SHORT).show()
             view?.findNavController()?.popBackStack()
         } else {

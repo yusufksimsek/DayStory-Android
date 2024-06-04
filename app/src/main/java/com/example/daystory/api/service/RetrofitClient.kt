@@ -46,7 +46,12 @@ object RetrofitClient {
              .build()
      }
 
-    val api: UserService by lazy {
+    val userApi: UserService by lazy {
         retrofit.create(UserService::class.java)
     }
+
+    val eventApi: EventService by lazy {
+        retrofit.create(EventService::class.java)
+    }
+
 }

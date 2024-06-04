@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentAddEventBinding
-import com.example.daystory.model.Event
 import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.api.model.Event
 
 class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
@@ -42,6 +42,16 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
             binding.textViewDateAdd.text = date
+        }
+
+        eventsViewModel.eventCreationStatus.observe(viewLifecycleOwner) { status ->
+            status?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                if (it == "Event successfully created") {
+                    view.findNavController().popBackStack()
+                }
+                eventsViewModel.clearEventCreationStatus()
+            }
         }
 
         binding.addBackIcon.setOnClickListener {
@@ -94,7 +104,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel.validateDesc(eventDesc)
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
-            val event = Event(0, eventTitle, eventDesc, date)
+            val event = Event(eventTitle,eventDesc,date)
             eventsViewModel.addEvent(event)
             Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
             addEventView.findNavController().popBackStack()

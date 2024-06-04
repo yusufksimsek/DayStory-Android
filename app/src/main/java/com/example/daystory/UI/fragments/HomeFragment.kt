@@ -22,8 +22,8 @@ import com.example.daystory.MainActivity
 import com.example.daystory.R
 import com.example.daystory.UI.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
-import com.example.daystory.model.Event
 import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.api.model.Event
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.Date
 import java.util.Locale
@@ -67,7 +67,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private fun setupDateTextView() {
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
 
@@ -80,7 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val dateString = dateFormat.format(it)
             binding.textViewDate.text = dateString
 
@@ -100,7 +100,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private fun checkDateAndToggleFab() {
         val currentDate = Calendar.getInstance().time
-        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(binding.textViewDate.text.toString())
+        val selectedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(binding.textViewDate.text.toString())
 
         if (selectedDate != null && (selectedDate.after(currentDate) || isSameDay(selectedDate, currentDate))) {
             binding.addEventFab.visibility = View.VISIBLE
@@ -112,7 +112,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
      override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
         checkDateAndToggleFab()
@@ -137,6 +137,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             adapter = eventAdapter
         }
 
+        /*
         activity?.let {
             eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
                 eventsViewModel.getEventsByDate(date).observe(viewLifecycleOwner) { events ->
@@ -145,6 +146,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 }
             }
         }
+
+         */
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
