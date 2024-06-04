@@ -1,4 +1,4 @@
-package com.example.daystory.viewmodel
+package com.example.daystory.UI.viewmodel
 
 import android.icu.text.SimpleDateFormat
 import android.util.Log

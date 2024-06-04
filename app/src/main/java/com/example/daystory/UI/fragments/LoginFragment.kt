@@ -1,4 +1,4 @@
-package com.example.daystory.fragments
+package com.example.daystory.UI.fragments
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -19,7 +19,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentLoginBinding
-import com.example.daystory.viewmodel.LoginViewModel
+import com.example.daystory.UI.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 

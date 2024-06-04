@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daystory.R
+import com.example.daystory.UI.fragments.HomeFragmentDirections
 import com.example.daystory.databinding.EventLayoutBinding
-import com.example.daystory.fragments.HomeFragmentDirections
 import com.example.daystory.model.Event
-import com.example.daystory.viewmodel.EventViewModel
+import com.example.daystory.UI.viewmodel.EventViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

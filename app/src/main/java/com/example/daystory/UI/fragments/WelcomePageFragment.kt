@@ -1,4 +1,4 @@
-package com.example.daystory.fragments
+package com.example.daystory.UI.fragments
 
 import android.os.Bundle
 import android.text.SpannableString

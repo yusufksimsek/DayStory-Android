@@ -10,8 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.daystory.database.EventDatabase
 import com.example.daystory.repository.EventRepository
-import com.example.daystory.viewmodel.EventViewModel
-import com.example.daystory.viewmodel.EventViewModelFactory
+import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.UI.viewmodel.EventViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

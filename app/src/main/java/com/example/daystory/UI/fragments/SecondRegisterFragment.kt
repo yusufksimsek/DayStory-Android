@@ -1,4 +1,4 @@
-package com.example.daystory.fragments
+package com.example.daystory.UI.fragments
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -20,7 +20,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.daystory.R
 import com.example.daystory.api.model.UserRegister
 import com.example.daystory.databinding.FragmentSecondRegisterBinding
-import com.example.daystory.viewmodel.RegistrationViewModel
+import com.example.daystory.UI.viewmodel.RegistrationViewModel
 
 
 class SecondRegisterFragment : Fragment() {

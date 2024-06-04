@@ -1,4 +1,4 @@
-package com.example.daystory.fragments
+package com.example.daystory.UI.fragments
 
 import android.app.DatePickerDialog
 import android.icu.text.SimpleDateFormat
@@ -23,7 +23,7 @@ import com.example.daystory.R
 import com.example.daystory.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.model.Event
-import com.example.daystory.viewmodel.EventViewModel
+import com.example.daystory.UI.viewmodel.EventViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.Date
 import java.util.Locale

@@ -6,7 +6,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SecondRegisterFragment"
+    tools:context=".UI.fragments.SecondRegisterFragment"
     android:background="@color/white">
 
     <com.google.android.material.textfield.TextInputLayout

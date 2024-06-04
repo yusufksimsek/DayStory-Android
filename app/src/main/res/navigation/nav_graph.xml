@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.daystory.fragments.HomeFragment"
+        android:name="com.example.daystory.UI.fragments.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_addEventFragment"
@@ -19,12 +19,12 @@
 
     <fragment
         android:id="@+id/addEventFragment"
-        android:name="com.example.daystory.fragments.AddEventFragment"
+        android:name="com.example.daystory.UI.fragments.AddEventFragment"
         android:label="AddEventFragment" />
 
     <fragment
         android:id="@+id/editEventFragment"
-        android:name="com.example.daystory.fragments.EditEventFragment"
+        android:name="com.example.daystory.UI.fragments.EditEventFragment"
         android:label="EditEventFragment" >
 
     <argument
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/welcomePageFragment"
-        android:name="com.example.daystory.fragments.WelcomePageFragment"
+        android:name="com.example.daystory.UI.fragments.WelcomePageFragment"
         android:label="fragment_welcome_page"
         tools:layout="@layout/fragment_welcome_page" >
         <action
@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.daystory.fragments.LoginFragment"
+        android:name="com.example.daystory.UI.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/secondRegisterFragment"
-        android:name="com.example.daystory.fragments.SecondRegisterFragment"
+        android:name="com.example.daystory.UI.fragments.SecondRegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_second_register" >
         <action
@@ -83,7 +83,7 @@
 
     <fragment
         android:id="@+id/firstRegisterFragment"
-        android:name="com.example.daystory.fragments.FirstRegisterFragment"
+        android:name="com.example.daystory.UI.fragments.FirstRegisterFragment"
         android:label="fragment_first_register"
         tools:layout="@layout/fragment_first_register" >
         <action
@@ -97,12 +97,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.daystory.fragments.ProfileFragment"
+        android:name="com.example.daystory.UI.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="com.example.daystory.fragments.GalleryFragment"
+        android:name="com.example.daystory.UI.fragments.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" /><action android:id="@+id/action_global_galleryFragment" app:destination="@id/galleryFragment"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
 
