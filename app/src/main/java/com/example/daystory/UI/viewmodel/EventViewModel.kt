@@ -24,6 +24,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _eventCreationStatus = MutableLiveData<String?>()
     val eventCreationStatus: LiveData<String?> = _eventCreationStatus
 
+    private val _eventsByDate = MutableLiveData<List<Event>>()
+    val eventsByDate: LiveData<List<Event>> get() = _eventsByDate
+
     fun validateTitle(title: String) {
         _titleError.value = if (title.length > 250) "Başlık en fazla 250 karakter olabilir" else null
     }
@@ -34,6 +37,20 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
+        fetchEventsByDate(date)
+    }
+
+    private fun fetchEventsByDate(date: String) = viewModelScope.launch {
+        try {
+            val response = eventRepository.getEventsByDate(date)
+            if (response.isSuccessful) {
+                _eventsByDate.postValue(response.body())
+            } else {
+                _eventsByDate.postValue(emptyList())
+            }
+        } catch (e: Exception) {
+            _eventsByDate.postValue(emptyList())
+        }
     }
 
     fun addEvent(event: Event) = viewModelScope.launch {
@@ -41,6 +58,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
             val response = eventRepository.createEvent(event)
             if (response.isSuccessful) {
                 _eventCreationStatus.postValue("Event successfully created")
+                fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
             }

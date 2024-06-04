@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daystory.MainActivity
@@ -62,6 +63,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         checkDateAndToggleFab()
+
+
 
     }
 
@@ -137,17 +140,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             adapter = eventAdapter
         }
 
-        /*
         activity?.let {
-            eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
-                eventsViewModel.getEventsByDate(date).observe(viewLifecycleOwner) { events ->
-                    eventAdapter.submitList(events)
-                    updateUI(events)
-                }
-            }
+            eventsViewModel.eventsByDate.observe(viewLifecycleOwner, Observer { events ->
+                eventAdapter.submitList(events)
+                updateUI(events)
+            })
         }
 
-         */
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
