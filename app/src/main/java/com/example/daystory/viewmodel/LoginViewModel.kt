@@ -45,7 +45,10 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
         if (password.isEmpty()) {
             _passwordError.value = "Şifre alanı boş bırakılamaz"
             isValid = false
-        } else {
+        }else if (password.length > 50) {
+            _passwordError.value = "Şifre en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else {
             _passwordError.value = null
         }
 

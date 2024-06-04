@@ -56,7 +56,7 @@ class RegistrationViewModel : ViewModel() {
         if (name.isEmpty()) {
             _nameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (name.length < 2) {
+        }else if (name.length < 2) {
             _nameError.value = "İsim en az 2 karakter olmalıdır"
             isValid = false
         }else if (name.length > 50) {
@@ -102,23 +102,26 @@ class RegistrationViewModel : ViewModel() {
         if (email.isEmpty()) {
             _emailError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailError.value = "Geçerli bir E-Mail adresi giriniz"
             isValid = false
-        } else {
+        }else if (email.length > 50) {
+            _emailError.value = "E-mail en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else {
             _emailError.value = null
         }
 
         if (username.isEmpty()) {
             _usernameError.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (username.length < 3) {
+        }else if (username.length < 3) {
             _usernameError.value = "Kullanıcı adı en az 3 karakter olmalıdır"
             isValid = false
-        } else if (username.length > 50) {
+        }else if (username.length > 50) {
             _usernameError.value = "Kullanıcı adı en fazla 50 karakter olmalıdır"
             isValid = false
-        } else {
+        }else {
             _usernameError.value = null
         }
 
@@ -127,17 +130,20 @@ class RegistrationViewModel : ViewModel() {
         if (password1.isEmpty()) {
             _password1Error.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else if (!passwordPattern.matches(password1)) {
+        }else if (!passwordPattern.matches(password1)) {
             _password1Error.value = "Şifre en az 7 karakter olmalı, 1 büyük harf, 1 küçük harf, 1 özel karakter ve 1 sayı içermeli"
             isValid = false
-        } else {
+        }else {
             _password1Error.value = null
         }
 
         if (password2.isEmpty()) {
             _password2Error.value = "Bu alan boş bırakılamaz"
             isValid = false
-        } else {
+        }else if (password2.length > 50) {
+            _password2Error.value = "Şifre onayı en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else {
             _password2Error.value = null
         }
 

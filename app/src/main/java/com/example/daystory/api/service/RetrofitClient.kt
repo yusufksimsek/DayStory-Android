@@ -22,6 +22,8 @@ object RetrofitClient {
         return AuthInterceptor(token)
     }
 
+
+
     private const val BASE_URL = "http://165.22.93.225:5003/"
 
      val retrofit: Retrofit by lazy{
