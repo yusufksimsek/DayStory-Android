@@ -1,4 +1,4 @@
-package com.example.daystory.adapter
+package com.example.daystory.UI.adapter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -20,7 +20,9 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Event, EventAdapter.EventViewHolder>(Mydif) {
+class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Event, EventAdapter.EventViewHolder>(
+    Mydif
+) {
 
     class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currentEvent: Event) {

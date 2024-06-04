@@ -20,7 +20,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daystory.MainActivity
 import com.example.daystory.R
-import com.example.daystory.adapter.EventAdapter
+import com.example.daystory.UI.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.model.Event
 import com.example.daystory.UI.viewmodel.EventViewModel
