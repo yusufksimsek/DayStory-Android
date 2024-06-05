@@ -64,8 +64,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         checkDateAndToggleFab()
 
-
-
     }
 
     private fun setupDateTextView() {

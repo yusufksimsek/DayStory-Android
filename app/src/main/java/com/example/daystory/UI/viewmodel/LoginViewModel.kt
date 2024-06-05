@@ -2,6 +2,7 @@ package com.example.daystory.UI.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -60,7 +61,8 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
             try {
                 val response = RetrofitClient.userApi.login(UserLogin(email, password))
                 if (response.isSuccessful) {
-                    val token = response.body() ?: ""
+                    val responseBody = response.body()
+                    val token = responseBody?.response?.token ?: ""
                     saveToken(token)
                     _loginResult.value = Result.success(token)
                 } else {
@@ -82,5 +84,6 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
     private fun saveToken(token: String) {
         val sharedPreferences = application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("auth_token", token).apply()
+        Log.d("LoginViewModel", "Token saved: $token")
     }
 }

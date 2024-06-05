@@ -20,6 +20,10 @@ data class UserRegisterResponse(
     val message: String
 )
 
+data class Token(val token: String)
+
+
+
 data class UserLoginResponse(
-    val token: String
+    val response: Token
 )

@@ -104,7 +104,8 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel.validateDesc(eventDesc)
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
-            val event = Event(eventTitle,eventDesc,date)
+            val id = null
+            val event = Event(id,eventTitle,eventDesc,date)
             eventsViewModel.addEvent(event)
             Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
             addEventView.findNavController().popBackStack()

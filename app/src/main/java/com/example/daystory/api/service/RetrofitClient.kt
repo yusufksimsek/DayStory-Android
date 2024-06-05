@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,11 +18,6 @@ object RetrofitClient {
     fun initialize(context: Context) {
         this.context = context
     }
-    private fun getAuthInterceptor(): AuthInterceptor {
-        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("auth_token", "") ?: ""
-        return AuthInterceptor(token)
-    }
 
     private const val BASE_URL = "http://165.22.93.225:5003/"
 
@@ -31,18 +27,29 @@ object RetrofitClient {
              setLevel(HttpLoggingInterceptor.Level.BODY)
          }
 
+         /*
+         val contentTypeInterceptor = Interceptor { chain ->
+             val originalRequest = chain.request()
+             val newRequest = originalRequest.newBuilder()
+                 .header("Content-Type", "application/json")
+                 .build()
+             chain.proceed(newRequest)
+         }
+          */
+
           val client: OkHttpClient = OkHttpClient.Builder()
              .addInterceptor(loggingInterceptor)
-             .addInterceptor(getAuthInterceptor())
+             .addInterceptor(AuthInterceptor(context))
+             //.addInterceptor(contentTypeInterceptor)
              .addInterceptor(ChuckerInterceptor(context))
              .build()
 
-         val gsonBuilder = GsonBuilder().setLenient().create()
+         //val gsonBuilder = GsonBuilder().setLenient().create()
 
          Retrofit.Builder()
              .baseUrl(BASE_URL)
              .client(client)
-             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
+             .addConverterFactory(GsonConverterFactory.create())
              .build()
      }
 

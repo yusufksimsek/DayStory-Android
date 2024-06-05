@@ -30,7 +30,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
             binding.eventDesc.text = currentEvent.description
 
             val currentDate = Calendar.getInstance().time
-            val eventDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(currentEvent.date)
+            val eventDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(currentEvent.date)
 
             if (eventDate.before(currentDate) && !isSameDay(eventDate, currentDate)) {
                 binding.moreVertIcon.visibility = View.GONE
