@@ -13,4 +13,7 @@ interface EventService {
 
     @GET("api/Events/day")
     suspend fun getEventsByDate(@Query("date") date: String): Response<List<Event>>
+
+    @GET("api/Events/all")
+    suspend fun getAllEvents(): Response<List<Event>>
 }

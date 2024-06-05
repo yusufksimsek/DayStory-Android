@@ -24,6 +24,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _eventCreationStatus = MutableLiveData<String?>()
     val eventCreationStatus: LiveData<String?> = _eventCreationStatus
 
+    private val _allEvents = MutableLiveData<List<Event>>()
+    val allEvents: LiveData<List<Event>> get() = _allEvents
+
     private val _eventsByDate = MutableLiveData<List<Event>>()
     val eventsByDate: LiveData<List<Event>> get() = _eventsByDate
 
@@ -50,6 +53,21 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
             }
         } catch (e: Exception) {
             _eventsByDate.postValue(emptyList())
+        }
+    }
+
+
+
+    fun fetchAllEvents() = viewModelScope.launch {
+        try {
+            val response = eventRepository.getAllEvents()
+            if (response.isSuccessful) {
+                _allEvents.postValue(response.body())
+            } else {
+                _allEvents.postValue(emptyList())
+            }
+        } catch (e: Exception) {
+            _allEvents.postValue(emptyList())
         }
     }
 

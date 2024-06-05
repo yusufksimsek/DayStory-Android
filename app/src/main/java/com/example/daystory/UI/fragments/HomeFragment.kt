@@ -51,7 +51,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         menuHost.addMenuProvider(this,viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         eventsViewModel = (activity as MainActivity).eventViewModel
-        setupHomeRecyclerView()
+        //setupHomeRecyclerView()
+        setupHomeRecyclerView2()
         setupDateTextView()
 
         binding.addEventFab.setOnClickListener {
@@ -63,6 +64,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         checkDateAndToggleFab()
+        eventsViewModel.fetchAllEvents()
 
     }
 
@@ -145,6 +147,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             })
         }
 
+    }
+
+    private fun setupHomeRecyclerView2() {
+        eventAdapter = EventAdapter(eventsViewModel)
+        binding.homeRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = eventAdapter
+        }
+
+        activity?.let {
+            eventsViewModel.allEvents.observe(viewLifecycleOwner, Observer { events ->
+                eventAdapter.submitList(events)
+                updateUI(events)
+            })
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

@@ -84,7 +84,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
 
     object Mydif : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.description == newItem.description
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {

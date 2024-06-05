@@ -11,4 +11,8 @@ class EventRepository {
         return RetrofitClient.eventApi.getEventsByDate(date)
     }
 
+    suspend fun getAllEvents(): Response<List<Event>> {
+        return RetrofitClient.eventApi.getAllEvents()
+    }
+
 }

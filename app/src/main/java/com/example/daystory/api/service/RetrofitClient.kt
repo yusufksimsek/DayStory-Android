@@ -27,25 +27,12 @@ object RetrofitClient {
              setLevel(HttpLoggingInterceptor.Level.BODY)
          }
 
-         /*
-         val contentTypeInterceptor = Interceptor { chain ->
-             val originalRequest = chain.request()
-             val newRequest = originalRequest.newBuilder()
-                 .header("Content-Type", "application/json")
-                 .build()
-             chain.proceed(newRequest)
-         }
-          */
-
           val client: OkHttpClient = OkHttpClient.Builder()
              .addInterceptor(loggingInterceptor)
              .addInterceptor(AuthInterceptor(context))
-             //.addInterceptor(contentTypeInterceptor)
              .addInterceptor(ChuckerInterceptor(context))
              .build()
-
-         //val gsonBuilder = GsonBuilder().setLenient().create()
-
+         
          Retrofit.Builder()
              .baseUrl(BASE_URL)
              .client(client)
