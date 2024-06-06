@@ -22,8 +22,6 @@ data class UserRegisterResponse(
 
 data class Token(val token: String)
 
-
-
 data class UserLoginResponse(
-    val response: Token
+    val data: Token
 )

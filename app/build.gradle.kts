@@ -45,8 +45,6 @@ android {
         dataBinding = true
     }
 
-   // apply(plugin = "androidx.navigation.safeargs.kotlin")
-
 }
 
 dependencies {

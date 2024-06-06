@@ -24,8 +24,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _eventCreationStatus = MutableLiveData<String?>()
     val eventCreationStatus: LiveData<String?> = _eventCreationStatus
 
-    private val _allEvents = MutableLiveData<List<Event>>()
-    val allEvents: LiveData<List<Event>> get() = _allEvents
+    private val _allEvents = MutableLiveData<List<Event>?>()
+    val allEvents: LiveData<List<Event>?> get() = _allEvents
 
     private val _eventsByDate = MutableLiveData<List<Event>>()
     val eventsByDate: LiveData<List<Event>> get() = _eventsByDate
@@ -40,9 +40,10 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
-        fetchEventsByDate(date)
+        //fetchEventsByDate(date)
     }
 
+/*
     private fun fetchEventsByDate(date: String) = viewModelScope.launch {
         try {
             val response = eventRepository.getEventsByDate(date)
@@ -56,13 +57,14 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         }
     }
 
+ */
 
 
     fun fetchAllEvents() = viewModelScope.launch {
         try {
             val response = eventRepository.getAllEvents()
             if (response.isSuccessful) {
-                _allEvents.postValue(response.body())
+                _allEvents.postValue(response.body()?.data)
             } else {
                 _allEvents.postValue(emptyList())
             }
@@ -76,7 +78,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
             val response = eventRepository.createEvent(event)
             if (response.isSuccessful) {
                 _eventCreationStatus.postValue("Event successfully created")
-                fetchEventsByDate(_selectedDate.value ?: "")
+                //fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
             }

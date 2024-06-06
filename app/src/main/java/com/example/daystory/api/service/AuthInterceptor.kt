@@ -9,6 +9,9 @@ class AuthInterceptor(val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("auth_token", "") ?: ""
+
+        Log.d("AuthInterceptor", "Token retrieved: $token")
+
         val original = chain.request()
         val requestBuilder = original.newBuilder()
             .addHeader("Authorization", "Bearer $token")

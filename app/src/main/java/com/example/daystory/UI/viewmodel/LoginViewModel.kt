@@ -62,7 +62,7 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
                 val response = RetrofitClient.userApi.login(UserLogin(email, password))
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    val token = responseBody?.response?.token ?: ""
+                    val token = responseBody?.data?.token ?: ""
                     saveToken(token)
                     _loginResult.value = Result.success(token)
                 } else {
@@ -85,5 +85,8 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
         val sharedPreferences = application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("auth_token", token).apply()
         Log.d("LoginViewModel", "Token saved: $token")
+
+        val savedToken = sharedPreferences.getString("auth_token", "") ?: ""
+        Log.d("LoginViewModel", "Token read immediately after saving: $savedToken")
     }
 }
