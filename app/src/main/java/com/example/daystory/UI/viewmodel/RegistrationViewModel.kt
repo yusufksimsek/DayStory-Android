@@ -52,6 +52,7 @@ class RegistrationViewModel : ViewModel() {
 
     fun firstvalidateFields(name:String,surname:String,gender:String,date:String): Boolean {
         var isValid = true
+        val letterPattern = Regex("^[a-zA-ZığüşöçİĞÜŞÖÇ]+$")
 
         if (name.isEmpty()) {
             _nameError.value = "Bu alan boş bırakılamaz"
@@ -61,6 +62,9 @@ class RegistrationViewModel : ViewModel() {
             isValid = false
         }else if (name.length > 50) {
             _nameError.value = "İsim en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else if (!letterPattern.matches(name)) {
+            _nameError.value = "Sadece harf girebilirsiniz"
             isValid = false
         } else {
             _nameError.value = null
@@ -74,6 +78,9 @@ class RegistrationViewModel : ViewModel() {
             isValid = false
         }else if (surname.length > 50) {
             _surnameError.value = "Soyisim en fazla 50 karakter olmalıdır"
+            isValid = false
+        }else if (!letterPattern.matches(surname)) {
+            _surnameError.value = "Sadece harf girebilirsiniz"
             isValid = false
         } else {
             _surnameError.value = null
