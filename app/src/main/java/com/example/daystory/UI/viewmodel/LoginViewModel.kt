@@ -69,7 +69,7 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
                     val errorBody = response.errorBody()?.string()
                     val errorMessage = when (response.code()) {
                         404 -> "Kullanıcı bulunamadı"
-                        401 -> "Yanlış şifre"
+                        401 -> "Şifreniz yanlış lütfen tekrar deneyin"
                         500 -> "Sunucu hatası: $errorBody"
                         else -> "Bilinmeyen hata: $errorBody"
                     }
