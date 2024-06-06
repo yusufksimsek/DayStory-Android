@@ -11,18 +11,12 @@ interface EventService {
     @POST("api/Events/")
     suspend fun createEvent(@Body event: Event): Response<String>
 
-    /*
     @GET("api/Events/day")
-    suspend fun getEventsByDate(@Query("date") date: String): Response<List<Event>>
-
-     */
+    suspend fun getEventsByDate(@Query("date") date: String): Response<BaseResponse<List<Event>>>
 
     data class BaseResponse<T>(
         val statusCode: Int?,
         val message: String?,
         val data: T?
     )
-
-    @GET("api/Events/all")
-    suspend fun getAllEvents(): Response<BaseResponse<List<Event>>>
 }

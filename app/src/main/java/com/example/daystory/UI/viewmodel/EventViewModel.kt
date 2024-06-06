@@ -1,7 +1,6 @@
 package com.example.daystory.UI.viewmodel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,8 +26,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _allEvents = MutableLiveData<List<Event>?>()
     val allEvents: LiveData<List<Event>?> get() = _allEvents
 
-    private val _eventsByDate = MutableLiveData<List<Event>>()
-    val eventsByDate: LiveData<List<Event>> get() = _eventsByDate
+    private val _eventsByDate = MutableLiveData<List<Event>?>()
+    val eventsByDate: LiveData<List<Event>?> get() = _eventsByDate
 
     fun validateTitle(title: String) {
         _titleError.value = if (title.length > 250) "Başlık en fazla 250 karakter olabilir" else null
@@ -40,15 +39,13 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
-        //fetchEventsByDate(date)
     }
 
-/*
-    private fun fetchEventsByDate(date: String) = viewModelScope.launch {
+    fun fetchEventsByDate(date: String) = viewModelScope.launch {
         try {
             val response = eventRepository.getEventsByDate(date)
             if (response.isSuccessful) {
-                _eventsByDate.postValue(response.body())
+                _eventsByDate.postValue(response.body()?.data)
             } else {
                 _eventsByDate.postValue(emptyList())
             }
@@ -57,28 +54,12 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         }
     }
 
- */
-
-
-    fun fetchAllEvents() = viewModelScope.launch {
-        try {
-            val response = eventRepository.getAllEvents()
-            if (response.isSuccessful) {
-                _allEvents.postValue(response.body()?.data)
-            } else {
-                _allEvents.postValue(emptyList())
-            }
-        } catch (e: Exception) {
-            _allEvents.postValue(emptyList())
-        }
-    }
-
     fun addEvent(event: Event) = viewModelScope.launch {
         try {
             val response = eventRepository.createEvent(event)
             if (response.isSuccessful) {
                 _eventCreationStatus.postValue("Event successfully created")
-                //fetchEventsByDate(_selectedDate.value ?: "")
+                fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
             }

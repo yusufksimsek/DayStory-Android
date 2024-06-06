@@ -8,15 +8,8 @@ import retrofit2.Response
 class EventRepository {
     suspend fun createEvent(event: Event) = RetrofitClient.eventApi.createEvent(event)
 
-    /*
-    suspend fun getEventsByDate(date: String): Response<List<Event>> {
+    suspend fun getEventsByDate(date: String): Response<EventService.BaseResponse<List<Event>>> {
         return RetrofitClient.eventApi.getEventsByDate(date)
-    }
-
-     */
-
-    suspend fun getAllEvents(): Response<EventService.BaseResponse<List<Event>>> {
-        return RetrofitClient.eventApi.getAllEvents()
     }
 
 }
