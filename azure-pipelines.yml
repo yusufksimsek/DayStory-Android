@@ -1,0 +1,29 @@
+trigger:
+- main
+
+pool:
+  name: Default
+  demands:
+  - agent.name -equals test-deneme
+
+variables:
+  ANDROID_HOME: 'C:\agent\Android\Sdk'
+
+steps:
+# - script: |
+#     echo Starting Gradle Build
+#     ./gradlew --stacktrace --debug
+#   displayName: 'Run Gradle Build'
+#   env:
+#     ANDROID_HOME: $(ANDROID_HOME)
+
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'assembleDebug'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false 
