@@ -71,7 +71,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
-                // Show a toast or a snackbar with the status message
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 eventsViewModel.clearEventDeletionStatus()
             }

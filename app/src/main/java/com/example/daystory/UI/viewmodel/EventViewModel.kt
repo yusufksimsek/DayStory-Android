@@ -32,6 +32,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _eventDeletionStatus = MutableLiveData<String?>()
     val eventDeletionStatus: LiveData<String?> = _eventDeletionStatus
 
+    private val _eventUpdateStatus = MutableLiveData<String?>()
+    val eventUpdateStatus: LiveData<String?> get() = _eventUpdateStatus
+
     fun validateTitle(title: String) {
         _titleError.value = if (title.length > 250) "Başlık en fazla 250 karakter olabilir" else null
     }
@@ -91,6 +94,24 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun clearEventCreationStatus() {
         _eventCreationStatus.value = null
+    }
+
+    fun updateEvent(event: Event) = viewModelScope.launch {
+        try {
+            val response = eventRepository.updateEvent(event)
+            if (response.isSuccessful) {
+                _eventUpdateStatus.postValue("Event successfully updated")
+                fetchEventsByDate(_selectedDate.value ?: "")
+            } else {
+                _eventUpdateStatus.postValue("Failed to update event: ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            _eventUpdateStatus.postValue("Network error: ${e.message}")
+        }
+    }
+
+    fun clearEventUpdateStatus() {
+        _eventUpdateStatus.value = null
     }
 
 }

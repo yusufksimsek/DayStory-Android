@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -18,6 +19,9 @@ interface EventService {
 
     @DELETE("api/Events/{id}")
     suspend fun deleteEvent(@Path("id") eventId: Int): Response<BaseResponse<String>>
+
+    @PUT("api/Events/")
+    suspend fun updateEvent(@Body event: Event): Response<BaseResponse<String>>
 
     data class BaseResponse<T>(
         val statusCode: Int?,

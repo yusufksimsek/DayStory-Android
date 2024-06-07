@@ -103,10 +103,19 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         eventsViewModel.validateDesc(eventDesc)
 
         if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
-            //val event = Event(currentEvent.id, eventTitle, eventDesc, existingDate)
-            //eventsViewModel.updateEvent(event)
-            Toast.makeText(requireContext(), "Event updated", Toast.LENGTH_SHORT).show()
-            view?.findNavController()?.popBackStack()
+            val updatedEvent = currentEvent.copy(title = eventTitle, description = eventDesc)
+            eventsViewModel.updateEvent(updatedEvent)
+            eventsViewModel.eventUpdateStatus.observe(viewLifecycleOwner) { status ->
+                status?.let {
+                    if (it == "Event successfully updated") {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        view?.findNavController()?.popBackStack()
+                    } else {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    }
+                    eventsViewModel.clearEventUpdateStatus()
+                }
+            }
         } else {
             Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }

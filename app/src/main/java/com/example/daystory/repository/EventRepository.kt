@@ -16,4 +16,8 @@ class EventRepository {
         return RetrofitClient.eventApi.deleteEvent(eventId)
     }
 
+    suspend fun updateEvent(event: Event): Response<EventService.BaseResponse<String>> {
+        return RetrofitClient.eventApi.updateEvent(event)
+    }
+
 }
