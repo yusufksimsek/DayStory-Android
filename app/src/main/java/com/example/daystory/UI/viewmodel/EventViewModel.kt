@@ -29,6 +29,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _eventsByDate = MutableLiveData<List<Event>?>()
     val eventsByDate: LiveData<List<Event>?> get() = _eventsByDate
 
+    private val _eventDeletionStatus = MutableLiveData<String?>()
+    val eventDeletionStatus: LiveData<String?> = _eventDeletionStatus
+
     fun validateTitle(title: String) {
         _titleError.value = if (title.length > 250) "Başlık en fazla 250 karakter olabilir" else null
     }
@@ -52,6 +55,24 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         } catch (e: Exception) {
             _eventsByDate.postValue(emptyList())
         }
+    }
+
+    fun deleteEvent(eventId: Int) = viewModelScope.launch {
+        try {
+            val response = eventRepository.deleteEvent(eventId)
+            if (response.isSuccessful) {
+                _eventDeletionStatus.postValue("Successfully deleted")
+                fetchEventsByDate(_selectedDate.value ?: "")
+            } else {
+                _eventDeletionStatus.postValue("Failed to delete event: ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            _eventDeletionStatus.postValue("Network error: ${e.message}")
+        }
+    }
+
+    fun clearEventDeletionStatus() {
+        _eventDeletionStatus.value = null
     }
 
     fun addEvent(event: Event) = viewModelScope.launch {

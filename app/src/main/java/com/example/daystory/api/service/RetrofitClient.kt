@@ -19,7 +19,7 @@ object RetrofitClient {
         this.context = context
     }
 
-    private const val BASE_URL = "http://165.22.93.225:5003/"
+    private const val BASE_URL = "http://165.22.93.225:5030/"
 
      val retrofit: Retrofit by lazy{
 

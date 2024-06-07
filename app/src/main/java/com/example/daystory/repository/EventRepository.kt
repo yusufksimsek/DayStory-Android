@@ -12,4 +12,8 @@ class EventRepository {
         return RetrofitClient.eventApi.getEventsByDate(date)
     }
 
+    suspend fun deleteEvent(eventId: Int): Response<EventService.BaseResponse<String>> {
+        return RetrofitClient.eventApi.deleteEvent(eventId)
+    }
+
 }

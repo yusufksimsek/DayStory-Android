@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -63,8 +64,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         checkDateAndToggleFab()
+
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
             eventsViewModel.fetchEventsByDate(date)
+        })
+
+        eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
+            status?.let {
+                // Show a toast or a snackbar with the status message
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                eventsViewModel.clearEventDeletionStatus()
+            }
         })
 
     }

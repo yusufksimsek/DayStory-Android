@@ -74,7 +74,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
                 .setTitle("Notu Sil")
                 .setMessage("Bu notu silmek istediğinize emin misiniz?")
                 .setPositiveButton("Evet") { _, _ ->
-                    //eventsViewModel.deleteEvent(event)
+                    eventsViewModel.deleteEvent(event.id!!)
                 }
                 .setNegativeButton("Hayır", null)
                 .show()
