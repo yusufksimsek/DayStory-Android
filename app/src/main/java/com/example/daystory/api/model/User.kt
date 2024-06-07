@@ -17,7 +17,8 @@ data class UserLogin(
 )
 
 data class UserRegisterResponse(
-    val message: String
+    val statusCode: Int?,
+    val message: String?,
 )
 
 data class Token(val token: String)

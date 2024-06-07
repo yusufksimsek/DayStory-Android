@@ -110,7 +110,7 @@ class SecondRegisterFragment : Fragment() {
 
         registerViewModel.registrationSuccess.observe(viewLifecycleOwner, Observer { success ->
             if (success == true) {
-                Toast.makeText(requireContext(),"Successfully Registered",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Kullanıcı başarıyla kaydoldu",Toast.LENGTH_SHORT).show()
                 view.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
             }
         })

@@ -168,16 +168,16 @@ class RegistrationViewModel : ViewModel() {
 
     fun registerUser(user: UserRegister) {
         val service = RetrofitClient.retrofit.create(UserService::class.java)
-        service.registerUser(user).enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+        service.registerUser(user).enqueue(object : Callback<UserRegisterResponse> {
+            override fun onResponse(call: Call<UserRegisterResponse>, response: Response<UserRegisterResponse>) {
                 if (response.isSuccessful) {
-                    Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()}")
+                    Log.d("RegistrationViewModel", "Successfully Registered: ${response.body()?.message}")
                     _registrationSuccess.value = true
                 } else {
                     when (response.code()) {
                         409 -> {
-                                _registrationError.value = "Bu e-posta veya kullanıcı adı zaten mevcut."
-                            }
+                            _registrationError.value = "Bu e-posta veya kullanıcı adı zaten mevcut."
+                        }
                         else -> {
                             _registrationError.value = "Kayıt başarısız. Lütfen tekrar deneyin."
                         }
@@ -186,7 +186,7 @@ class RegistrationViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
+            override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {
                 Log.d("RegistrationViewModel", "Error: ${t.message}")
                 _registrationSuccess.value = false
             }
