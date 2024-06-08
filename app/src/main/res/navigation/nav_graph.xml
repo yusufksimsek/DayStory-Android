@@ -104,6 +104,18 @@
         android:id="@+id/galleryFragment"
         android:name="com.example.daystory.UI.fragments.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" /><action android:id="@+id/action_global_galleryFragment" app:destination="@id/galleryFragment"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
+        tools:layout="@layout/fragment_gallery" >
+        <argument
+            android:name="imagePath"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="imageDate"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <action android:id="@+id/action_global_galleryFragment" app:destination="@id/galleryFragment"/>
+    <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
+    <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
 
 </navigation>
