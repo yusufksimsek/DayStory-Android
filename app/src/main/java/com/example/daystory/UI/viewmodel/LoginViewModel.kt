@@ -84,8 +84,5 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
         val sharedPreferences = application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("auth_token", token).apply()
         Log.d("LoginViewModel", "Token saved: $token")
-
-        val savedToken = sharedPreferences.getString("auth_token", "") ?: ""
-        Log.d("LoginViewModel", "Token read immediately after saving: $savedToken")
     }
 }
