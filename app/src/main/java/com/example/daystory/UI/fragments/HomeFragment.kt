@@ -136,9 +136,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             if(event.isEmpty()){
                 binding.homeRecyclerView.visibility = View.GONE
                 binding.textViewNotBulunmuyor.visibility = View.VISIBLE
+                binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
             } else {
                 binding.homeRecyclerView.visibility = View.VISIBLE
                 binding.textViewNotBulunmuyor.visibility = View.GONE
+                binding.btnAI.setBackgroundResource(R.drawable.button_background2)
             }
         }
     }
