@@ -1,5 +1,6 @@
 package com.example.daystory.UI.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -65,6 +66,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         checkDateAndToggleFab()
 
+        binding.btnAI.setOnClickListener {
+            if (binding.btnAI.isClickable) {
+                showAIAlertDialog()
+            }
+        }
+
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
             eventsViewModel.fetchEventsByDate(date)
         })
@@ -76,6 +83,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
         })
 
+    }
+
+    private fun showAIAlertDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Uyarı")
+        builder.setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz.\n\nDevam etmek istiyor musunuz?")
+        builder.setPositiveButton("Devam Et") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Vazgeç") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     private fun setupDateTextView() {
@@ -137,10 +157,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 binding.homeRecyclerView.visibility = View.GONE
                 binding.textViewNotBulunmuyor.visibility = View.VISIBLE
                 binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
+                binding.btnAI.isClickable = false
             } else {
                 binding.homeRecyclerView.visibility = View.VISIBLE
                 binding.textViewNotBulunmuyor.visibility = View.GONE
                 binding.btnAI.setBackgroundResource(R.drawable.button_background2)
+                binding.btnAI.isClickable = true
             }
         }
     }
