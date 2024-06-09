@@ -42,8 +42,13 @@ class LoginViewModel(private val application: Application): AndroidViewModel(app
             _emailError.value = null
         }
 
+        val passwordPattern = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{7,}$")
+
         if (password.isEmpty()) {
             _passwordError.value = "Şifre alanı boş bırakılamaz"
+            isValid = false
+        }else if (!passwordPattern.matches(password)) {
+            _passwordError.value = "Şifre en az 7 karakter olmalı, 1 büyük harf, 1 küçük harf, 1 özel karakter ve 1 sayı içermeli"
             isValid = false
         }else if (password.length > 50) {
             _passwordError.value = "Şifre en fazla 50 karakter olmalıdır"
