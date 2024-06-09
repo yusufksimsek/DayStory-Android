@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentFirstRegisterBinding
@@ -32,7 +33,10 @@ class FirstRegisterFragment : Fragment() {
         binding = FragmentFirstRegisterBinding.inflate(inflater, container, false)
 
         binding.backIcon.setOnClickListener {
-            it.findNavController().popBackStack()
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.firstRegisterFragment, true)
+                .build()
+            it.findNavController().navigate(R.id.welcomePageFragment, null, navOptions)
         }
 
         binding.btnDevam.setOnClickListener {

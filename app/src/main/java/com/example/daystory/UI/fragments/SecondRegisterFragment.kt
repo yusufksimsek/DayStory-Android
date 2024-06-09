@@ -124,8 +124,7 @@ class SecondRegisterFragment : Fragment() {
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                widget.findNavController()
-                    .navigate(R.id.action_secondRegisterFragment_to_loginFragment)
+                widget.findNavController().navigate(R.id.action_secondRegisterFragment_to_loginFragment)
             }
         }
 

@@ -15,11 +15,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.daystory.R
 import com.example.daystory.databinding.FragmentLoginBinding
 import com.example.daystory.UI.viewmodel.LoginViewModel
+import com.example.daystory.databinding.FragmentWelcomePageBinding
 
 class LoginFragment : Fragment() {
 
@@ -32,7 +34,10 @@ class LoginFragment : Fragment() {
         setupDayStorySpan()
 
         binding.backIcon.setOnClickListener {
-            it.findNavController().popBackStack()
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.loginFragment, true)
+                .build()
+            it.findNavController().navigate(R.id.welcomePageFragment, null, navOptions)
         }
 
         binding.btnLogin.setOnClickListener {
@@ -100,8 +105,7 @@ class LoginFragment : Fragment() {
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                widget.findNavController()
-                    .navigate(R.id.action_loginFragment_to_firstRegisterFragment)
+                widget.findNavController().navigate(R.id.action_loginFragment_to_firstRegisterFragment)
             }
         }
 

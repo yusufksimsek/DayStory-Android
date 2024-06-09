@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.daystory.R
@@ -33,6 +34,10 @@ class WelcomePageFragment : Fragment() {
 
         binding.btnYeniHesapOlustur.setOnClickListener {
             it.findNavController().navigate(R.id.action_welcomePageFragment_to_firstRegisterFragment)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
         }
 
         return binding.root
