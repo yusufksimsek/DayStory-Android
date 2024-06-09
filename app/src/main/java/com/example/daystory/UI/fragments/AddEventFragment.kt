@@ -103,14 +103,20 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel.validateTitle(eventTitle)
         eventsViewModel.validateDesc(eventDesc)
 
-        if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
+        if (binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
             val id = null
-            val event = Event(id,eventTitle,eventDesc,date)
+            val event = Event(id, eventTitle, eventDesc, date)
             eventsViewModel.addEvent(event)
-            Toast.makeText(addEventView.context, "Event Saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(addEventView.context, "Not oluşturuldu", Toast.LENGTH_SHORT).show()
             addEventView.findNavController().popBackStack()
         } else {
-            Toast.makeText(addEventView.context, "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
+            if (binding.TitleInputLayout.error != null) {
+                binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
+            }
+            if (binding.DescInputLayout.error != null) {
+                binding.DescInputLayout.error = "Lütfen bu alanı doldurun"
+            }
+            //Toast.makeText(addEventView.context, "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }
 

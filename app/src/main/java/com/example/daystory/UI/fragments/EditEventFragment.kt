@@ -102,12 +102,12 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         eventsViewModel.validateTitle(eventTitle)
         eventsViewModel.validateDesc(eventDesc)
 
-        if (eventTitle.isNotEmpty() && eventDesc.isNotEmpty() && binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
+        if (binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
             val updatedEvent = currentEvent.copy(title = eventTitle, description = eventDesc)
             eventsViewModel.updateEvent(updatedEvent)
             eventsViewModel.eventUpdateStatus.observe(viewLifecycleOwner) { status ->
                 status?.let {
-                    if (it == "Event successfully updated") {
+                    if (it == "Event başarıyla güncellendi") {
                         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                         view?.findNavController()?.popBackStack()
                     } else {
@@ -117,9 +117,16 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
                 }
             }
         } else {
-            Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
+            if (binding.editTitleInputLayout.error != null) {
+                binding.editTitleInputLayout.error = "Lütfen bu alanı doldurun"
+            }
+            if (binding.editDescInputLayout.error != null) {
+                binding.editDescInputLayout.error = "Lütfen bu alanı doldurun"
+            }
+            //Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
