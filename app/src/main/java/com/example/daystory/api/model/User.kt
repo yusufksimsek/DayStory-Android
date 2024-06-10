@@ -21,8 +21,26 @@ data class UserRegisterResponse(
     val message: String?,
 )
 
-data class Token(val token: String)
+data class Token(
+    val token: String
+)
 
 data class UserLoginResponse(
     val data: Token
+)
+
+data class UserGetResponse(
+    val statusCode: Int,
+    val message: String,
+    val data: UserProfile
+)
+
+data class UserProfile(
+    val id: Int,
+    val firstName: String,
+    val lastName: String,
+    val username: String,
+    val email: String,
+    val birthDate: String,
+    val gender: String
 )
