@@ -82,7 +82,7 @@
             app:argType="string" />
         <argument
             android:name="gender"
-            app:argType="string" />
+            app:argType="integer" />
         <argument
             android:name="date"
             app:argType="string" />

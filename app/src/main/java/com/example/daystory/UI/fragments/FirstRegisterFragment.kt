@@ -49,10 +49,10 @@ class FirstRegisterFragment : Fragment() {
             if (registerViewModel.firstvalidateFields(name,surname,selectedGender,userEnteredDate)) {
 
                 val genderForBackend = when (selectedGender) {
-                    "Erkek" -> "Male"
-                    "Kadın" -> "Female"
-                    "Diğer" -> "Other"
-                    else -> "NotSpecified"
+                    "Erkek" -> 1
+                    "Kadın" -> 2
+                    "Diğer" -> 3
+                    else -> 0
                 }
 
                 val action = FirstRegisterFragmentDirections
