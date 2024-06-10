@@ -3,8 +3,6 @@ package com.example.daystory.api.service
 import android.annotation.SuppressLint
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,6 +18,7 @@ object RetrofitClient {
     }
 
     private const val BASE_URL = "http://165.22.93.225:5030/"
+    //private const val BASE_URL = "https://talent.mobven.com:6003/"
 
      val retrofit: Retrofit by lazy{
 

@@ -59,17 +59,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Chucker
+    // Chucker
     val chuckerVersion = "4.0.0"
     debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
-    //Interceptor
+    // Interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    //Retrofit
+    // Retrofit
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    //Material Design
+    // Material Design
     implementation("com.google.android.material:material:1.5.0")
     // Room
     val roomVersion = "2.6.1"

@@ -120,9 +120,6 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
             if (binding.editTitleInputLayout.error != null) {
                 binding.editTitleInputLayout.error = "Lütfen bu alanı doldurun"
             }
-            if (binding.editDescInputLayout.error != null) {
-                binding.editDescInputLayout.error = "Lütfen bu alanı doldurun"
-            }
             //Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }

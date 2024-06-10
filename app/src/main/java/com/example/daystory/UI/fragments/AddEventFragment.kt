@@ -113,9 +113,6 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
             if (binding.TitleInputLayout.error != null) {
                 binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
             }
-            if (binding.DescInputLayout.error != null) {
-                binding.DescInputLayout.error = "Lütfen bu alanı doldurun"
-            }
             //Toast.makeText(addEventView.context, "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
     }

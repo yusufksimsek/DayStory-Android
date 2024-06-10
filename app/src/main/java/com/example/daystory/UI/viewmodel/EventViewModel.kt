@@ -45,7 +45,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun validateDesc(desc: String) {
         _descError.value = when {
-            desc.isEmpty() -> "Açıklama Başlık boş olamaz"
+            desc.length < 2 -> "Açıklama 2 karakterden az olamaz"
             desc.length > 350 -> "Açıklama en fazla 350 karakter olabilir"
             else -> null
         }
