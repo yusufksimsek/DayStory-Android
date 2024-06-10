@@ -1,28 +1,31 @@
 package com.example.daystory.UI.fragments
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
-import android.widget.Toast
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.daystory.R
-import com.example.daystory.databinding.FragmentAddEventBinding
 import com.example.daystory.UI.viewmodel.EventViewModel
+import com.example.daystory.UI.viewmodel.EventViewModelFactory
 import com.example.daystory.api.model.Event
+import com.example.daystory.databinding.FragmentAddEventBinding
+import com.example.daystory.repository.EventRepository
+import java.util.Locale
 
-class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
+class AddEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private var addEventBinding: FragmentAddEventBinding? = null
     private val binding get() = addEventBinding!!
-
     private lateinit var eventsViewModel: EventViewModel
-    private lateinit var addEventView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,35 +37,19 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        val eventRepository = EventRepository()
+        val viewModelFactory = EventViewModelFactory(requireActivity().application, eventRepository)
+        eventsViewModel = ViewModelProvider(this, viewModelFactory)[EventViewModel::class.java]
 
-        eventsViewModel = ViewModelProvider(requireActivity()).get(EventViewModel::class.java)
-        addEventView = view
+        val todayDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
 
-        eventsViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
-            binding.textViewDateAdd.text = date
-        }
+        binding.textViewDateAdd.text = todayDate
 
-        eventsViewModel.eventCreationStatus.observe(viewLifecycleOwner) { status ->
-            status?.let {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                if (it == "Event successfully created") {
-                    view.findNavController().popBackStack()
-                }
-                eventsViewModel.clearEventCreationStatus()
-            }
-        }
-
-        binding.addBackIcon.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             it.findNavController().popBackStack()
         }
 
-        binding.btnSave.setOnClickListener {
-            saveEvent()
-        }
-
-        binding.btnCancel.setOnClickListener {
+        binding.addBackIcon.setOnClickListener {
             it.findNavController().popBackStack()
         }
 
@@ -93,38 +80,34 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
         eventsViewModel.addDescError.observe(viewLifecycleOwner) { error ->
             binding.DescInputLayout.error = error
         }
-    }
 
-    private fun saveEvent() {
-        val eventTitle = binding.addEventTitle.text.toString().trim()
-        val eventDesc = binding.addEventDesc.text.toString().trim()
-        val date = binding.textViewDateAdd.text.toString()
+        binding.btnSave.setOnClickListener {
+            val title = binding.addEventTitle.text.toString().trim()
+            val desc = binding.addEventDesc.text.toString().trim()
 
-        eventsViewModel.validateTitle(eventTitle)
-        eventsViewModel.validateDesc(eventDesc)
+            eventsViewModel.validateTitle(title)
+            eventsViewModel.validateDesc(desc)
 
-        if (binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
-            val id = null
-            val priority = null
-            val event = Event(id, eventTitle, eventDesc, date,priority)
-            eventsViewModel.addEvent(event)
-            Toast.makeText(addEventView.context, "Not oluşturuldu", Toast.LENGTH_SHORT).show()
-            addEventView.findNavController().popBackStack()
-        } else {
-            if (binding.TitleInputLayout.error != null) {
-                binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
+            if (eventsViewModel.addTitleError.value == null && eventsViewModel.addDescError.value == null) {
+                val newEvent = Event(
+                    title = title,
+                    description = desc,
+                    date = todayDate
+                )
+                eventsViewModel.addEvent(newEvent)
+            }else {
+                if (binding.TitleInputLayout.error != null) {
+                    binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
+                }
             }
-            //Toast.makeText(addEventView.context, "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
         }
-    }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menu.clear()
-        menuInflater.inflate(R.menu.menu_add_event, menu)
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return false
+        eventsViewModel.eventCreationStatus.observe(viewLifecycleOwner, Observer { status ->
+            status?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                eventsViewModel.clearEventCreationStatus()
+            }
+        })
     }
 
     override fun onDestroy() {

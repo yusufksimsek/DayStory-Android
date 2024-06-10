@@ -15,12 +15,19 @@
         <action
             android:id="@+id/action_homeFragment_to_editEventFragment"
             app:destination="@id/editEventFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_imageDetailFragment"
+            app:destination="@id/imageDetailFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/addEventFragment"
         android:name="com.example.daystory.UI.fragments.AddEventFragment"
-        android:label="AddEventFragment" />
+        android:label="AddEventFragment" >
+    <argument
+        android:name="selectedDate"
+        app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/editEventFragment"
@@ -117,5 +124,16 @@
     <action android:id="@+id/action_global_galleryFragment" app:destination="@id/galleryFragment"/>
     <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
     <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="com.example.daystory.UI.fragments.ImageDetailFragment"
+        android:label="fragment_image_detail"
+        tools:layout="@layout/fragment_image_detail" >
+    <argument
+        android:name="events"
+        app:argType="com.example.daystory.api.model.Event[]"
+        app:nullable="true"
+        android:defaultValue="@null" />
+    </fragment>
 
 </navigation>

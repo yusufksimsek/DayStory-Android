@@ -1,7 +1,6 @@
 package com.example.daystory.UI.fragments
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -12,14 +11,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daystory.MainActivity
 import com.example.daystory.R
@@ -27,17 +25,16 @@ import com.example.daystory.UI.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.UI.viewmodel.EventViewModel
 import com.example.daystory.api.model.Event
-import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.Date
 import java.util.Locale
 
-class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,MenuProvider,DatePickerDialog.OnDateSetListener {
+class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener, MenuProvider {
 
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
 
-    private lateinit var eventsViewModel : EventViewModel
-    private lateinit var eventAdapter : EventAdapter
+    private lateinit var eventsViewModel: EventViewModel
+    private lateinit var eventAdapter: EventAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,18 +47,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         super.onViewCreated(view, savedInstanceState)
 
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(this,viewLifecycleOwner, Lifecycle.State.RESUMED)
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         eventsViewModel = (activity as MainActivity).eventViewModel
         setupHomeRecyclerViewDate()
-        setupDateTextView()
+        setTodayDate()
 
         binding.addEventFab.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_addEventFragment)
-        }
-
-        binding.textViewDate.setOnClickListener {
-            showDatePicker()
+            navigateToAddEvent()
         }
 
         checkDateAndToggleFab()
@@ -82,53 +75,35 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 eventsViewModel.clearEventDeletionStatus()
             }
         })
-
     }
 
     private fun showAIAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Uyarı")
-        builder.setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz.\n\nDevam etmek istiyor musunuz?")
-        builder.setPositiveButton("Devam Et") { dialog, which ->
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Vazgeç") { dialog, which ->
-            dialog.dismiss()
-        }
-        builder.show()
+            .setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz.\n\nDevam etmek istiyor musunuz?")
+            .setPositiveButton("Devam Et") { dialog, which ->
+                dialog.dismiss()
+                navigateToImageDetailFragment()
+            }
+            .setNegativeButton("Vazgeç") { dialog, which ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
-    private fun setupDateTextView() {
+    private fun navigateToImageDetailFragment() {
+        val selectedDateEvents = eventsViewModel.eventsByDate.value ?: emptyList()
+        val direction = HomeFragmentDirections.actionHomeFragmentToImageDetailFragment(selectedDateEvents.toTypedArray())
+        findNavController().navigate(direction)
+    }
+
+    private fun setTodayDate() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val date = dateFormat.format(calendar.time)
         binding.textViewDate.text = date
 
         eventsViewModel.setSelectedDate(date)
-    }
-
-    private fun showDatePicker() {
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Tarih Seçiniz")
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val dateString = dateFormat.format(it)
-            binding.textViewDate.text = dateString
-
-            eventsViewModel.setSelectedDate(dateString)
-            checkDateAndToggleFab()
-        }
-
-        datePicker.show(childFragmentManager, datePicker.toString())
-    }
-
-    private fun isSameDay(date1: Date, date2: Date): Boolean {
-        val calendar1 = Calendar.getInstance().apply { time = date1 }
-        val calendar2 = Calendar.getInstance().apply { time = date2 }
-        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-                calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
     }
 
     private fun checkDateAndToggleFab() {
@@ -142,18 +117,20 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, dayOfMonth)
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val date = dateFormat.format(calendar.time)
-        binding.textViewDate.text = date
-        checkDateAndToggleFab()
+    private fun navigateToAddEvent() {
+        findNavController().navigate(R.id.action_homeFragment_to_addEventFragment)
     }
 
-    private fun updateUI(event: List<Event>?){
-        if(event != null){
-            if(event.isEmpty()){
+    private fun isSameDay(date1: Date, date2: Date): Boolean {
+        val calendar1 = Calendar.getInstance().apply { time = date1 }
+        val calendar2 = Calendar.getInstance().apply { time = date2 }
+        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+                calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun updateUI(event: List<Event>?) {
+        if (event != null) {
+            if (event.isEmpty()) {
                 binding.homeRecyclerView.visibility = View.GONE
                 binding.textViewNotBulunmuyor.visibility = View.VISIBLE
                 binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
@@ -167,7 +144,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-    private fun setupHomeRecyclerViewDate(){
+    private fun setupHomeRecyclerViewDate() {
         eventAdapter = EventAdapter(eventsViewModel)
         binding.homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -180,7 +157,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 updateUI(events)
             })
         }
-
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -204,5 +180,4 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return false
     }
-
 }
