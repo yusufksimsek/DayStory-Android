@@ -21,7 +21,7 @@ interface EventService {
     suspend fun deleteEvent(@Path("id") eventId: Int): Response<BaseResponse<String>>
 
     @PUT("api/Events/")
-    suspend fun updateEvent(@Body event: Event): Response<BaseResponse<String>>
+    suspend fun updateEvent(@Body event: Event): Response<crudResponse>
 
     data class BaseResponse<T>(
         val statusCode: Int?,

@@ -46,7 +46,7 @@ class ImageDetailFragment : Fragment() {
         }
     }
     private fun setDate() {
-        val currentDate = SimpleDateFormat("dd-MMus-yyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         binding.textViewDate.text = currentDate
     }
 }
