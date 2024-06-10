@@ -111,7 +111,7 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
             eventsViewModel.updateEvent(updatedEvent)
             eventsViewModel.eventUpdateStatus.observe(viewLifecycleOwner) { status ->
                 status?.let {
-                    if (it == "Etkinlik başarıyla güncellendi") {
+                    if (it == "Event başarıyla güncellendi") {
                         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                         view?.findNavController()?.popBackStack()
                     } else {

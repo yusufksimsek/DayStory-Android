@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 interface EventService {
     @POST("api/Events/")
-    suspend fun createEvent(@Body event: Event): Response<String>
+    suspend fun createEvent(@Body event: Event): Response<crudResponse>
 
     @GET("api/Events/day")
     suspend fun getEventsByDate(@Query("date") date: String): Response<BaseResponse<List<Event>>>
@@ -28,4 +28,10 @@ interface EventService {
         val message: String?,
         val data: T?
     )
+
+    data class crudResponse(
+        val status: Int,
+        val message: String
+    )
+
 }

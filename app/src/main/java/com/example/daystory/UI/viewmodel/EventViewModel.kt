@@ -72,7 +72,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         try {
             val response = eventRepository.deleteEvent(eventId)
             if (response.isSuccessful) {
-                _eventDeletionStatus.postValue("Successfully deleted")
+                _eventDeletionStatus.postValue("Başarıyla silindi")
                 fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventDeletionStatus.postValue("Failed to delete event: ${response.errorBody()?.string()}")
@@ -90,7 +90,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         try {
             val response = eventRepository.createEvent(event)
             if (response.isSuccessful) {
-                _eventCreationStatus.postValue("Event successfully created")
+                _eventCreationStatus.postValue("Event başarıyla oluşturuldu")
                 fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
@@ -109,7 +109,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
             val eventWithoutPriority = event.copy(priority = null)
             val response = eventRepository.updateEvent(eventWithoutPriority)
             if (response.isSuccessful) {
-                _eventUpdateStatus.postValue("Event successfully updated")
+                _eventUpdateStatus.postValue("Event başarıyla güncellendi")
                 fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventUpdateStatus.postValue("Failed to update event: ${response.errorBody()?.string()}")

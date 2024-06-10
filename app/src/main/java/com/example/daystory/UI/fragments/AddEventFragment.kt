@@ -82,32 +82,39 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
         }
 
         binding.btnSave.setOnClickListener {
-            val title = binding.addEventTitle.text.toString().trim()
-            val desc = binding.addEventDesc.text.toString().trim()
-
-            eventsViewModel.validateTitle(title)
-            eventsViewModel.validateDesc(desc)
-
-            if (eventsViewModel.addTitleError.value == null && eventsViewModel.addDescError.value == null) {
-                val newEvent = Event(
-                    title = title,
-                    description = desc,
-                    date = todayDate
-                )
-                eventsViewModel.addEvent(newEvent)
-            }else {
-                if (binding.TitleInputLayout.error != null) {
-                    binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
-                }
-            }
+            saveEvent(todayDate)
         }
 
         eventsViewModel.eventCreationStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 eventsViewModel.clearEventCreationStatus()
+                if (it == "Event başarıyla oluşturuldu") {
+                    view.findNavController().popBackStack()
+                }
             }
         })
+    }
+
+    private fun saveEvent(todayDate: String) {
+        val title = binding.addEventTitle.text.toString().trim()
+        val desc = binding.addEventDesc.text.toString().trim()
+
+        eventsViewModel.validateTitle(title)
+        eventsViewModel.validateDesc(desc)
+
+        if (eventsViewModel.addTitleError.value == null && eventsViewModel.addDescError.value == null) {
+            val newEvent = Event(
+                title = title,
+                description = desc,
+                date = todayDate
+            )
+            eventsViewModel.addEvent(newEvent)
+        } else {
+            if (binding.TitleInputLayout.error != null) {
+                binding.TitleInputLayout.error = "Lütfen bu alanı doldurun"
+            }
+        }
     }
 
     override fun onDestroy() {
