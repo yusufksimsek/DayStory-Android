@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
             binding.tvGender.text = when (user.gender) {
                 "Male" -> "Erkek"
                 "Female" -> "Kadın"
-                "NotSpecified" -> "Belirtme"
+                "NotSpecified" -> "Belirtilmemiş"
                 "Other" -> "Diğer"
                 else -> user.gender
             }
