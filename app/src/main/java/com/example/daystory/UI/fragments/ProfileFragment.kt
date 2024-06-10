@@ -31,7 +31,13 @@ class ProfileFragment : Fragment() {
             binding.tvNameSurname.text = "${user.firstName} ${user.lastName}"
             binding.tvEmail.text = user.email
             binding.tvDate.text = user.birthDate
-            binding.tvGender.text = user.gender
+            binding.tvGender.text = when (user.gender) {
+                "Male" -> "Erkek"
+                "Female" -> "Kadın"
+                "NotSpecified" -> "Belirtme"
+                "Other" -> "Diğer"
+                else -> user.gender
+            }
         })
 
         profileViewModel.fetchUserDetails()

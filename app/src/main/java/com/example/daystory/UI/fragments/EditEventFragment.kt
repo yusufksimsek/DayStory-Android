@@ -103,11 +103,15 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
         eventsViewModel.validateDesc(eventDesc)
 
         if (binding.editTitleInputLayout.error == null && binding.editDescInputLayout.error == null) {
-            val updatedEvent = currentEvent.copy(title = eventTitle, description = eventDesc)
+            val updatedEvent = currentEvent.copy(
+                title = eventTitle,
+                description = eventDesc,
+                priority = null
+            )
             eventsViewModel.updateEvent(updatedEvent)
             eventsViewModel.eventUpdateStatus.observe(viewLifecycleOwner) { status ->
                 status?.let {
-                    if (it == "Event başarıyla güncellendi") {
+                    if (it == "Etkinlik başarıyla güncellendi") {
                         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                         view?.findNavController()?.popBackStack()
                     } else {
@@ -120,7 +124,7 @@ class EditEventFragment : Fragment(R.layout.fragment_edit_event), MenuProvider {
             if (binding.editTitleInputLayout.error != null) {
                 binding.editTitleInputLayout.error = "Lütfen bu alanı doldurun"
             }
-            //Toast.makeText(requireContext(), "Please fill out all fields correctly", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "Lütfen tüm alanları doğru şekilde doldurun", Toast.LENGTH_SHORT).show()
         }
     }
 

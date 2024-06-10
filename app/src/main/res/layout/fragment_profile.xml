@@ -170,7 +170,7 @@
         android:fontFamily="@font/roboto_medium"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="Çıkış yap"
+        android:text="Çıkış Yap"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/outlined_Button_Border"
         android:textSize="16sp"

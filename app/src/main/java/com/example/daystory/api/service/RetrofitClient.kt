@@ -9,18 +9,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 @SuppressLint("StaticFieldLeak")
 object RetrofitClient {
-
-
     private lateinit var context: Context
 
     fun initialize(context: Context) {
         this.context = context
     }
 
-    private const val BASE_URL = "http://165.22.93.225:5030/"
+    private const val BASE_URL = "https://talent.mobven.com:5043/"
     //private const val BASE_URL = "https://talent.mobven.com:6003/"
+    //private const val BASE_URL = "http://165.22.93.225:5030/"
 
-     val retrofit: Retrofit by lazy{
+
+    val retrofit: Retrofit by lazy{
 
           val loggingInterceptor = HttpLoggingInterceptor().apply {
              setLevel(HttpLoggingInterceptor.Level.BODY)

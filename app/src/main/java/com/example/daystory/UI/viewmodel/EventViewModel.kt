@@ -45,12 +45,11 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun validateDesc(desc: String) {
         _descError.value = when {
-            desc.length < 2 -> "Açıklama 2 karakterden az olamaz"
+            desc.length < 3 -> "Açıklama 3 karakterden az olamaz"
             desc.length > 350 -> "Açıklama en fazla 350 karakter olabilir"
             else -> null
         }
     }
-
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
@@ -107,7 +106,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun updateEvent(event: Event) = viewModelScope.launch {
         try {
-            val response = eventRepository.updateEvent(event)
+            val eventWithoutPriority = event.copy(priority = null)
+            val response = eventRepository.updateEvent(eventWithoutPriority)
             if (response.isSuccessful) {
                 _eventUpdateStatus.postValue("Event successfully updated")
                 fetchEventsByDate(_selectedDate.value ?: "")

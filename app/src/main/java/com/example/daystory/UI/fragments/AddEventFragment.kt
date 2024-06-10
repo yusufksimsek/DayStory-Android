@@ -105,7 +105,8 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event), MenuProvider {
 
         if (binding.TitleInputLayout.error == null && binding.DescInputLayout.error == null) {
             val id = null
-            val event = Event(id, eventTitle, eventDesc, date)
+            val priority = null
+            val event = Event(id, eventTitle, eventDesc, date,priority)
             eventsViewModel.addEvent(event)
             Toast.makeText(addEventView.context, "Not oluşturuldu", Toast.LENGTH_SHORT).show()
             addEventView.findNavController().popBackStack()
