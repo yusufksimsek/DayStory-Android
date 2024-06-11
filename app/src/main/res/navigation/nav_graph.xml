@@ -146,6 +146,9 @@
         <argument
             android:name="date"
             app:argType="string" />
+        <argument
+            android:name="imagePath"
+            app:argType="string" />
     </fragment>
 
     <action android:id="@+id/action_global_galleryDetailFragment" app:destination="@id/galleryDetailFragment"/>

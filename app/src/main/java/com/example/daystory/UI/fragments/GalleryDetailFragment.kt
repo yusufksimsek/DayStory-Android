@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.daystory.UI.adapter.GalleryDetailAdapter
 import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.databinding.FragmentGalleryDetailBinding
@@ -33,6 +34,8 @@ class GalleryDetailFragment : Fragment() {
         val args: GalleryDetailFragmentArgs by navArgs()
         binding.textViewDate.text = args.date
 
+        Glide.with(this).load(args.imagePath).into(binding.imageAI)
+
         setupRecyclerView()
 
         fetchEvents(args.date)
@@ -55,10 +58,10 @@ class GalleryDetailFragment : Fragment() {
                         adapter.setEvents(response.body()?.data ?: emptyList())
                     }
                 } else {
-                    // Handle the error
+
                 }
             } catch (e: Exception) {
-                // Handle the exception
+
             }
         }
     }

@@ -20,7 +20,9 @@ class GalleryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
         binding.galleryRecyclerView.layoutManager = LinearLayoutManager(context)
+
         observeViewModel()
+
         galleryViewModel.fetchDaySummaries()
         return binding.root
     }
@@ -29,7 +31,7 @@ class GalleryFragment : Fragment() {
         galleryViewModel.daySummaries.observe(viewLifecycleOwner, Observer { daySummaries ->
             if (daySummaries != null) {
                 val adapter = GalleryAdapter(daySummaries) { daySummary ->
-                    val action = GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(daySummary.date)
+                    val action = GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(daySummary.date,daySummary.imagePath)
                     findNavController().navigate(action)
                 }
                 binding.galleryRecyclerView.adapter = adapter
