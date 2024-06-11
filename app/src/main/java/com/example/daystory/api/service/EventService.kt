@@ -31,10 +31,19 @@ interface EventService {
     @POST("api/DaySummarys/")
     suspend fun createDaySummary(@Body request: daySummaryCreateRequest): Response<daySummaryResponse>
 
+    @GET("api/DaySummarys/all")
+    suspend fun getAllDaySummaries(): Response<BaseResponse<List<DaySummary>>>
+
     data class BaseResponse<T>(
         val statusCode: Int?,
         val message: String?,
         val data: T?
+    )
+
+    data class DaySummary(
+        val id: Int,
+        val date: String,
+        val imagePath: String
     )
 
     data class crudResponse(
