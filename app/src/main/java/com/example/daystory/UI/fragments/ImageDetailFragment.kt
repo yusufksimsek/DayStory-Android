@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.daystory.GlideApp
 import com.example.daystory.UI.adapter.ImageDetailAdapter
+import com.example.daystory.UI.viewmodel.ImageDetailViewModel
 import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.databinding.FragmentImageDetailBinding
 import kotlinx.coroutines.launch
@@ -28,6 +30,7 @@ import java.util.Locale
 class ImageDetailFragment : Fragment() {
     private lateinit var binding: FragmentImageDetailBinding
     private lateinit var imageDetailAdapter: ImageDetailAdapter
+    private val viewModel: ImageDetailViewModel by viewModels()
 
     private val args: ImageDetailFragmentArgs by navArgs()
 
@@ -46,7 +49,7 @@ class ImageDetailFragment : Fragment() {
         }
 
         setupRecyclerView()
-        loadDaySummary()
+        observeDaySummary()
 
         val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         binding.textViewDate.text = currentDate
@@ -76,31 +79,20 @@ class ImageDetailFragment : Fragment() {
         toolbar.title = spannableString
     }
 
-    private fun loadDaySummary() {
-        val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.eventApi.getDaySummary(currentDate)
-                if (response.isSuccessful) {
-                    val daySummary = response.body()?.data
-                    Log.d("ImageDetailFragment", "Day summary response: $daySummary")
-                    daySummary?.let {
-                        val imageUrl = "https://talent.mobven.com:5043/" + it.imagePath
-                        Log.d("ImageDetailFragment", "Loading image from URL: $imageUrl")
+    private fun observeDaySummary() {
+        viewModel.getDaySummary().observe(viewLifecycleOwner) { daySummary ->
+            daySummary?.let {
+                val imageUrl = "https://talent.mobven.com:5043/" + it.imagePath
+                Log.d("ImageDetailFragment", "Loading image from URL: $imageUrl")
 
-                        Glide.with(this@ImageDetailFragment)
-                            .load(imageUrl)
-                            .into(binding.imageAI)
-                    }
-                } else {
-                    Log.e("ImageDetailFragment", "Response not successful: ${response.errorBody()?.string()}")
-                }
-            } catch (e: Exception) {
-                Log.e("ImageDetailFragment", "Error loading day summary: ${e.message}", e)
+                Glide.with(this@ImageDetailFragment)
+                    .load(imageUrl)
+                    .into(binding.imageAI)
+            } ?: run {
+                Log.e("ImageDetailFragment", "Error loading day summary")
             }
         }
     }
-
 }
 
 
