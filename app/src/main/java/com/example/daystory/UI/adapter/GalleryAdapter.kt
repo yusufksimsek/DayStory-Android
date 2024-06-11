@@ -10,7 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.daystory.R
 import com.example.daystory.api.service.EventService
 
-class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>) :
+class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>,
+                     private val onItemClicked: (EventService.DaySummary) -> Unit) :
     RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
     class GalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,6 +32,10 @@ class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>) :
         Glide.with(holder.itemView.context)
             .load(imageUrl)
             .into(holder.imageView)
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(daySummary)
+        }
     }
 
     override fun getItemCount(): Int = daySummaries.size
