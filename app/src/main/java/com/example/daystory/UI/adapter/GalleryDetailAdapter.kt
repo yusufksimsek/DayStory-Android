@@ -34,6 +34,7 @@ class GalleryDetailAdapter : RecyclerView.Adapter<GalleryDetailAdapter.EventView
         fun bind(event: Event) {
             binding.eventTitle.text = event.title
             binding.eventDesc.text = event.description
+            binding.moreVertIcon.visibility = View.GONE
         }
     }
 }

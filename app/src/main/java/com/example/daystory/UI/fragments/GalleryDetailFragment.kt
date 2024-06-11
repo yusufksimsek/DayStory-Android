@@ -28,7 +28,7 @@ class GalleryDetailFragment : Fragment() {
         binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
 
         binding.iconBack.setOnClickListener {
-            it.findNavController().popBackStack()
+            it.findNavController().navigateUp()
         }
 
         val args: GalleryDetailFragmentArgs by navArgs()
