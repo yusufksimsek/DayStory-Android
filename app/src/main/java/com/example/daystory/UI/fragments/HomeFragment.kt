@@ -61,7 +61,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             navigateToAddEvent()
         }
 
-        checkDateAndToggleFab()
+        //checkDateAndToggleFab()
 
         binding.btnAI.setOnClickListener {
             if (binding.btnAI.isClickable) {
@@ -70,7 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
-
+            eventsViewModel.checkDaySummary(date)
         })
 
         eventsViewModel.daySummaryStatus.observe(viewLifecycleOwner, Observer { isSummaryExists ->
