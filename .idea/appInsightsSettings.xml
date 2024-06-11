@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.daystory" />
+                  <option name="mobileSdkAppId" value="1:311132917764:android:1e5f2c03449db543a22551" />
+                  <option name="projectId" value="daystory-android" />
+                  <option name="projectNumber" value="311132917764" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
