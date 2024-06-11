@@ -1,11 +1,13 @@
 package com.example.daystory.UI.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.daystory.api.model.Event
+import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.repository.EventRepository
 import kotlinx.coroutines.launch
 
@@ -34,6 +36,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     private val _eventUpdateStatus = MutableLiveData<String?>()
     val eventUpdateStatus: LiveData<String?> get() = _eventUpdateStatus
+    private val _daySummaryStatus = MutableLiveData<Boolean>()
+    val daySummaryStatus: LiveData<Boolean> get() = _daySummaryStatus
 
     fun validateTitle(title: String) {
         _titleError.value = when {
@@ -54,6 +58,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
         fetchEventsByDate(date)
+        checkDaySummary(date)
     }
 
     fun fetchEventsByDate(date: String) = viewModelScope.launch {
@@ -123,4 +128,13 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         _eventUpdateStatus.value = null
     }
 
+    fun checkDaySummary(date: String) = viewModelScope.launch {
+        try {
+            val response = RetrofitClient.eventApi.getDaySummary(date)
+            _daySummaryStatus.postValue(response.isSuccessful && response.body()?.data != null)
+        } catch (e: Exception) {
+            Log.e("EventViewModel", "Error fetching day summary: ${e.message}")
+            _daySummaryStatus.postValue(false)
+        }
+    }
 }

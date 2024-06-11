@@ -70,7 +70,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
-            checkDaySummary(date)
+
+        })
+
+        eventsViewModel.daySummaryStatus.observe(viewLifecycleOwner, Observer { isSummaryExists ->
+            if (isSummaryExists) {
+                binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
+                binding.btnAI.isClickable = false
+            } else {
+                binding.btnAI.setBackgroundResource(R.drawable.button_background2)
+                binding.btnAI.isClickable = true
+            }
         })
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
@@ -125,23 +135,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val selectedDateEvents = eventsViewModel.eventsByDate.value ?: emptyList()
         val direction = HomeFragmentDirections.actionHomeFragmentToImageDetailFragment(selectedDateEvents.toTypedArray())
         findNavController().navigate(direction)
-    }
-
-    private fun checkDaySummary(date: String) {
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.eventApi.getDaySummary(date)
-                if (response.isSuccessful && response.body()?.data != null) {
-                    binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
-                    binding.btnAI.isClickable = false
-                } else {
-                    binding.btnAI.setBackgroundResource(R.drawable.button_background2)
-                    binding.btnAI.isClickable = true
-                }
-            } catch (e: Exception) {
-                Log.e("HomeFragment", "Error fetching day summary: ${e.message}")
-            }
-        }
     }
 
     private fun setTodayDate() {
