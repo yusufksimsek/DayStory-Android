@@ -66,7 +66,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
-            eventsViewModel.fetchEventsByDate(date)
+
         })
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->

@@ -53,6 +53,7 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
+        fetchEventsByDate(date)
     }
 
     fun fetchEventsByDate(date: String) = viewModelScope.launch {
@@ -91,7 +92,6 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
             val response = eventRepository.createEvent(event)
             if (response.isSuccessful) {
                 _eventCreationStatus.postValue("Event başarıyla oluşturuldu")
-                fetchEventsByDate(_selectedDate.value ?: "")
             } else {
                 _eventCreationStatus.postValue("Failed to create event: ${response.errorBody()?.string()}")
             }
