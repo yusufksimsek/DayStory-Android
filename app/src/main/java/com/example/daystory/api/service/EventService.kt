@@ -1,6 +1,8 @@
 package com.example.daystory.api.service
 
 import com.example.daystory.api.model.Event
+import com.example.daystory.api.model.daySummaryResponse
+import com.example.daystory.api.model.imageResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -23,6 +25,12 @@ interface EventService {
     @PUT("api/Events/")
     suspend fun updateEvent(@Body event: Event): Response<crudResponse>
 
+    @GET("api/DaySummarys/day")
+    suspend fun getDaySummary(@Query("date") date: String): Response<imageResponseModel>
+
+    @POST("api/DaySummarys/")
+    suspend fun createDaySummary(@Body request: daySummaryCreateRequest): Response<daySummaryResponse>
+
     data class BaseResponse<T>(
         val statusCode: Int?,
         val message: String?,
@@ -32,6 +40,10 @@ interface EventService {
     data class crudResponse(
         val status: Int,
         val message: String
+    )
+
+    data class daySummaryCreateRequest(
+        val date: String
     )
 
 }

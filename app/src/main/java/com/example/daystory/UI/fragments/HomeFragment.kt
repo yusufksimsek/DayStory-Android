@@ -17,6 +17,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daystory.MainActivity
@@ -25,6 +26,9 @@ import com.example.daystory.UI.adapter.EventAdapter
 import com.example.daystory.databinding.FragmentHomeBinding
 import com.example.daystory.UI.viewmodel.EventViewModel
 import com.example.daystory.api.model.Event
+import com.example.daystory.api.service.EventService
+import com.example.daystory.api.service.RetrofitClient
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 
@@ -32,7 +36,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
-
     private lateinit var eventsViewModel: EventViewModel
     private lateinit var eventAdapter: EventAdapter
 
@@ -83,6 +86,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             .setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz.\n\nDevam etmek istiyor musunuz?")
             .setPositiveButton("Devam Et") { dialog, which ->
                 dialog.dismiss()
+                //createDaySummary()
                 navigateToImageDetailFragment()
             }
             .setNegativeButton("Vazgeç") { dialog, which ->
@@ -90,6 +94,31 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
             .show()
     }
+        /*
+    private fun createDaySummary() {
+        val currentDate = getCurrentDate()
+        lifecycleScope.launch {
+            try {
+                val request = EventService.daySummaryCreateRequest(currentDate)
+                val response = RetrofitClient.eventApi.createDaySummary(request)
+                if (response.isSuccessful && response.body()?.status == 200) {
+                    Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Day summary oluşturulamadı", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+         */
+
+    private fun getCurrentDate(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        return dateFormat.format(calendar.time)
+    }
+
 
     private fun navigateToImageDetailFragment() {
         val selectedDateEvents = eventsViewModel.eventsByDate.value ?: emptyList()
