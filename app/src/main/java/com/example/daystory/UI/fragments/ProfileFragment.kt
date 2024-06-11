@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import com.example.daystory.R
 import com.example.daystory.UI.viewmodel.ProfileViewModel
 import com.example.daystory.databinding.FragmentProfileBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class ProfileFragment : Fragment() {
@@ -30,7 +32,7 @@ class ProfileFragment : Fragment() {
             binding.tvUsername.text = user.username
             binding.tvNameSurname.text = "${user.firstName} ${user.lastName}"
             binding.tvEmail.text = user.email
-            binding.tvDate.text = user.birthDate
+            binding.tvDate.text = formatDate(user.birthDate)
             binding.tvGender.text = when (user.gender) {
                 "Male" -> "Erkek"
                 "Female" -> "Kadın"
@@ -43,4 +45,15 @@ class ProfileFragment : Fragment() {
         profileViewModel.fetchUserDetails()
     }
 
+}
+
+private fun formatDate(dateString: String): String {
+    return try {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateString)
+        outputFormat.format(date)
+    } catch (e: Exception) {
+        dateString
+    }
 }
