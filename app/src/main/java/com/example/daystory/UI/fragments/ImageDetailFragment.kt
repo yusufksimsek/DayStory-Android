@@ -82,7 +82,7 @@ class ImageDetailFragment : Fragment() {
     private fun observeDaySummary() {
         viewModel.getDaySummary().observe(viewLifecycleOwner) { daySummary ->
             daySummary?.let {
-                val imageUrl = "https://talent.mobven.com:5043/" + it.imagePath
+                val imageUrl = it.imagePath
                 Log.d("ImageDetailFragment", "Loading image from URL: $imageUrl")
 
                 Glide.with(this@ImageDetailFragment)
