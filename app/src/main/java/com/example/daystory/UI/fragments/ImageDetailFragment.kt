@@ -1,6 +1,10 @@
 package com.example.daystory.UI.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +32,8 @@ class ImageDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbarTitle()
+
         binding.iconBack.setOnClickListener {
             it.findNavController().popBackStack()
         }
@@ -48,5 +54,18 @@ class ImageDetailFragment : Fragment() {
     private fun setDate() {
         val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         binding.textViewDate.text = currentDate
+    }
+
+    private fun setupToolbarTitle() {
+        val toolbar = binding.materialToolbar
+        val title = "DayStory"
+        val spannableString = SpannableString(title)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, 3,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        toolbar.title = spannableString
     }
 }
