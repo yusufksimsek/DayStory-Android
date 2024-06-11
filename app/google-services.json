@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311132917764",
+    "project_id": "daystory-android",
+    "storage_bucket": "daystory-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311132917764:android:1e5f2c03449db543a22551",
+        "android_client_info": {
+          "package_name": "com.example.daystory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-dSAdy6_dsbNmKXC2uMzAnXD-Cke9Wbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
