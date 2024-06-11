@@ -42,6 +42,9 @@ class ImageDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
+        binding.textViewDate.text = currentDate
+
         setupToolbarTitle()
 
         binding.iconBack.setOnClickListener {
@@ -50,9 +53,6 @@ class ImageDetailFragment : Fragment() {
 
         setupRecyclerView()
         observeDaySummary()
-
-        val currentDate = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
-        binding.textViewDate.text = currentDate
 
         val events = args.events!!.toList()
         imageDetailAdapter.submitList(events)
@@ -84,7 +84,6 @@ class ImageDetailFragment : Fragment() {
             daySummary?.let {
                 val imageUrl = it.imagePath
                 Log.d("ImageDetailFragment", "Loading image from URL: $imageUrl")
-
                 Glide.with(this@ImageDetailFragment)
                     .load(imageUrl)
                     .into(binding.imageAI)

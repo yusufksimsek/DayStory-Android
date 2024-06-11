@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -69,7 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
 
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
-
+            checkDaySummary(date)
         })
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
@@ -83,7 +84,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun showAIAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Uyarı")
-            .setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz.\n\nDevam etmek istiyor musunuz?")
+            .setMessage("Günde yalnızca 1 kez AI gün özetinizi oluşturabilirsiniz." +
+                    "\n\nDevam etmek istiyor musunuz?")
             .setPositiveButton("Devam Et") { dialog, which ->
                 dialog.dismiss()
                 //createDaySummary()
@@ -94,7 +96,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
             .show()
     }
-        /*
+
     private fun createDaySummary() {
         val currentDate = getCurrentDate()
         lifecycleScope.launch {
@@ -111,7 +113,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
         }
     }
-         */
 
     private fun getCurrentDate(): String {
         val calendar = Calendar.getInstance()
@@ -124,6 +125,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val selectedDateEvents = eventsViewModel.eventsByDate.value ?: emptyList()
         val direction = HomeFragmentDirections.actionHomeFragmentToImageDetailFragment(selectedDateEvents.toTypedArray())
         findNavController().navigate(direction)
+    }
+
+    private fun checkDaySummary(date: String) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.eventApi.getDaySummary(date)
+                if (response.isSuccessful && response.body()?.data != null) {
+                    binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
+                    binding.btnAI.isClickable = false
+                } else {
+                    binding.btnAI.setBackgroundResource(R.drawable.button_background2)
+                    binding.btnAI.isClickable = true
+                }
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Error fetching day summary: ${e.message}")
+            }
+        }
     }
 
     private fun setTodayDate() {
