@@ -97,6 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         eventsViewModel.daySummaryStatus.observe(viewLifecycleOwner, Observer { isSummaryExists ->
             updateAISummaryStatus(isSummaryExists)
+            eventAdapter.updateIsSummaryExists(isSummaryExists)
         })
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
@@ -235,7 +236,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
     private fun setupHomeRecyclerViewDate() {
-        eventAdapter = EventAdapter(eventsViewModel)
+        eventAdapter = EventAdapter(eventsViewModel, false)
         binding.homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = eventAdapter
@@ -243,7 +244,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         activity?.let {
             eventsViewModel.eventsByDate.observe(viewLifecycleOwner, Observer { events ->
-
                 eventAdapter.submitList(events)
                 updateUI(events)
             })

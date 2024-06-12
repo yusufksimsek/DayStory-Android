@@ -20,12 +20,15 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Event, EventAdapter.EventViewHolder>(
-    Mydif
-) {
+class EventAdapter(
+    private val eventsViewModel: EventViewModel,
+    private var isSummaryExists: Boolean
+
+) : ListAdapter<Event, EventAdapter.EventViewHolder>(Mydif) {
 
 
-    inner class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel) : RecyclerView.ViewHolder(binding.root) {
+    inner class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel)
+        : RecyclerView.ViewHolder(binding.root) {
         fun bind(currentEvent: Event) {
             binding.eventTitle.text = currentEvent.title
             binding.eventDesc.text = currentEvent.description
@@ -33,7 +36,7 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
             val currentDate = Calendar.getInstance().time
             val eventDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(currentEvent.date)
 
-            if (eventDate.before(currentDate) && !isSameDay(eventDate, currentDate)) {
+            if (eventDate.before(currentDate) && !isSameDay(eventDate, currentDate) || isSummaryExists) {
                 binding.moreVertIcon.visibility = View.GONE
             } else {
                 binding.moreVertIcon.visibility = View.VISIBLE
@@ -102,6 +105,10 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+    fun updateIsSummaryExists(isSummaryExists: Boolean) {
+        this.isSummaryExists = isSummaryExists
+        notifyDataSetChanged()
     }
 }
 
