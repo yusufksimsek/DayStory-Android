@@ -31,6 +31,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      set PATH=%PATH%;C:\npm;C:\Ruby32-x64\bin\fastlane
+      set PATH=%PATH%;C:\Ruby32-x64\bin\
       fastlane android beta
   displayName: 'Beta Dağıtımı'
