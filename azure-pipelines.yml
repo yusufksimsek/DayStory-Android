@@ -31,5 +31,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      C:\Ruby32x64\bin\fastlane android beta
+      C:\Ruby32-x64\bin\fastlane android beta
   displayName: 'Beta Dağıtımı'
