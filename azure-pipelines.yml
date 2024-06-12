@@ -28,6 +28,6 @@ steps:
     ANDROID_HOME: $(ANDROID_HOME)
 
 - script: |
-    set PATH=%PATH%;C:\npm;C:\Ruby33-x64\bin\fastlane;C:\gradle-8.8\bin
+    set PATH=%PATH%;C:\npm;C:\Ruby32-x64\bin\fastlane;C:\gradle-8.8\bin
     fastlane android beta
   displayName: 'Beta Dağıtımı'
