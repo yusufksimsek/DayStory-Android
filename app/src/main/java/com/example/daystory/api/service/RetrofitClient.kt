@@ -7,6 +7,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
 @SuppressLint("StaticFieldLeak")
 object RetrofitClient {
     private lateinit var context: Context
@@ -27,10 +29,13 @@ object RetrofitClient {
          }
 
           val client: OkHttpClient = OkHttpClient.Builder()
+             .readTimeout(60,TimeUnit.SECONDS)
+             .connectTimeout(60,TimeUnit.SECONDS)
              .addInterceptor(loggingInterceptor)
              .addInterceptor(AuthInterceptor(context))
              .addInterceptor(ChuckerInterceptor(context))
              .build()
+
          
          Retrofit.Builder()
              .baseUrl(BASE_URL)

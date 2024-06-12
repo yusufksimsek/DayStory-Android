@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daystory.UI.adapter.GalleryAdapter
 import com.example.daystory.UI.viewmodel.GalleryViewModel
 import com.example.daystory.databinding.FragmentGalleryBinding

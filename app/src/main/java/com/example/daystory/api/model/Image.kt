@@ -13,6 +13,6 @@ data class Data(
 )
 
 data class daySummaryResponse(
-    val status: Int,
+    val statusCode: Int,
     val message: String
 )

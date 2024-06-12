@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.daystory.api.model.Event
 import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.repository.EventRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class EventViewModel(app: Application, private val eventRepository: EventRepository) : AndroidViewModel(app) {

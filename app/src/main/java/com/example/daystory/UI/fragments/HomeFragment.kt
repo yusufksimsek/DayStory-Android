@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -30,8 +31,11 @@ import com.example.daystory.UI.viewmodel.EventViewModel
 import com.example.daystory.api.model.Event
 import com.example.daystory.api.service.EventService
 import com.example.daystory.api.service.RetrofitClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.Locale
 
@@ -39,7 +43,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
-    private lateinit var eventsViewModel: EventViewModel
+    private val eventsViewModel: EventViewModel by activityViewModels()
     private lateinit var eventAdapter: EventAdapter
 
     override fun onCreateView(
@@ -55,7 +59,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        eventsViewModel = (activity as MainActivity).eventViewModel
         setupHomeRecyclerViewDate()
         setTodayDate()
 
@@ -110,8 +113,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun createDaySummary() {
         val currentDate = getCurrentDate()
         lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+
+            }
             try {
-                val result = async { requestDaySummary(currentDate) }.await()
+                val result =  requestDaySummary(currentDate)
                 if (result) {
                     Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
                     navigateToImageDetailFragment()
@@ -130,7 +136,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         return try {
             val request = EventService.daySummaryCreateRequest(currentDate)
             val response = RetrofitClient.eventApi.createDaySummary(request)
-            response.isSuccessful && response.body()?.status == 200
+            response.isSuccessful && response.body()?.statusCode == 200
         } catch (e: Exception) {
             false
         }
