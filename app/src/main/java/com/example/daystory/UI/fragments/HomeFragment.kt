@@ -138,7 +138,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             .setPositiveButton("Devam Et") { dialog, which ->
                 dialog.dismiss()
                 showLogoAnimation()
-                //createDaySummary()
+                createDaySummary()
             }
             .setNegativeButton("Vazgeç") { dialog, which ->
                 dialog.dismiss()
