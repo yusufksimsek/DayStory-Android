@@ -1,6 +1,10 @@
 package com.example.daystory.UI.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +26,8 @@ class GalleryFragment : Fragment() {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
         binding.galleryRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
+        setupToolbarTitle()
+
         observeViewModel()
 
         galleryViewModel.fetchDaySummaries()
@@ -33,6 +39,19 @@ class GalleryFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun setupToolbarTitle() {
+        val toolbar = binding.materialToolbar
+        val title = "DayStory"
+        val spannableString = SpannableString(title)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, 3,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        toolbar.title = spannableString
     }
 
     private fun observeViewModel() {

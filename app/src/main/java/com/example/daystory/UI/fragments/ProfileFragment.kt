@@ -1,6 +1,10 @@
 package com.example.daystory.UI.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +24,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-
+        setupToolbarTitle()
 
         return binding.root
     }
@@ -43,6 +47,19 @@ class ProfileFragment : Fragment() {
         })
 
         profileViewModel.fetchUserDetails()
+    }
+
+    private fun setupToolbarTitle() {
+        val toolbar = binding.materialToolbar
+        val title = "DayStory"
+        val spannableString = SpannableString(title)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, 3,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        toolbar.title = spannableString
     }
 
 }
