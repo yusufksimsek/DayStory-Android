@@ -28,9 +28,5 @@ steps:
     ANDROID_HOME: $(ANDROID_HOME)
 
 - script: |
-    firebase deploy --token "$1//031fRYS0elj8GCgYIARAAGAMSNwF-L9Irm7SEX_N3LGnp4YP7X8nPkL9niWdjEhRpZs--hN2e0Hgafs_tEIn-6Z3Ng6HUBkGni_o" --project "$daystory-android"
-  displayName: 'Deployment'
-
-# - script: |
-#     fastlane beta
-#   displayName: 'Beta Dağıtımı'
+    fastlane beta
+  displayName: 'Beta Dağıtımı'
