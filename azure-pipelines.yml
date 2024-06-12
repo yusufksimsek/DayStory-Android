@@ -29,5 +29,5 @@ steps:
 
 - script: |
     set PATH=%PATH%;C:\npm;C:\Ruby33-x64\bin\fastlane;C:\gradle-8.8\bin
-    fastlane beta
+    fastlane android beta
   displayName: 'Beta Dağıtımı'
