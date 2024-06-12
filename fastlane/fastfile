@@ -1,0 +1,18 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build the Android app"
+  lane :beta do
+    gradle(
+      task: "assembleDebug",
+      project_dir: "app"
+    )
+
+    firebase_app_distribution(
+      app: "1:311132917764:android:1e5f2c03449db543a22551",
+      apk_path: "C:\agent\_work\15\s\app\build\outputs\apk\debug\app-debug.apk",
+      groups: "dev",
+      release_notes: "New release"
+    )
+  end
+end

@@ -13,7 +13,7 @@ steps:
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'
-    tasks: 'assembleDebug'
+    tasks: 'assembleRelease'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
@@ -26,3 +26,7 @@ steps:
   displayName: 'Run SonarQube Analysis'
   env:
     ANDROID_HOME: $(ANDROID_HOME)
+
+- script: |
+    fastlane beta
+  displayName: 'Beta Dağıtımı'
