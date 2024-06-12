@@ -132,7 +132,8 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     fun checkDaySummary(date: String) = viewModelScope.launch {
         try {
             val response = RetrofitClient.eventApi.getDaySummary(date)
-            _daySummaryStatus.postValue(response.isSuccessful && response.body()?.data?.imagePath != null)
+            val isSummaryExists = response.isSuccessful && response.body()?.data?.imagePath != null
+            _daySummaryStatus.postValue(isSummaryExists)
         } catch (e: Exception) {
             Log.e("EventViewModel", "Error fetching day summary: ${e.message}")
             _daySummaryStatus.postValue(false)

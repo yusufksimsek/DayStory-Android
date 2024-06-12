@@ -78,18 +78,25 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
         }
 
+        observeLiveData()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val selectedDate = eventsViewModel.selectedDate.value
+        if (selectedDate != null) {
+            eventsViewModel.checkDaySummary(selectedDate)
+        }
+    }
+
+    private fun observeLiveData() {
         eventsViewModel.selectedDate.observe(viewLifecycleOwner, Observer { date ->
             eventsViewModel.checkDaySummary(date)
         })
 
         eventsViewModel.daySummaryStatus.observe(viewLifecycleOwner, Observer { isSummaryExists ->
-            if (isSummaryExists) {
-                binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
-                binding.btnAI.isClickable = false
-            } else {
-                binding.btnAI.setBackgroundResource(R.drawable.button_background2)
-                binding.btnAI.isClickable = true
-            }
+            updateAISummaryStatus(isSummaryExists)
         })
 
         eventsViewModel.eventDeletionStatus.observe(viewLifecycleOwner, Observer { status ->
@@ -98,6 +105,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 eventsViewModel.clearEventDeletionStatus()
             }
         })
+    }
+
+    private fun updateAISummaryStatus(isSummaryExists: Boolean) {
+        if (isSummaryExists) {
+            binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
+            binding.btnAI.isClickable = false
+        } else {
+            binding.btnAI.setBackgroundResource(R.drawable.button_background2)
+            binding.btnAI.isClickable = true
+        }
     }
 
     private fun setupToolbarTitle() {
