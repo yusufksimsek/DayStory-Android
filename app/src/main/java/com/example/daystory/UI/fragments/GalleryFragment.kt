@@ -24,6 +24,7 @@ class GalleryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
+
         binding.galleryRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
         setupToolbarTitle()

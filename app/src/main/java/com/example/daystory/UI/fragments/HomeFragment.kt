@@ -111,9 +111,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         if (isSummaryExists) {
             binding.btnAI.setBackgroundResource(R.drawable.pasif_button)
             binding.btnAI.isClickable = false
+            binding.addEventFab.visibility = View.GONE
         } else {
             binding.btnAI.setBackgroundResource(R.drawable.button_background2)
             binding.btnAI.isClickable = true
+            binding.addEventFab.visibility = View.VISIBLE
         }
     }
 
@@ -154,6 +156,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             }
             try {
                 val result =  requestDaySummary(currentDate)
+                hideLogoAnimation()
                 if (result) {
                     Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
                     navigateToImageDetailFragment()
@@ -162,8 +165,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
-            } finally {
-                hideLogoAnimation()
             }
         }
     }
@@ -172,7 +173,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         return try {
             val request = EventService.daySummaryCreateRequest(currentDate)
             val response = RetrofitClient.eventApi.createDaySummary(request)
-            response.isSuccessful && response.body()?.statusCode == 200
+            response.isSuccessful
         } catch (e: Exception) {
             false
         }
@@ -242,6 +243,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         activity?.let {
             eventsViewModel.eventsByDate.observe(viewLifecycleOwner, Observer { events ->
+
                 eventAdapter.submitList(events)
                 updateUI(events)
             })

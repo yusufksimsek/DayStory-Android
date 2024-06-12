@@ -24,7 +24,8 @@ class EventAdapter(private val eventsViewModel: EventViewModel) : ListAdapter<Ev
     Mydif
 ) {
 
-    class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class EventViewHolder(val binding: EventLayoutBinding, private val eventsViewModel: EventViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currentEvent: Event) {
             binding.eventTitle.text = currentEvent.title
             binding.eventDesc.text = currentEvent.description
