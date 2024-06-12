@@ -10,22 +10,22 @@ variables:
   ANDROID_HOME: 'C:\agent\Android\Sdk'
 
 steps:
-# - task: Gradle@3
-#   inputs:
-#     gradleWrapperFile: 'gradlew'
-#     tasks: 'assembleRelease'
-#     publishJUnitResults: true
-#     testResultsFiles: '**/TEST-*.xml'
-#     javaHomeOption: 'JDKVersion'
-#     jdkVersionOption: '1.17'
-#     sonarQubeRunAnalysis: false
-#     spotBugsAnalysis: false
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'assembleRelease'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
 
-# - script: |
-#     ./gradlew sonar -Dsonar.projectKey=DayStory-Android -Dsonar.projectName='DayStory-Android' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_61e4d489e0210aeeab791afbf9b8f23647deae49
-#   displayName: 'Run SonarQube Analysis'
-#   env:
-#     ANDROID_HOME: $(ANDROID_HOME)
+- script: |
+    ./gradlew sonar -Dsonar.projectKey=DayStory-Android -Dsonar.projectName='DayStory-Android' -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_61e4d489e0210aeeab791afbf9b8f23647deae49
+  displayName: 'Run SonarQube Analysis'
+  env:
+    ANDROID_HOME: $(ANDROID_HOME)
 
 - task: PowerShell@2
   inputs:
