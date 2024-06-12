@@ -20,7 +20,7 @@ class GalleryViewModel : ViewModel() {
                     _daySummaries.value = daySummaries
                 }
             } else {
-                // Hata durumunu yönet
+
             }
         }
     }

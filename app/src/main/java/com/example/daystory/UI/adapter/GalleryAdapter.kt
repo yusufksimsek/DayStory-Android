@@ -28,6 +28,11 @@ class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>,
         val daySummary = daySummaries[position]
         holder.textViewImageDate.text = daySummary.date
 
+        val dateParts = daySummary.date.split("-")
+        val formattedDate = "${dateParts[0]}/${dateParts[1]}/${dateParts[2]}"
+
+        holder.textViewImageDate.text = formattedDate
+
         val imageUrl = daySummary.imagePath
         Glide.with(holder.itemView.context)
             .load(imageUrl)
