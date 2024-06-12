@@ -31,6 +31,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $Env:PATH += ";C:\Ruby32x64\bin\fastlane"
-      fastlane android beta
+      C:\Ruby32x64\bin\fastlane android beta
   displayName: 'Beta Dağıtımı'
