@@ -27,7 +27,10 @@ steps:
 #   env:
 #     ANDROID_HOME: $(ANDROID_HOME)
 
-- script: |
-    set PATH=%PATH%;C:\Ruby32x64\bin\fastlane
-    fastlane android beta
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Env:PATH += ";C:\Ruby32x64\bin\fastlane"
+      fastlane android beta
   displayName: 'Beta Dağıtımı'
