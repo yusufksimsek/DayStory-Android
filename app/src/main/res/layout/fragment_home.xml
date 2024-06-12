@@ -121,6 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="gone"
+            android:indeterminateTint="@color/dayStoryColor"
+            android:indeterminateTintMode="src_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
