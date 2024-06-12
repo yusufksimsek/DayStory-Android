@@ -115,18 +115,18 @@
             app:layout_constraintBottom_toTopOf="@+id/homeRecyclerView"
             app:layout_constraintVertical_bias="0.5" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:visibility="gone"
-            android:indeterminateTint="@color/dayStoryColor"
-            android:indeterminateTintMode="src_in"
+            android:src="@drawable/daystory_logo2"
+            android:contentDescription="Logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,6 +13,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
@@ -101,7 +102,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                     "\n\nDevam etmek istiyor musunuz?")
             .setPositiveButton("Devam Et") { dialog, which ->
                 dialog.dismiss()
-                showProgressBar()
+                showLogoAnimation()
                 //createDaySummary()
             }
             .setNegativeButton("Vazgeç") { dialog, which ->
@@ -127,7 +128,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             } catch (e: Exception) {
                 Toast.makeText(context, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
-                hideProgressBar()
+                hideLogoAnimation()
             }
         }
     }
@@ -142,12 +143,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-    private fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
+    private fun showLogoAnimation() {
+        val logoImageView = binding.logoImageView
+        logoImageView.visibility = View.VISIBLE
+        val rotateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_logo)
+        logoImageView.startAnimation(rotateAnimation)
     }
 
-    private fun hideProgressBar() {
-        binding.progressBar.visibility = View.GONE
+    private fun hideLogoAnimation() {
+        val logoImageView = binding.logoImageView
+        logoImageView.clearAnimation()
+        logoImageView.visibility = View.GONE
     }
 
     private fun getCurrentDate(): String {
