@@ -1,6 +1,7 @@
 package com.example.daystory.UI.fragments
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -29,6 +30,7 @@ import com.example.daystory.UI.viewmodel.EventViewModel
 import com.example.daystory.api.model.Event
 import com.example.daystory.api.service.EventService
 import com.example.daystory.api.service.RetrofitClient
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
@@ -60,8 +62,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         binding.addEventFab.setOnClickListener {
             navigateToAddEvent()
         }
-
-        //checkDateAndToggleFab()
 
         binding.btnAI.setOnClickListener {
             if (binding.btnAI.isClickable) {
@@ -98,8 +98,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                     "\n\nDevam etmek istiyor musunuz?")
             .setPositiveButton("Devam Et") { dialog, which ->
                 dialog.dismiss()
+                showProgressBar()
                 //createDaySummary()
-                navigateToImageDetailFragment()
             }
             .setNegativeButton("Vazgeç") { dialog, which ->
                 dialog.dismiss()
@@ -111,17 +111,37 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val currentDate = getCurrentDate()
         lifecycleScope.launch {
             try {
-                val request = EventService.daySummaryCreateRequest(currentDate)
-                val response = RetrofitClient.eventApi.createDaySummary(request)
-                if (response.isSuccessful && response.body()?.status == 200) {
+                val result = async { requestDaySummary(currentDate) }.await()
+                if (result) {
                     Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
+                    navigateToImageDetailFragment()
                 } else {
                     Toast.makeText(context, "Day summary oluşturulamadı", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                hideProgressBar()
             }
         }
+    }
+
+    private suspend fun requestDaySummary(currentDate: String): Boolean {
+        return try {
+            val request = EventService.daySummaryCreateRequest(currentDate)
+            val response = RetrofitClient.eventApi.createDaySummary(request)
+            response.isSuccessful && response.body()?.status == 200
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun getCurrentDate(): String {
@@ -146,26 +166,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         eventsViewModel.setSelectedDate(date)
     }
 
-    private fun checkDateAndToggleFab() {
-        val currentDate = Calendar.getInstance().time
-        val selectedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(binding.textViewDate.text.toString())
-
-        if (selectedDate != null && (selectedDate.after(currentDate) || isSameDay(selectedDate, currentDate))) {
-            binding.addEventFab.visibility = View.VISIBLE
-        } else {
-            binding.addEventFab.visibility = View.GONE
-        }
-    }
-
     private fun navigateToAddEvent() {
         findNavController().navigate(R.id.action_homeFragment_to_addEventFragment)
-    }
-
-    private fun isSameDay(date1: Date, date2: Date): Boolean {
-        val calendar1 = Calendar.getInstance().apply { time = date1 }
-        val calendar2 = Calendar.getInstance().apply { time = date2 }
-        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-                calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
     }
 
     private fun updateUI(event: List<Event>?) {
