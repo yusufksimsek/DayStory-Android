@@ -27,9 +27,8 @@ steps:
 #   env:
 #     ANDROID_HOME: $(ANDROID_HOME)
 
-- task: PowerShell@2
+- task: CmdLine@2
   inputs:
-    targetType: 'inline'
     script: |
       set PATH=%PATH%;C:\Ruby32-x64\bin\
       fastlane android beta
