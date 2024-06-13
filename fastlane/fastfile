@@ -8,10 +8,10 @@ platform :android do
     Dir.chdir("..") do
       firebase_app_distribution(
         app: "1:311132917764:android:1e5f2c03449db543a22551",
-        apk_path: "#{Dir.pwd}/app/build/outputs/apk/debug/app-debug.apk",
+        apk_path: "{Dir.pwd}/app/build/outputs/apk/debug/app-debug.apk",
         groups: "developer",
         release_notes: "New release",
-        firebase_cli_token: "1//03YJwgh89kUDTCgYIARAAGAMSNwF-L9IrnplrWKMXqsFx6M70QkwIzYDuMI1yBloPLmjbVmTK2UTgkPYYBzEpVTk5IAScU7_1JxM"
+        firebase_cli_token: "1//031fRYS0elj8GCgYIARAAGAMSNwF-L9Irm7SEX_N3LGnp4YP7X8nPkL9niWdjEhRpZs--hN2e0Hgafs_tEIn-6Z3Ng6HUBkGni_o"
       )
     end
   end
