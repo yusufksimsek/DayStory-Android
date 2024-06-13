@@ -31,7 +31,7 @@ steps:
 - script: |
     set PATH=%PATH%;C:\Ruby32-x64\bin\
     set FASTLANE_OPT_OUT_INTERACTIVE=false
-    gem install fastlane-plugin-firebase_app_distribution --user-install
+    gem install fastlane-plugin-firebase_app_distribution --install-dir
   displayName: 'Beta Dağıtımı'
   env:
     ANDROID_HOME: $(ANDROID_HOME)
