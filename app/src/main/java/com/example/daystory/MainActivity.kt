@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.firstRegisterFragment,
                 R.id.secondRegisterFragment,
                 R.id.addEventFragment,
+                R.id.galleryDetailFragment,
+                R.id.imageDetailFragment,
                 R.id.editEventFragment -> bottomNavigationView.visibility = View.GONE
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
