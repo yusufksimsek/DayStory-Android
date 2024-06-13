@@ -24,27 +24,27 @@
                 android:fontFamily="@font/poppins"
                 android:text="Event Title"
                 android:textColor="@color/eventTextfieldColor"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/more_vert_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0"/>
+                app:layout_constraintVertical_bias="0" />
 
             <ImageView
                 android:id="@+id/more_vert_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:layout_marginTop="3dp"
-                app:tint="@color/dayStoryColor"
+                android:layout_marginTop="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/eventTitle"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0"
-                app:srcCompat="@drawable/more_vert_icon" />
+                app:srcCompat="@drawable/more_vert_icon"
+                app:tint="@color/dayStoryColor" />
 
             <TextView
                 android:id="@+id/eventDesc"

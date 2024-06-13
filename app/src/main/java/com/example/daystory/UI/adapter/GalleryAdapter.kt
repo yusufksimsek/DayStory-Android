@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.daystory.R
 import com.example.daystory.api.service.EventService
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>,
                      private val onItemClicked: (EventService.DaySummary) -> Unit) :
@@ -26,11 +28,11 @@ class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>,
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         val daySummary = daySummaries[position]
+
+
         holder.textViewImageDate.text = daySummary.date
 
-        val dateParts = daySummary.date.split("-")
-        val formattedDate = "${dateParts[0]}/${dateParts[1]}/${dateParts[2]}"
-
+        val formattedDate = formatDate(daySummary.date)
         holder.textViewImageDate.text = formattedDate
 
         val imageUrl = daySummary.imagePath
@@ -44,4 +46,11 @@ class GalleryAdapter(private val daySummaries: List<EventService.DaySummary>,
     }
 
     override fun getItemCount(): Int = daySummaries.size
+
+    fun formatDate(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM EEEE", Locale("tr"))
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date)
+    }
 }

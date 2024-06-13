@@ -17,7 +17,7 @@ class GalleryViewModel : ViewModel() {
             val response = RetrofitClient.eventApi.getAllDaySummaries()
             if (response.isSuccessful) {
                 response.body()?.data?.let { daySummaries ->
-                    _daySummaries.value = daySummaries
+                    _daySummaries.value = daySummaries.sortedByDescending { it.date }
                 }
             } else {
 
