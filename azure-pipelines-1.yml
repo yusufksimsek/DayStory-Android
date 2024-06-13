@@ -32,7 +32,6 @@ steps:
     set PATH=%PATH%;C:\Ruby32-x64\bin\
     set FASTLANE_OPT_OUT_INTERACTIVE=false
     gem install fastlane-plugin-firebase_app_distribution
-    echo 'yes' | fastlane update_plugins firebase_app_distribution
     fastlane android beta
   displayName: 'Beta Dağıtımı'
   env:
