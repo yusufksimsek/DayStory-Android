@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 default_platform(:android)
 
 platform :android do
@@ -5,14 +7,16 @@ platform :android do
   lane :beta do
     gradle(
       task: "assembleDebug",
-      project_dir: "app"
+      project_dir: "./"
     )
-
-    firebase_app_distribution(
-      app: "1:311132917764:android:1e5f2c03449db543a22551",
-      apk_path: "C:\agent\_work\15\s\app\build\outputs\apk\debug\app-debug.apk",
-      groups: "dev",
-      release_notes: "New release"
-    )
+    Dir.chdir("..") do
+      firebase_app_distribution(
+        app: "1:311132917764:android:1e5f2c03449db543a22551",
+        apk_path: "#{Dir.pwd}/app/build/outputs/apk/debug/app-debug.apk",
+        groups: "developer",
+        release_notes: "New release",
+        firebase_cli_token: "1//031fRYS0elj8GCgYIARAAGAMSNwF-L9Irm7SEX_N3LGnp4YP7X8nPkL9niWdjEhRpZs--hN2e0Hgafs_tEIn-6Z3Ng6HUBkGni_o"
+      )
+    end
   end
 end
