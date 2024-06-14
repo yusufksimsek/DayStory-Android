@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.daystory.api.model.Event
+import com.example.daystory.api.service.EventService
 import com.example.daystory.api.service.RetrofitClient
 import com.example.daystory.repository.EventRepository
 import kotlinx.coroutines.delay
@@ -40,6 +41,9 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
     private val _daySummaryStatus = MutableLiveData<Boolean>()
     val daySummaryStatus: LiveData<Boolean> get() = _daySummaryStatus
 
+    private val _daySummaryCreationStatus = MutableLiveData<Boolean>()
+    val daySummaryCreationStatus: LiveData<Boolean> get() = _daySummaryCreationStatus
+
     fun validateTitle(title: String) {
         _titleError.value = when {
             title.isEmpty() -> "Başlık boş olamaz"
@@ -60,6 +64,27 @@ class EventViewModel(app: Application, private val eventRepository: EventReposit
         _selectedDate.value = date
         fetchEventsByDate(date)
         checkDaySummary(date)
+    }
+
+    fun createDaySummary(currentDate: String) {
+        viewModelScope.launch {
+            try {
+                val result = requestDaySummary(currentDate)
+                _daySummaryCreationStatus.postValue(result)
+            } catch (e: Exception) {
+                _daySummaryCreationStatus.postValue(false)
+            }
+        }
+    }
+
+    private suspend fun requestDaySummary(currentDate: String): Boolean {
+        return try {
+            val request = EventService.daySummaryCreateRequest(currentDate)
+            val response = RetrofitClient.eventApi.createDaySummary(request)
+            response.isSuccessful
+        } catch (e: Exception) {
+            false
+        }
     }
 
     fun fetchEventsByDate(date: String) = viewModelScope.launch {

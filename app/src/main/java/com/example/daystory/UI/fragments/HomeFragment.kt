@@ -106,6 +106,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 eventsViewModel.clearEventDeletionStatus()
             }
         })
+
+        eventsViewModel.daySummaryCreationStatus.observe(viewLifecycleOwner, Observer { result ->
+            hideLogoAnimation()
+            if (result) {
+                Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
+                navigateToImageDetailFragment()
+            } else {
+                Toast.makeText(context, "Day summary oluşturulamadı", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun updateAISummaryStatus(isSummaryExists: Boolean) {
@@ -151,33 +161,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private fun createDaySummary() {
         val currentDate = getCurrentDate()
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO){
-
-            }
-            try {
-                val result =  requestDaySummary(currentDate)
-                hideLogoAnimation()
-                if (result) {
-                    Toast.makeText(context, "Day summary oluşturuldu", Toast.LENGTH_SHORT).show()
-                    navigateToImageDetailFragment()
-                } else {
-                    Toast.makeText(context, "Day summary oluşturulamadı", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(context, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private suspend fun requestDaySummary(currentDate: String): Boolean {
-        return try {
-            val request = EventService.daySummaryCreateRequest(currentDate)
-            val response = RetrofitClient.eventApi.createDaySummary(request)
-            response.isSuccessful
-        } catch (e: Exception) {
-            false
-        }
+        eventsViewModel.createDaySummary(currentDate)
     }
 
     private fun showLogoAnimation() {
