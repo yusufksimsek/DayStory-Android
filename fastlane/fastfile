@@ -1,21 +1,16 @@
-#encoding: utf-8
-
+# encoding: utf-8
 default_platform(:android)
 
 platform :android do
   desc "Build the Android app"
   lane :beta do
-    gradle(
-      task: "assembleDebug",
-      project_dir: "./"
-    )
     Dir.chdir("..") do
       firebase_app_distribution(
         app: "1:311132917764:android:1e5f2c03449db543a22551",
         apk_path: "#{Dir.pwd}/app/build/outputs/apk/debug/app-debug.apk",
         groups: "developer",
         release_notes: "New release",
-        firebase_cli_token: "1//031fRYS0elj8GCgYIARAAGAMSNwF-L9Irm7SEX_N3LGnp4YP7X8nPkL9niWdjEhRpZs--hN2e0Hgafs_tEIn-6Z3Ng6HUBkGni_o"
+        firebase_cli_token: "1//03YJwgh89kUDTCgYIARAAGAMSNwF-L9IrnplrWKMXqsFx6M70QkwIzYDuMI1yBloPLmjbVmTK2UTgkPYYBzEpVTk5IAScU7_1JxM"
       )
     end
   end
